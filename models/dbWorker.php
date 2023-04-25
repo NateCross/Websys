@@ -6,7 +6,7 @@ class DatabaseWorker
 
   public static function parseEnv(): array | null
   {
-    return parse_ini_file('.env');
+    return parse_ini_file('../.env');
   }
 
   public static function initializeDb(): \mysqli | null

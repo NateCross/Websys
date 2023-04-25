@@ -1,6 +1,6 @@
 # Setup
 
-- Run `setup.php`
+- Run `setup.php` in `config/`
   - Execute this file by running `php setup.php` in command line
 - This copies the `.env.example` to `.env`
 - Fill in each field. Replace as necessary 

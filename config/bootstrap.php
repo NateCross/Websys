@@ -1,6 +1,6 @@
 <?php
 
-require 'models/dbWorker.php';
+require '../models/dbWorker.php';
 
 $db = DatabaseWorker::getDb();
 
