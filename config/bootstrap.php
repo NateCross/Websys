@@ -1,7 +1,7 @@
 <?php
 
-require '../models/dbWorker.php';
+require '../models/Database.php';
 
-$db = DatabaseWorker::getDb();
+$db = Database::getDb();
 
 var_dump($db);

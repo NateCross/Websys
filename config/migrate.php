@@ -1,10 +1,10 @@
 <?php
 
-require_once 'bootstrap.php';
+require_once '../require/require.php';
 
-$db = DatabaseWorker::getDb();
+$db = Database::getDb();
 
-['DATABASE' => $database] = DatabaseWorker::parseEnv();
+['DATABASE' => $database] = Database::parseEnv();
 
 // This file must be run every time something is changed in the database
 

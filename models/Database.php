@@ -1,6 +1,6 @@
 <?php
 
-class DatabaseWorker
+class Database
 {
   protected static \mysqli $DB;
 
@@ -35,7 +35,6 @@ class DatabaseWorker
       $result = $db->query('SHOW DATABASES LIKE "' . $database . '"');
       if ($result->num_rows) {
         $db->select_db($database);
-        echo "Connected to database $database\n";
       }
     } catch (\mysqli_sql_exception $e) {
       // Throwing the listed error but rewrapping it first so it does not
