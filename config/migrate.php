@@ -1,10 +1,10 @@
 <?php
 
-require_once 'bootstrap.php';
+require_once '../require/require.php';
 
-$db = DatabaseWorker::getDb();
+$db = Database::getDb();
 
-['DATABASE' => $database] = DatabaseWorker::parseEnv();
+['DATABASE' => $database] = Database::parseEnv();
 
 // This file must be run every time something is changed in the database
 
@@ -26,15 +26,17 @@ try {
       name VARCHAR(255) NOT NULL
     );
 
-    CREATE TABLE db_schema_version (
-      id ENUM('1') NOT NULL UNIQUE PRIMARY KEY DEFAULT '1',
-      version INTEGER NOT NULL UNIQUE
+    CREATE TABLE `product` (
+      `id` INT NOT NULL AUTO_INCREMENT , 
+      `name` VARCHAR(255) NOT NULL , 
+      `image_path` VARCHAR(255) NOT NULL , 
+      `description` VARCHAR(10000) NOT NULL , 
+      `quantity` INT NOT NULL , 
+      PRIMARY KEY (`id`)
     );
-
-    INSERT INTO db_schema_version VALUES (1);
-
-    UPDATE db_schema_version SET version = 2 WHERE version = 1;
   ");
+
+  echo "Successfully migrated";
 } catch (mysqli_sql_exception $e) {
   throw new mysqli_sql_exception($e->getMessage(), $e->getCode());
 }
