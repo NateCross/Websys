@@ -6,7 +6,7 @@ var_dump($db);
 
 ?>
 
-<form action="../index.php">
+<form action="./_product.php">
   <input type="text" name="yes">
   <input type="submit" value="yes">
 </form>

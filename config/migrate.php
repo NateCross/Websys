@@ -25,6 +25,15 @@ try {
       id INTEGER NOT NULL AUTO_INCREMENT UNIQUE PRIMARY KEY,
       name VARCHAR(255) NOT NULL
     );
+
+    CREATE TABLE `product` (
+      `id` INT NOT NULL AUTO_INCREMENT , 
+      `name` VARCHAR(255) NOT NULL , 
+      `image_path` VARCHAR(255) NOT NULL , 
+      `description` VARCHAR(10000) NOT NULL , 
+      `quantity` INT NOT NULL , 
+      PRIMARY KEY (`id`)
+    );
   ");
 
   echo "Successfully migrated";

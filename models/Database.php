@@ -51,10 +51,33 @@ class Database
     return self::$DB;
   }
 
-  function __construct() {}
+  private function __construct() {}
 
   function __destruct()
   {
     $this->DB->close();
+  }
+
+  /**
+   * Function for general queries. Do not use
+   * for prepared statements (i.e. statements with WHERE)
+   */
+  public static function query(string $query): mysqli_result | null {
+    if (!isset(self::$DB)) self::initializeDb();
+    try {
+      return self::$DB->query($query);
+    } catch (\mysqli_sql_exception $e) {
+      throw new \mysqli_sql_exception($e->getMessage(), $e->getCode());
+    }
+  }
+
+  public static function preparedQuery(string $query, string ...$arguments) {
+    if (!isset(self::$DB)) self::initializeDb();
+    try {
+      $statement = self::$DB->prepare($query);
+      return $statement->execute($arguments);
+    } catch (\mysqli_sql_exception $e) {
+      throw new \mysqli_sql_exception($e->getMessage(), $e->getCode());
+    }
   }
 }
