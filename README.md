@@ -5,6 +5,7 @@
 - This copies the `.env.example` to `.env`
 - Fill in each field. Replace as necessary 
   - If you have not yet created a user that can access the database, do so first
+- Serve the website through the `views/` folder
 
 # Notes
 
