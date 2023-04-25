@@ -9,3 +9,6 @@
 # Notes
 
 - `start-nginx.sh` is for Nate only. Don't worry about it.
+- `views/` is the directory for all the php files
+  - `_assets/` is for images
+- PHP files that process stuff in `views/` should have an underscore at the beginning
