@@ -6,7 +6,7 @@ class Database
 
   public static function parseEnv(): array | null
   {
-    return parse_ini_file('../.env');
+    return parse_ini_file(dirname(__DIR__) . '/.env');
   }
 
   public static function initializeDb(): \mysqli | null
@@ -71,11 +71,36 @@ class Database
     }
   }
 
+  private static function generateBindTypeString(mixed $arguments) {
+
+    $reducer = function ($carry, string $item) {
+      $types = [
+        'integer' => 'i',  // Integer
+        'double' => 'd',  // Float
+        'string' => 's',  // String
+      ];
+
+      $carry = $carry . $types[gettype($item)];
+      return $carry;
+    }; 
+
+    return array_reduce(
+      $arguments, 
+      $reducer,
+      "",
+    );
+  }
+
   public static function preparedQuery(string $query, string ...$arguments) {
     if (!isset(self::$DB)) self::initializeDb();
+
+    $bindTypeString = self::generateBindTypeString($arguments);
+
+  
     try {
       $statement = self::$DB->prepare($query);
-      return $statement->execute($arguments);
+      $statement->bind_param($bindTypeString, ...$arguments);
+      return $statement->execute();
     } catch (\mysqli_sql_exception $e) {
       throw new \mysqli_sql_exception($e->getMessage(), $e->getCode());
     }

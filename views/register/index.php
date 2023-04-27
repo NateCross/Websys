@@ -4,7 +4,7 @@ require_once '../../require/require.php';
 
 ?>
 
-<form action="/login/_login.php" method="POST">
+<form action="/register/_register.php" method="POST">
 
   <label for="username">Username</label>
   <input type="text" name="username" id="username" required>
