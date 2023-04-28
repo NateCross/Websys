@@ -22,7 +22,6 @@ require_once '../../require/require.php';
     checked
     value="Member"
   >
-
   <label for="seller">Seller</label>
   <input 
     type="radio" 

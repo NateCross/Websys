@@ -86,7 +86,6 @@ abstract class User {
       return password_verify($loginPassword, $memberPassword);
     } catch (Exception $e) {
       echo $e->getMessage();
-      die;
     }
   }
 
@@ -149,8 +148,17 @@ abstract class User {
 
       return true;
     } catch (Exception $e) {
-      echo $e->getMessage();
       return false;
     }
+  }
+
+  /**
+   * Logs the current user out
+   * Also removes the type of user
+   */
+  public static function logout(): bool {
+    if (Session::delete('user') && Session::delete('type'))
+      return true;
+    return false;
   }
 }

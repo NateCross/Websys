@@ -4,6 +4,7 @@ if (!isset($_POST['submit'])) return;
 
 require_once "../../require/require.php";
 require_once "../../models/Member.php";
+require_once "../../models/Seller.php";
 
 $email = filter_input(
   INPUT_POST, 
@@ -15,8 +16,18 @@ $password = filter_input(
   'password', 
   FILTER_SANITIZE_SPECIAL_CHARS,
 );
+$type = filter_input(
+  INPUT_POST,
+  'type',
+  FILTER_SANITIZE_SPECIAL_CHARS,
+);
 
-if (Member::login($email, $password))
-  header("Location: /");
+if ($type === "Member") {
+  if (Member::login($email, $password))
+    header('Location: /');
+} else if ($type === "Seller") {
+  if (Seller::login($email, $password))
+    header('Location: /');
+}
 
 echo "Unable to login. Please try again.";

@@ -35,16 +35,16 @@ class Session {
    * Checks if a key in the session superglobal has been set
    */
   public static function has($key): bool {
-    return isset($_SESSION[$key]);
+    return session_id() && isset($_SESSION[$key]);
   }
 
   /**
    * Sets the value of a key in the session superglobal
    * to null
    */
-  public static function delete($key) {
+  public static function delete($key): bool {
     if (self::has($key)) {
-      self::set($key, null);
+      unset($_SESSION[$key]);
       return true;
     }
     return false;
