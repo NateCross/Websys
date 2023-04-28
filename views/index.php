@@ -2,11 +2,12 @@
 
 require_once '../require/require.php';
 
-var_dump($db);
+if ($member = Session::get('member')) {
+  echo "Hello, " . $member['name'] . "<br>";
+}
 
 ?>
 
-<form action="./_product.php">
-  <input type="text" name="yes">
-  <input type="submit" value="yes">
-</form>
+<a href="/login">Login</a>
+
+<a href="/register">Register</a>

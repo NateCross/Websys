@@ -13,3 +13,11 @@
 - `views/` is the directory for all the php files
   - `_assets/` is for images
 - PHP files that process stuff in `views/` should have an underscore at the beginning
+
+# Todo
+
+- [x] Login for member
+- [x] Register for member
+- [ ] Login for seller
+- [ ] Register for seller
+- [ ] Update profile details

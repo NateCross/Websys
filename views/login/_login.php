@@ -5,12 +5,18 @@ if (!isset($_POST['submit'])) return;
 require_once "../../require/require.php";
 require_once "../../models/Member.php";
 
-// Filter input
+$email = filter_input(
+  INPUT_POST, 
+  'email', 
+  FILTER_VALIDATE_EMAIL | FILTER_SANITIZE_EMAIL,
+);
+$password = filter_input(
+  INPUT_POST, 
+  'password', 
+  FILTER_SANITIZE_SPECIAL_CHARS,
+);
 
-$username = filter_input(INPUT_POST, 'username');
-$password = filter_input(INPUT_POST, 'password');
+if (Member::login($email, $password))
+  header("Location: /");
 
-[$memberId, $memberUsername, $memberPassword] = 
-  Member::getMemberUsername($username);
-
-$doPasswordsMatch = password_verify($password, $memberPassword);
+echo "Unable to login. Please try again.";

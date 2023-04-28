@@ -2,20 +2,26 @@
 
 if (!isset($_POST['submit'])) return;
 
-require_once dirname(__DIR__, 2) . "/require/require.php";
+require_once "../../require/require.php";
 require_once "../../models/Member.php";
 
-var_dump($_POST);
+$email = filter_input(
+  INPUT_POST, 
+  'email', 
+  FILTER_VALIDATE_EMAIL | FILTER_SANITIZE_EMAIL,
+);
+$username = filter_input(
+  INPUT_POST, 
+  'username', 
+  FILTER_SANITIZE_SPECIAL_CHARS,
+);
+$password = filter_input(
+  INPUT_POST, 
+  'password', 
+  FILTER_SANITIZE_SPECIAL_CHARS,
+);
 
-// Filter input
+if (Member::register($email, $username, $password))
+  header('Location: /');
 
-$username = filter_input(INPUT_POST, 'username');
-$password = filter_input(INPUT_POST, 'password');
-
-Member::createMember($username, $password);
-
-
-// Hash password for better security
-// $saltedPass = password_hash($password, PASSWORD_BCRYPT);
-
-// var_dump($username);
+echo "Unable to create account. Please try again.";

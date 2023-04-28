@@ -96,7 +96,6 @@ class Database
 
     $bindTypeString = self::generateBindTypeString($arguments);
 
-  
     try {
       $statement = self::$DB->prepare($query);
       $statement->bind_param($bindTypeString, ...$arguments);
