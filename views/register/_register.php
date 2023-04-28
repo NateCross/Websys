@@ -8,7 +8,7 @@ require_once "../../models/Member.php";
 $email = filter_input(
   INPUT_POST, 
   'email', 
-  FILTER_VALIDATE_EMAIL | FILTER_SANITIZE_EMAIL,
+  FILTER_VALIDATE_EMAIL,
 );
 $username = filter_input(
   INPUT_POST, 
@@ -20,8 +20,16 @@ $password = filter_input(
   'password', 
   FILTER_SANITIZE_SPECIAL_CHARS,
 );
+$type = filter_input(
+  INPUT_POST,
+  'type',
+  FILTER_SANITIZE_SPECIAL_CHARS,
+);
 
-if (Member::register($email, $username, $password))
-  header('Location: /');
+if ($type === "Member") {
+  if (Member::register($email, $username, $password))
+    header('Location: /');
+} else if ($type === "Seller") {
+}
 
 echo "Unable to create account. Please try again.";

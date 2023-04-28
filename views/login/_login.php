@@ -8,7 +8,7 @@ require_once "../../models/Member.php";
 $email = filter_input(
   INPUT_POST, 
   'email', 
-  FILTER_VALIDATE_EMAIL | FILTER_SANITIZE_EMAIL,
+  FILTER_VALIDATE_EMAIL,
 );
 $password = filter_input(
   INPUT_POST, 

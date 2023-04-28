@@ -2,8 +2,9 @@
 
 require_once '../require/require.php';
 
-if ($member = Session::get('member')) {
-  echo "Hello, " . $member['name'] . "<br>";
+if ($user = Session::get('user')) {
+  echo "Hello, " . $user['name'] . "<br>";
+  echo "Currently logged in as a: " . Session::get('type') . "<br>";
 }
 
 ?>
