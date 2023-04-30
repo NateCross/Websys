@@ -8,9 +8,11 @@ $logout = User::logout();
 ?>
 
 <?php if ($logout): ?>
-  <script>
-    window.location.replace('/');
-  </script>
+
+<p>Successfully logged out. <a href="/">Click to return</a></p>
+
 <?php else: ?>
-  <p>Unable to logout. Please try again.</p>
+
+<p>Unable to log out. <a href="/">Click to return</a></p>
+
 <?php endif; ?>
