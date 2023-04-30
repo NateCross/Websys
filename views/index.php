@@ -1,10 +1,14 @@
 <?php
 
 require_once '../require/require.php';
+require_once '../models/User.php';
 
-if ($user = Session::get('user')) {
+$user = User::getCurrentUser();
+$type = User::getCurrentUserType();
+
+if ($user) {
   echo "Hello, " . $user['name'] . "<br>";
-  echo "Currently logged in as a: " . Session::get('type') . "<br>";
+  echo "Currently logged in as a: " . $type . "<br>";
 }
 
 ?>
@@ -13,7 +17,7 @@ if ($user = Session::get('user')) {
 
 <a href="/register">Register</a>
 
-<?php if (Session::has('user')): ?>
+<?php if (User::getCurrentUser()): ?>
   <button id="logout">Logout</button>
 <?php endif; ?>
 
