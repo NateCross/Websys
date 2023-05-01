@@ -2,6 +2,8 @@
 
 require_once 'Database.php';
 require_once 'User.php';
+require_once 'Category.php';
+require_once 'Product.php';
 
 class Seller extends User {
   protected static function getTableName(): string {
@@ -54,23 +56,6 @@ class Seller extends User {
 
       if ($file['size'] > 10000000)
         throw new Exception('Exceeded filesize limit');
-
-      // Check file MIME type
-      // Determines the true type of the file     
-      // $fileinfo = new finfo(FILEINFO_MIME_TYPE);
-      // if (!$extension = array_search(
-      //   $fileinfo->file($file['tmp_name']),
-
-      //   // Array below determines filetypes to be checked
-      //   [
-      //     'jpg' => 'image/jpeg',
-      //     'jpeg' => 'image/jpeg',
-      //     'png' => 'image/png',
-      //     'gif' => 'image/gif',
-      //   ],
-
-      //   true,
-      // ))
       if (!self::getImageExtension($file))
         throw new Exception('Invalid file format');
 
@@ -93,6 +78,7 @@ class Seller extends User {
     int $quantity,
     float $price,
     array $file,
+    string $category,
   ): bool {
     if (!$user = self::getCurrentUser()) return false;
     if (!self::currentUserIsSeller()) return false;
@@ -118,6 +104,13 @@ class Seller extends User {
       ) VALUES (?, ?, ?, ?, ?, ?);
     ", $name, $id, $description, $quantity, $price, $file_name);
 
-    return $result;
+    if (!$result) return $result;
+
+    if (!Category::createCategory($category)) return false;
+
+    $category_id = Category::getCategoryByName($category)['id'];
+    $product_id = Product::getProductByName($name)['id'];
+
+    return Category::linkProductToCategory($product_id, $category_id);
   }
 }

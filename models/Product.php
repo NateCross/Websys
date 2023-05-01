@@ -30,7 +30,7 @@ class Product {
   ) {
     if ($id) {
       $result = Database::query("
-        SELECT * FROM product WHERE id = '{$id}';
+        SELECT * FROM product WHERE id = '$id';
       ");
     } else {
       $result = Database::query(
@@ -44,7 +44,24 @@ class Product {
     return $result->fetch_all(MYSQLI_ASSOC);
   }
 
-  public static function getCategories() {
+  public static function getProductByName(string $name) {
+    $result = Database::query("
+      SELECT * FROM product WHERE name = '$name';
+    ");
+    return $result->fetch_all(MYSQLI_ASSOC)[0];
+  }
+
+  public static function getCategories(int $id) {
+    $result = Database::query("
+      SELECT category.id, category.name
+      FROM category
+        LEFT JOIN product_category
+        ON product_category.category_id = category.id
+        LEFT JOIN product
+        ON product_category.product_id = product.id
+        AND product.id = $id;
+    ");
+    return $result->fetch_all(MYSQLI_ASSOC);
 
   }
 
@@ -54,12 +71,12 @@ class Product {
 
   public static function getSeller(int $id) {
     $result = Database::query("
-      SELECT 'seller'.* 
-      FROM 'seller'
-        LEFT JOIN 'product'
-        ON 'product'.'seller_id' = 'seller'.'id'
-        AND 'product'.'id' = '$id';
+      SELECT seller.id, seller.name
+      FROM seller
+        LEFT JOIN product
+        ON product.seller_id = seller.id
+        AND product.id = $id;
     ");
-    return $result->fetch_all(MYSQLI_ASSOC);
+    return $result->fetch_all(MYSQLI_ASSOC)[0];
   }
 }

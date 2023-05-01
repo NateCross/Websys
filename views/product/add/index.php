@@ -35,6 +35,9 @@ $type = User::getCurrentUserType();
   <label for="description">Description</label>
   <textarea name="description" id="description" cols="30" rows="10"></textarea>
 
+  <label for="category">Category</label>
+  <input type="text" name="category" id="category" required>
+
   <label for="quantity">Quantity</label>
   <input 
     type="number" 

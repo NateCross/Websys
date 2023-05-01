@@ -35,7 +35,7 @@ try {
     CREATE TABLE `product` (
       `id` INT NOT NULL AUTO_INCREMENT , 
       `seller_id` INT NOT NULL ,
-      `name` VARCHAR(255) NOT NULL , 
+      `name` VARCHAR(255) NOT NULL UNIQUE , 
       `image_path` VARCHAR(255) NOT NULL , 
       `description` VARCHAR(10000) NOT NULL , 
       `quantity` INT NOT NULL DEFAULT 0 , 
@@ -54,7 +54,7 @@ try {
 
     CREATE TABLE `category` (
       `id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-      `name` VARCHAR(255) NOT NULL,
+      `name` VARCHAR(255) NOT NULL UNIQUE,
       `last_modified` TIMESTAMP DEFAULT CURRENT_TIMESTAMP 
         ON UPDATE CURRENT_TIMESTAMP NOT NULL
     );
@@ -79,6 +79,8 @@ try {
     CREATE TABLE `bill` (
       `id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
       `member_id` INT NOT NULL,
+      `member_address` VARCHAR(1000) NOT NULL,
+      `contact_number` VARCHAR(255) NOT NULL,
 
       FOREIGN KEY (`member_id`)
         REFERENCES `member`(`id`)
@@ -153,7 +155,7 @@ try {
           member m
           ON
             b.`member_id` = m.`id`
-      GROUP BY pb.`bill_id`;
+      GROUP BY b.`id`;
 
     CREATE PROCEDURE update_product_quantity
       (IN product_id INT, IN qty INT)

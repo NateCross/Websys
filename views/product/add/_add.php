@@ -14,26 +14,36 @@ require_once "../../../models/Seller.php";
   redirect('/', 1000);
 </script>
 
-<?php else: {
+<?php die(); endif; ?>
 
+<?php
   [
     'name' => $name,
     'description' => $description,
     'quantity' => $quantity,
     'price' => $price,
+    'category' => $category,
   ] = filter_input_array(INPUT_POST, [
-    'name' => FILTER_SANITIZE_ENCODED,
-    'description' => FILTER_SANITIZE_ENCODED,
+    'name' => FILTER_SANITIZE_SPECIAL_CHARS,
+    'description' => FILTER_SANITIZE_SPECIAL_CHARS,
     'quantity' => FILTER_VALIDATE_INT,
     'price' => FILTER_VALIDATE_FLOAT,
+    'category' => FILTER_SANITIZE_SPECIAL_CHARS,
   ]);
   $image = $_FILES['image'];
+?>
 
-  if (Seller::addProduct(
-    $name, $description, $quantity, $price, $image
-  ))
-    echo "Successfully uploaded product";
-  else
-    echo "Product upload unsuccessful";
-
-} endif; ?>
+<?php if (Seller::addProduct(
+  $name, 
+  $description, 
+  $quantity, 
+  $price, 
+  $image, 
+  $category,
+)): ?>
+  <p>Successfully added product.</p>
+  <a href="/">Click to return</a>
+<?php else: ?>
+  <p>An error has occurred.</p>
+  <a href="/">Click to return</a>
+<?php endif; ?>
