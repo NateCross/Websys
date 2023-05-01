@@ -2,6 +2,7 @@
 
 require_once '../require/require.php';
 require_once '../models/User.php';
+require_once '../models/Product.php';
 
 $user = User::getCurrentUser();
 $type = User::getCurrentUserType();
@@ -28,5 +29,10 @@ if ($user) {
 <a href="/product/add">Add Product For Sale</a>
 
 <?php endif; ?>
+
+<?php
+  $products = Product::getProducts();
+  var_dump($products);
+?>
 
 <script src='index.js'></script>

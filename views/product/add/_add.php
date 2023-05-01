@@ -2,6 +2,7 @@
 
 require_once "../../../require/require.php";
 require_once "../../../models/User.php";
+require_once "../../../models/Seller.php";
 
 ?>
 
@@ -15,7 +16,12 @@ require_once "../../../models/User.php";
 
 <?php else: {
 
-  $inputs = filter_input_array(INPUT_POST, [
+  [
+    'name' => $name,
+    'description' => $description,
+    'quantity' => $quantity,
+    'price' => $price,
+  ] = filter_input_array(INPUT_POST, [
     'name' => FILTER_SANITIZE_ENCODED,
     'description' => FILTER_SANITIZE_ENCODED,
     'quantity' => FILTER_VALIDATE_INT,
@@ -23,7 +29,11 @@ require_once "../../../models/User.php";
   ]);
   $image = $_FILES['image'];
 
-  var_dump($inputs);
-  var_dump($image);
+  if (Seller::addProduct(
+    $name, $description, $quantity, $price, $image
+  ))
+    echo "Successfully uploaded product";
+  else
+    echo "Product upload unsuccessful";
 
 } endif; ?>

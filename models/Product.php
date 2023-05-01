@@ -2,6 +2,11 @@
 
 require_once "Database.php";
 
+/**
+ * Handles the products
+ * Note that adding products is handled in the Seller
+ * model
+ */
 class Product {
 
   /**
@@ -10,6 +15,9 @@ class Product {
    * With a parameter, it returns the product of that id
    * 
    * Parameters:
+   *  $id
+   *    - The id of the product to get.
+   *      Without this, it gets all products
    *  $randomize
    *    - Randomizes the order of results. Best with limit
    *  $limit
@@ -29,10 +37,11 @@ class Product {
         "SELECT * FROM product "
         . ($randomize ? "ORDER BY rand() " : "")
         . ($limit ? "LIMIT {$limit} " : "")
+        . "WHERE quantity != 0"
         . "; "
       );
     }
-    return $result->fetch_all();
+    return $result->fetch_all(MYSQLI_ASSOC);
   }
 
   public static function getCategories() {
