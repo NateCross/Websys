@@ -52,7 +52,14 @@ class Product {
 
   }
 
-  public static function getSeller() {
-
+  public static function getSeller(int $id) {
+    $result = Database::query("
+      SELECT 'seller'.* 
+      FROM 'seller'
+        LEFT JOIN 'product'
+        ON 'product'.'seller_id' = 'seller'.'id'
+        AND 'product'.'id' = '$id';
+    ");
+    return $result->fetch_all(MYSQLI_ASSOC);
   }
 }
