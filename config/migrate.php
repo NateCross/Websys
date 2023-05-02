@@ -2,7 +2,7 @@
 
 // This file must be run every time something is changed in the database
 
-require_once '../require/require.php';
+require_once '../lib/require.php';
 
 $db = Database::getDb();
 

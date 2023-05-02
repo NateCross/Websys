@@ -2,9 +2,9 @@
 
 if (!isset($_POST['submit'])) return;
 
-require_once "../../require/require.php";
-require_once "../../models/Member.php";
-require_once "../../models/Seller.php";
+require_once "../lib/require.php";
+require_once "../lib/Member.php";
+require_once "../lib/Seller.php";
 
 $email = filter_input(
   INPUT_POST, 

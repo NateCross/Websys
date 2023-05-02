@@ -1,8 +1,8 @@
 <?php
 
-require_once '../require/require.php';
-require_once '../models/User.php';
-require_once '../models/Product.php';
+require_once 'lib/require.php';
+require_once 'lib/User.php';
+require_once 'lib/Product.php';
 
 $user = User::getCurrentUser();
 $type = User::getCurrentUserType();
@@ -14,9 +14,9 @@ if ($user) {
 
 ?>
 
-<a href="/login">Login</a>
+<a href="login.php">Login</a>
 
-<a href="/register">Register</a>
+<a href="register.php">Register</a>
 
 <?php if (User::getCurrentUser()): ?>
 
@@ -26,7 +26,7 @@ if ($user) {
 
 <?php if ($type === 'seller'): ?>
 
-<a href="/product/add">Add Product For Sale</a>
+<a href="product_add.php">Add Product For Sale</a>
 
 <?php endif; ?>
 

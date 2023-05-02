@@ -1,10 +1,10 @@
 <?php
 
-require_once '../../require/require.php';
+require_once 'lib/require.php';
 
 ?>
 
-<form action="/register/_register.php" method="POST">
+<form action="scripts/_register.php" method="POST">
   <label for="Email">Email</label>
   <input type="email" name="email" id="email" required>
 

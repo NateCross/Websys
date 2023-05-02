@@ -1,7 +1,7 @@
 <?php
 
-require_once "../require/require.php";
-require_once "../models/User.php";
+require_once "../lib/require.php";
+require_once "../lib/User.php";
 
 $logout = User::logout();
 

@@ -1,8 +1,8 @@
 <?php
 
-require_once "../../../require/require.php";
-require_once "../../../models/User.php";
-require_once "../../../models/Seller.php";
+require_once "../lib/require.php";
+require_once "../lib/User.php";
+require_once "../lib/Seller.php";
 
 ?>
 
@@ -10,8 +10,8 @@ require_once "../../../models/Seller.php";
 
 <p>Invalid form. Please try again.</p>
 <script type="module">
-  import { redirect } from '../../utils.js';
-  redirect('/', 1000);
+  import { redirect } from '../lib/utils.js';
+  redirect('/', 3000);
 </script>
 
 <?php die(); endif; ?>

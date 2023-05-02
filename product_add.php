@@ -1,7 +1,7 @@
 <?php
 
-require_once "../../../require/require.php";
-require_once "../../../models/User.php";
+require_once "lib/require.php";
+require_once "lib/User.php";
 
 $user = User::getCurrentUser();
 $type = User::getCurrentUserType();
@@ -11,13 +11,13 @@ $type = User::getCurrentUserType();
 <?php if (!$user): ?>
 <p>No user. Please try again.</p>
 <script type="module">
-  import { redirect } from '../../utils.js';
+  import { redirect } from 'lib/utils.js';
   redirect('/', 1000);
 </script>
 <?php elseif (!$type === 'seller'): ?>
 <p>Not a seller. Please try again.</p>
 <script type="module">
-  import { redirect } from '../../utils.js';
+  import { redirect } from 'lib/utils.js';
   redirect('/', 1000);
 </script>
 <?php else: ?>
@@ -25,7 +25,7 @@ $type = User::getCurrentUserType();
 <h1>Add Product</h1>
 
 <form 
-  action="add/_add.php" 
+  action="scripts/_add.php" 
   method="post" 
   enctype="multipart/form-data"
 >

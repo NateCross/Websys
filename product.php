@@ -1,6 +1,6 @@
 <?php if (!$id = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_ENCODED)): ?>
   <script type="module">
-    import { redirect } from '../utils.js';
+    import { redirect } from 'lib/utils.js';
     redirect();
   </script>
   <?php die(); ?>
@@ -8,21 +8,18 @@
 
 <?php
 
-require_once '../../require/require.php';
-require_once '../../models/Product.php';
+require_once 'lib/require.php';
+require_once 'lib/Product.php';
 
-// var_dump($_GET);
 $product = Product::getProducts($id)[0];
 $seller = Product::getSeller($product['seller_id']);
-// var_dump($product);
-var_dump($seller);
 
 ?>
 
 <?php if(!$product): ?>
   <p>Product not found. Redirecting to home page...</p>
   <script type="module">
-    import { redirect } from '../utils.js';
+    import { redirect } from 'lib/utils.js';
     redirect('/', 3000);
   </script>
 <?php die(); endif; ?>
