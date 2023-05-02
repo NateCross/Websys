@@ -12,7 +12,7 @@ require_once 'lib/require.php';
 require_once 'lib/Product.php';
 
 $product = Product::getProducts($id)[0];
-$seller = Product::getSeller($product['seller_id']);
+$seller = Product::getSellerByProduct($product);
 
 ?>
 
@@ -24,5 +24,6 @@ $seller = Product::getSeller($product['seller_id']);
   </script>
 <?php die(); endif; ?>
 
-<h1><?= $product['name']; ?></h1>
-<p>Seller: <?= Product::getSeller($product['seller_id']) ?></p>
+<h1><?= Product::getProductNameAttribute($product); ?></h1>
+<img src="<?= Product::getImagePath($product) ?>">
+<p>Seller: <?= $seller['name'] ?></p>

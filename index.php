@@ -30,9 +30,26 @@ if ($user) {
 
 <?php endif; ?>
 
-<?php
-  $products = Product::getProducts();
-  var_dump($products);
-?>
+<?php if ($products = Product::getProducts()) { ?>
+
+<ul class="product-list-container">
+  <?php foreach ($products as $product): ?>
+
+  <li>
+    <a 
+      href="product.php?id=<?= Product::getProductIdAttribute($product) ?>"
+    >
+      <!-- TODO: Adjust size through CSS  -->
+      <img 
+        src="<?= Product::getImagePath($product); ?>" 
+      >
+      <?= Product::getProductNameAttribute($product); ?>
+      </a>
+  </li>
+
+  <?php endforeach; ?>
+</ul>
+
+<?php } ?>
 
 <script src='index.js'></script>

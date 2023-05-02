@@ -6,7 +6,7 @@ require_once "../lib/Seller.php";
 
 ?>
 
-<?php if (!isset($_FILES['image']) || !isset($_POST['submit'])): ?>
+<?php if (!isset($_POST['submit'])): ?>
 
 <p>Invalid form. Please try again.</p>
 <script type="module">
@@ -23,6 +23,7 @@ require_once "../lib/Seller.php";
     'quantity' => $quantity,
     'price' => $price,
     'category' => $category,
+    'id' => $product_id,
   ] = filter_input_array(INPUT_POST, [
     'name' => FILTER_SANITIZE_SPECIAL_CHARS,
     'description' => FILTER_SANITIZE_SPECIAL_CHARS,
@@ -33,13 +34,13 @@ require_once "../lib/Seller.php";
   $image = $_FILES['image'];
 ?>
 
-<?php if (Seller::addProduct(
+<?php if (Seller::updateProduct(
+  $product_id,
   $name, 
   $description, 
   $quantity, 
   $price, 
   $category,
-  $image, 
 )): ?>
   <p>Successfully added product.</p>
   <a href="/">Click to return</a>

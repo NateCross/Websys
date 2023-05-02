@@ -62,14 +62,13 @@ class Product {
         AND product.id = $id;
     ");
     return $result->fetch_all(MYSQLI_ASSOC);
-
   }
 
   public static function getBills() {
 
   }
 
-  public static function getSeller(int $id) {
+  public static function getSellerById(int $id) {
     $result = Database::query("
       SELECT seller.id, seller.name
       FROM seller
@@ -78,5 +77,51 @@ class Product {
         AND product.id = $id;
     ");
     return $result->fetch_all(MYSQLI_ASSOC)[0];
+  }
+
+  public static function getSellerByProduct($product) {
+    return self::getSellerById($product['seller_id']);
+  }
+
+  public static function getImagePath($product) {
+    return "_assets/" . $product['image_path'];
+  }
+
+  public static function getProductNameAttribute($product) {
+    return $product['name'];
+  }
+
+  public static function getProductIdAttribute($product) {
+    return $product['id'];
+  }
+
+  public static function getProductSellerIdAttribute($product) {
+    return $product['seller_id'];
+  }
+
+  public static function getProductDescriptionAttribute($product) {
+    return $product['description'];
+  }
+
+  public static function getProductCategoryAttribute($product) {
+    return self::getCategories($product['id'])[0];
+  }
+
+  public static function getProductQuantityAttribute($product) {
+    return $product['quantity'];
+  }
+
+  public static function getProductPriceAttribute($product) {
+    return $product['price'];
+  }
+  
+  /**
+   * To buy a product, we need to have a bill
+   * Then we add products to that bill
+   * When a product_bill is added, we subtract that much
+   * to the quantity of the original product
+   */
+  public static function buyProduct(int $id, int $quantity) {
+    return Database::preparedQuery();
   }
 }

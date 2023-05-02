@@ -77,8 +77,8 @@ class Seller extends User {
     string $description,
     int $quantity,
     float $price,
-    array $file,
     string $category,
+    array $file,
   ): bool {
     if (!$user = self::getCurrentUser()) return false;
     if (!self::currentUserIsSeller()) return false;
@@ -112,5 +112,27 @@ class Seller extends User {
     $product_id = Product::getProductByName($name)['id'];
 
     return Category::linkProductToCategory($product_id, $category_id);
+  }
+
+  public static function updateProduct(
+    int $product_id,
+    string $name,
+    string $description,
+    int $quantity,
+    float $price,
+    string $category,
+  ): bool {
+    if (!$product = Product::getProducts($product_id)) 
+      return false;
+    if (!$user = self::getCurrentUser()) return false;
+    if (!self::currentUserIsSeller()) return false;
+    return true;
+  }
+
+  public static function updateProductImage(
+    int $id,
+    array $image,
+  ) {
+    $product = Product::getProducts($id);
   }
 }

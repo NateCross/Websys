@@ -160,4 +160,8 @@ abstract class User {
       return true;
     return false;
   }
+
+  public static function getUserIdAttribute($user): int {
+    return $user['id'];
+  }
 }
