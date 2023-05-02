@@ -85,7 +85,7 @@ class Seller extends User {
     if (!self::verifyFileUpload($file)) return false;
 
     $file_name = self::generateFilename($file);
-    $file_path = "../../_assets/" . $file_name;
+    $file_path = "../_assets/" . $file_name;
 
     if(!move_uploaded_file(
       $file['tmp_name'], $file_path
@@ -122,33 +122,61 @@ class Seller extends User {
     float $price,
     string $category,
   ): bool {
-    if (!Product::getProducts($product_id)) 
+    try {
+      if (!Product::getProducts($product_id)) 
+        return false;
+      if (!self::getCurrentUser()) return false;
+      if (!self::currentUserIsSeller()) return false;
+
+      $result = Database::preparedQuery("
+        UPDATE product SET
+          name = ?,
+          description = ?,
+          quantity = ?,
+          price = ?
+        WHERE id = ?;
+      ", $name, $description, $quantity, $price, $product_id);
+
+      if (!$result) return $result;
+
+      if (!Category::createCategory($category)) return false;
+
+      $category_id = Category::getCategoryByName($category)['id'];
+
+      return Category::linkProductToCategory($product_id, $category_id);
+    } catch (Exception $e) {
       return false;
-    if (!self::getCurrentUser()) return false;
-    if (!self::currentUserIsSeller()) return false;
-
-    $result = Database::preparedQuery("
-      UPDATE product SET
-        name = ?,
-        description = ?,
-        quantity = ?,
-        price = ?
-      WHERE id = ?;
-    ", $name, $description, $quantity, $price, $product_id);
-
-    if (!$result) return $result;
-
-    if (!Category::createCategory($category)) return false;
-
-    $category_id = Category::getCategoryByName($category)['id'];
-
-    return Category::linkProductToCategory($product_id, $category_id);
+    }
   }
 
   public static function updateProductImage(
     int $id,
     array $image,
   ) {
-    $product = Product::getProducts($id);
+    try {
+      if (!$product = Product::getProducts($id)[0])
+        return false;
+      if (!self::getCurrentUser()) return false;
+      if (!self::currentUserIsSeller()) return false;
+
+      $old_file_path = "../_assets/" . Product::getProductImageAttribute($product);
+
+      if (!unlink($old_file_path)) return false;
+
+      $image_name = self::generateFilename($image);
+      $image_path = "../_assets/" . $image_name;
+
+      if(!move_uploaded_file(
+        $image['tmp_name'], $image_path
+      )) return false;
+
+      return Database::preparedQuery("
+        UPDATE product SET
+          image_path = ?
+        WHERE id = ?;
+      ", $image_name, $id);
+    } catch (Exception $e) {
+      return false;
+    }
   }
 }

@@ -16,6 +16,18 @@
 
 - [x] Login for member
 - [x] Register for member
-- [ ] Login for seller
-- [ ] Register for seller
-- [ ] Update profile details
+- [x] Login for seller
+- [x] Register for seller
+- [x] Create product
+- [x] Update product
+- [x] Read product
+- [ ] Delete product
+- [ ] Buy stuff
+- [x] Update profile details
+
+# Features
+
+- [ ] Wishlist
+- [ ] Notifications
+- [ ] Admin / Report
+- [ ] Cart / Voucher

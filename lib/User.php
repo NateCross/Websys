@@ -59,16 +59,20 @@ abstract class User {
     string $email,
     string $username,
     string $password,
-  ) {
-    // Hash password first for better security
-    $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
+  ): bool {
+    try {
+      // Hash password first for better security
+      $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
 
-    return Database::preparedQuery("
-      INSERT INTO "
-      . static::getTableName()
-      . " (email, name, password) 
-      VALUES (?, ?, ?);
-    ", $email, $username, $hashedPassword);
+      return Database::preparedQuery("
+        INSERT INTO "
+        . static::getTableName()
+        . " (email, name, password) 
+        VALUES (?, ?, ?);
+      ", $email, $username, $hashedPassword);
+    } catch (Exception $e) {
+      return false;
+    }
   }
 
   /**
@@ -163,5 +167,38 @@ abstract class User {
 
   public static function getUserIdAttribute($user): int {
     return $user['id'];
+  }
+
+  public static function getUserNameAttribute($user) {
+    return $user['name'];
+  }
+
+  public static function getUserEmailAttribute($user) {
+    return $user['email'];
+  }
+
+  public static function updateUser(
+    int $id,
+    string $email,
+    string $username,
+    string $password,
+  ) {
+    try {
+      // Hash password first for better security
+      $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
+
+      return Database::preparedQuery("
+        UPDATE " 
+        . static::getTableName()
+        . " SET 
+          email = ?,
+          name = ?,
+          password = ?
+        WHERE id = ?
+      ", $email, $username, $hashedPassword, $id);
+    } catch (Exception $e) {
+      return false;
+    }
+
   }
 }

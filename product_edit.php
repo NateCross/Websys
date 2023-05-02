@@ -112,10 +112,17 @@ $seller = Product::getSellerById($product_id);
   method="post" 
   enctype="multipart/form-data"
 >
+  <!-- Sends the id of the product -->
+  <input 
+    type="hidden" 
+    name="product_id"
+    value="<?= Product::getProductIdAttribute($product) ?>"
+  >
 
   <label for="image">Image</label>
   <input type="file" name="image" id="image" required>
 
+  <input type="submit" name="submit" value="Submit">
 </form>
 
 

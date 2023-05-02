@@ -12,20 +12,20 @@ $type = User::getCurrentUserType();
 <p>No user. Please try again.</p>
 <script type="module">
   import { redirect } from 'lib/utils.js';
-  redirect('/', 1000);
+  redirect('/', 3000);
 </script>
 <?php elseif (!$type === 'seller'): ?>
 <p>Not a seller. Please try again.</p>
 <script type="module">
   import { redirect } from 'lib/utils.js';
-  redirect('/', 1000);
+  redirect('/', 3000);
 </script>
 <?php else: ?>
 
 <h1>Add Product</h1>
 
 <form 
-  action="scripts/_add.php" 
+  action="scripts/_add_product.php" 
   method="post" 
   enctype="multipart/form-data"
 >

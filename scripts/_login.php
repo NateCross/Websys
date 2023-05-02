@@ -31,3 +31,11 @@ if ($type === "Member") {
 }
 
 echo "Unable to login. Please try again.";
+?>
+
+<script type="module">
+  import {
+    redirect
+  } from '../lib/utils.js';
+  redirect('/', 3000);
+</script>

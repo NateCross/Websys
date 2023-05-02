@@ -3,8 +3,6 @@
 require_once "../lib/require.php";
 require_once "../lib/User.php";
 require_once "../lib/Seller.php";
-require_once "../lib/Product.php";
-
 
 ?>
 
@@ -19,21 +17,8 @@ require_once "../lib/Product.php";
 <?php die(); endif; ?>
 
 <?php
-  [
-    'name' => $name,
-    'description' => $description,
-    'quantity' => $quantity,
-    'price' => $price,
-    'category' => $category,
-    'product_id' => $product_id,
-  ] = filter_input_array(INPUT_POST, [
-    'name' => FILTER_SANITIZE_SPECIAL_CHARS,
-    'description' => FILTER_SANITIZE_SPECIAL_CHARS,
-    'quantity' => FILTER_VALIDATE_INT,
-    'price' => FILTER_VALIDATE_FLOAT,
-    'category' => FILTER_SANITIZE_SPECIAL_CHARS,
-    'product_id' => FILTER_VALIDATE_INT,
-  ]);
+  $product_id = filter_input(INPUT_POST, 'product_id', FILTER_SANITIZE_SPECIAL_CHARS);
+  $image = $_FILES['image'];
 
   $user = User::getCurrentUser();
   $type = User::getCurrentUserType();
@@ -47,6 +32,12 @@ require_once "../lib/Product.php";
   <script type="module">
     import { redirect } from '../lib/utils.js';
     redirect('/', 3000);
+  </script>
+  <?php die(); ?>
+<?php elseif (!$image): ?>
+  <script type="module">
+    import { redirect } from '../lib/utils.js';
+    redirect();
   </script>
   <?php die(); ?>
 <?php elseif (!$product_id): ?>
@@ -74,13 +65,9 @@ require_once "../lib/Product.php";
   <?php die(); ?>
 <?php endif; ?>
 
-<?php if (Seller::updateProduct(
+<?php if (Seller::updateProductImage(
   $product_id,
-  $name, 
-  $description, 
-  $quantity, 
-  $price, 
-  $category,
+  $image,
 )): ?>
   <p>Successfully edited product.</p>
   <a href="/">Click to return</a>

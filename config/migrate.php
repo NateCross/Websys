@@ -38,13 +38,11 @@ try {
       `name` VARCHAR(255) NOT NULL UNIQUE , 
       `image_path` VARCHAR(255) NOT NULL , 
       `description` VARCHAR(10000) NOT NULL , 
-      `quantity` INT NOT NULL DEFAULT 0 , 
-      `price` DECIMAL(19, 2) NOT NULL DEFAULT 1,
+      `quantity` INT NOT NULL DEFAULT 0 CHECK (`quantity` >= 0), 
+      `price` DECIMAL(19, 2) NOT NULL DEFAULT 1 CHECK (`price` >= 1),
       `last_modified` TIMESTAMP DEFAULT CURRENT_TIMESTAMP 
         ON UPDATE CURRENT_TIMESTAMP NOT NULL,
 
-      CHECK (`quantity` >= 0),
-      CHECK (`price` >= 1),
       PRIMARY KEY (`id`),
       FOREIGN KEY (`seller_id`)
         REFERENCES `seller`(`id`)
@@ -107,11 +105,10 @@ try {
     CREATE TABLE `review` (
       `id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
       `comment` VARCHAR(10000),
-      `rating` INT NOT NULL DEFAULT 3,
+      `rating` INT NOT NULL DEFAULT 3 CHECK (5 >= `rating` AND `rating` >= 1),
       `member_id` INT NOT NULL,
       `product_id` INT NOT NULL,
 
-      CHECK (5 >= `rating` AND `rating` >= 1),
       FOREIGN KEY (`member_id`)
         REFERENCES `member`(`id`)
         ON UPDATE CASCADE

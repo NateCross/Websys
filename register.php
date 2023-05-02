@@ -14,6 +14,9 @@ require_once 'lib/require.php';
   <label for="password">Password</label>
   <input type="password" name="password" id="password" required>
 
+  <label for="confirm_password">Confirm Password</label>
+  <input type="password" name="confirm_password" id="confirm_password" required>
+
   <label for="member">Member</label>
   <input 
     type="radio" 

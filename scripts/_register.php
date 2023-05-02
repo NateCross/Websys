@@ -7,18 +7,23 @@ require_once "../lib/Member.php";
 require_once "../lib/Seller.php";
 
 $email = filter_input(
-  INPUT_POST, 
-  'email', 
+  INPUT_POST,
+  'email',
   FILTER_VALIDATE_EMAIL,
 );
 $username = filter_input(
-  INPUT_POST, 
-  'username', 
+  INPUT_POST,
+  'username',
   FILTER_SANITIZE_SPECIAL_CHARS,
 );
 $password = filter_input(
-  INPUT_POST, 
-  'password', 
+  INPUT_POST,
+  'password',
+  FILTER_SANITIZE_SPECIAL_CHARS,
+);
+$confirm_password = filter_input(
+  INPUT_POST,
+  'confirm_password',
   FILTER_SANITIZE_SPECIAL_CHARS,
 );
 $type = filter_input(
@@ -26,6 +31,19 @@ $type = filter_input(
   'type',
   FILTER_SANITIZE_SPECIAL_CHARS,
 );
+
+?>
+
+<?php if ($password !== $confirm_password): ?>
+  <p>Passwords do not match. Redirecting to register page...</p>
+  <script type="module">
+    import { redirect } from '../lib/utils.js';
+    redirect('/register.php', 3000);
+  </script>
+  <?php die(); ?>
+<?php endif; ?>
+
+<?php
 
 if ($type === "Member") {
   if (Member::register($email, $username, $password))
@@ -36,3 +54,11 @@ if ($type === "Member") {
 }
 
 echo "Unable to create account. Please try again.";
+?>
+
+<script type="module">
+  import {
+    redirect
+  } from '../lib/utils.js';
+  redirect('/', 3000);
+</script>

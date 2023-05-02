@@ -84,7 +84,11 @@ class Product {
   }
 
   public static function getImagePath($product) {
-    return "_assets/" . $product['image_path'];
+    return "_assets/" . self::getProductImageAttribute($product);
+  }
+
+  public static function getProductImageAttribute($product) {
+    return $product['image_path'];
   }
 
   public static function getProductNameAttribute($product) {
@@ -113,6 +117,16 @@ class Product {
 
   public static function getProductPriceAttribute($product) {
     return $product['price'];
+  }
+
+  public static function deleteProduct(int $id) {
+    try {
+      return Database::preparedQuery("
+        DELETE FROM product WHERE id = $id;
+      ");
+    } catch (Exception $e) {
+      return false;
+    }
   }
   
   /**
