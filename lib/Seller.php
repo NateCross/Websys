@@ -122,11 +122,27 @@ class Seller extends User {
     float $price,
     string $category,
   ): bool {
-    if (!$product = Product::getProducts($product_id)) 
+    if (!Product::getProducts($product_id)) 
       return false;
-    if (!$user = self::getCurrentUser()) return false;
+    if (!self::getCurrentUser()) return false;
     if (!self::currentUserIsSeller()) return false;
-    return true;
+
+    $result = Database::preparedQuery("
+      UPDATE product SET
+        name = ?,
+        description = ?,
+        quantity = ?,
+        price = ?
+      WHERE id = ?;
+    ", $name, $description, $quantity, $price, $product_id);
+
+    if (!$result) return $result;
+
+    if (!Category::createCategory($category)) return false;
+
+    $category_id = Category::getCategoryByName($category)['id'];
+
+    return Category::linkProductToCategory($product_id, $category_id);
   }
 
   public static function updateProductImage(

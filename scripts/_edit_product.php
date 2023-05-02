@@ -23,15 +23,15 @@ require_once "../lib/Seller.php";
     'quantity' => $quantity,
     'price' => $price,
     'category' => $category,
-    'id' => $product_id,
+    'product_id' => $product_id,
   ] = filter_input_array(INPUT_POST, [
     'name' => FILTER_SANITIZE_SPECIAL_CHARS,
     'description' => FILTER_SANITIZE_SPECIAL_CHARS,
     'quantity' => FILTER_VALIDATE_INT,
     'price' => FILTER_VALIDATE_FLOAT,
     'category' => FILTER_SANITIZE_SPECIAL_CHARS,
+    'product_id' => FILTER_VALIDATE_INT,
   ]);
-  $image = $_FILES['image'];
 ?>
 
 <?php if (Seller::updateProduct(
@@ -42,7 +42,7 @@ require_once "../lib/Seller.php";
   $price, 
   $category,
 )): ?>
-  <p>Successfully added product.</p>
+  <p>Successfully edited product.</p>
   <a href="/">Click to return</a>
 <?php else: ?>
   <p>An error has occurred.</p>
