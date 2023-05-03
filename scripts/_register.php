@@ -37,7 +37,7 @@ $type = filter_input(
 <?php if ($password !== $confirm_password): ?>
   <p>Passwords do not match. Redirecting to register page...</p>
   <script type="module">
-    import { redirect } from '../lib/utils.js';
+    import { redirect } from '../js/utils.js';
     redirect('/register.php', 3000);
   </script>
   <?php die(); ?>
@@ -59,6 +59,6 @@ echo "Unable to create account. Please try again.";
 <script type="module">
   import {
     redirect
-  } from '../lib/utils.js';
+  } from '../js/utils.js';
   redirect('/', 3000);
 </script>

@@ -21,9 +21,17 @@
 - [x] Create product
 - [x] Update product
 - [x] Read product
-- [ ] Delete product
+- [x] Delete product
 - [ ] Buy stuff
 - [x] Update profile details
+  - [x] Profile Picture
+- [ ] Create reviews
+- [ ] View reviews
+- [ ] Delete reviews
+- [ ] Update reviews
+- [ ] Unified error messages and behavior
+- [x] Search products
+  - [ ] Search categories?
 
 # Features
 

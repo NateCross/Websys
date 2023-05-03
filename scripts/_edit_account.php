@@ -13,7 +13,7 @@ $type = User::getCurrentUserType();
 
 <p>Invalid form. Redirecting to previous page... </p>
 <script type="module">
-  import { redirect } from '../lib/utils.js';
+  import { redirect } from '../js/utils.js';
   redirect('/account.php', 3000);
 </script>
 

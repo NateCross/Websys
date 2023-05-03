@@ -1,6 +1,6 @@
 <?php if (!$id = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_ENCODED)): ?>
   <script type="module">
-    import { redirect } from 'lib/utils.js';
+    import { redirect } from './js/utils.js';
     redirect();
   </script>
   <?php die(); ?>
@@ -41,4 +41,14 @@ $seller = Product::getSellerByProduct($product);
 
 <?php if($user_is_seller): ?>
   <a href="product_edit.php?id=<?= $id ?>">Edit Product</a>
+  <form action="scripts/_delete_product.php" method="POST">
+    <input 
+      type="hidden" 
+      name="id" 
+      value="<?= $id ?>"
+    >
+    <input type="submit" name="submit" value="Delete Product">
+  </form>
 <?php endif; ?>
+
+<script src="js/fetch.js"></script>

@@ -12,7 +12,7 @@ require_once "../lib/Product.php";
 
 <p>Invalid form. Please try again.</p>
 <script type="module">
-  import { redirect } from '../lib/utils.js';
+  import { redirect } from '.././js/utils.js';
   redirect('/', 3000);
 </script>
 
@@ -45,20 +45,20 @@ require_once "../lib/Product.php";
 <?php if (!$user): ?>
   <p>No user. Please try again.</p>
   <script type="module">
-    import { redirect } from '../lib/utils.js';
+    import { redirect } from '../js/utils.js';
     redirect('/', 3000);
   </script>
   <?php die(); ?>
 <?php elseif (!$product_id): ?>
   <script type="module">
-    import { redirect } from '../lib/utils.js';
+    import { redirect } from '../js/utils.js';
     redirect();
   </script>
   <?php die(); ?>
 <?php elseif (!$type === 'seller'): ?>
   <p>Not a seller. Please try again.</p>
   <script type="module">
-    import { redirect } from '../lib/utils.js';
+    import { redirect } from '../js/utils.js';
     redirect('/', 3000);
   </script>
   <?php die(); ?>
@@ -68,7 +68,7 @@ require_once "../lib/Product.php";
 ): ?>
   <p>Not the seller of this product. Please try again.</p>
   <script type="module">
-    import { redirect } from '../lib/utils.js';
+    import { redirect } from '../js/utils.js';
     redirect('/', 3000);
   </script>
   <?php die(); ?>

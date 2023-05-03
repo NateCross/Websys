@@ -36,6 +36,6 @@ echo "Unable to login. Please try again.";
 <script type="module">
   import {
     redirect
-  } from '../lib/utils.js';
+  } from '../js/utils.js';
   redirect('/', 3000);
 </script>

@@ -4,6 +4,7 @@ require_once 'Database.php';
 require_once 'User.php';
 require_once 'Category.php';
 require_once 'Product.php';
+require_once 'Utils.php';
 
 class Seller extends User {
   protected static function getTableName(): string {
@@ -12,29 +13,6 @@ class Seller extends User {
 
   public static function currentUserIsSeller(): bool {
     return self::getCurrentUserType() === 'seller';
-  }
-
-  /**
-   * Check file MIME type
-   * Determines the true type of the file     
-   * $file The file uploaded from a POST request
-   */
-  private static function getImageExtension($file): int | string | false {
-    $fileinfo = new finfo(FILEINFO_MIME_TYPE);
-
-    return array_search(
-      $fileinfo->file($file['tmp_name']),
-
-      // Array below determines filetypes to be checked
-      [
-        'jpg' => 'image/jpeg',
-        'jpeg' => 'image/jpeg',
-        'png' => 'image/png',
-        'gif' => 'image/gif',
-      ],
-
-      true,
-    );
   }
 
   /**
@@ -56,7 +34,7 @@ class Seller extends User {
 
       if ($file['size'] > 10000000)
         throw new Exception('Exceeded filesize limit');
-      if (!self::getImageExtension($file))
+      if (!Utils\getImageExtension($file))
         throw new Exception('Invalid file format');
 
       return true;
@@ -64,12 +42,6 @@ class Seller extends User {
       echo $e->getMessage();
       return false;
     }
-  }
-
-  private static function generateFilename($file): string {
-    return sha1_file($file['tmp_name']) 
-    . "." 
-    . self::getImageExtension($file);
   }
 
   public static function addProduct(
@@ -84,7 +56,7 @@ class Seller extends User {
     if (!self::currentUserIsSeller()) return false;
     if (!self::verifyFileUpload($file)) return false;
 
-    $file_name = self::generateFilename($file);
+    $file_name = Utils\generateFilename($file);
     $file_path = "../_assets/" . $file_name;
 
     if(!move_uploaded_file(
@@ -163,7 +135,7 @@ class Seller extends User {
 
       if (!unlink($old_file_path)) return false;
 
-      $image_name = self::generateFilename($image);
+      $image_name = \Utils\generateFilename($image);
       $image_path = "../_assets/" . $image_name;
 
       if(!move_uploaded_file(

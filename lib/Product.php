@@ -122,8 +122,8 @@ class Product {
   public static function deleteProduct(int $id) {
     try {
       return Database::preparedQuery("
-        DELETE FROM product WHERE id = $id;
-      ");
+        DELETE FROM product WHERE id = ?;
+      ", $id);
     } catch (Exception $e) {
       return false;
     }
@@ -137,5 +137,12 @@ class Product {
    */
   public static function buyProduct(int $id, int $quantity) {
     return Database::preparedQuery();
+  }
+
+  public static function searchProduct(string $query) {
+    return Database::query("
+      SELECT * FROM product
+      WHERE name LIKE '%$query%';
+    ")->fetch_all(MYSQLI_ASSOC);
   }
 }

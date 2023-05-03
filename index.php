@@ -21,6 +21,7 @@ if ($user) {
 <?php if (User::getCurrentUser()): ?>
 
 <button id="logout">Logout</button>
+<a href="account.php">Account</a>
 
 <?php endif; ?>
 
@@ -31,6 +32,17 @@ if ($user) {
 <?php endif; ?>
 
 <?php if ($products = Product::getProducts()) { ?>
+
+<div class="search-container">
+  <form 
+    action="search.php"
+    method="GET"
+  >
+    <input type="text" name="search" id="search">
+
+    <input type="submit" value="Search">
+  </form>
+</div>
 
 <ul class="product-list-container">
   <?php foreach ($products as $product): ?>
@@ -52,4 +64,4 @@ if ($user) {
 
 <?php } ?>
 
-<script src='index.js'></script>
+<script src='js/index.js'></script>

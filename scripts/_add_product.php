@@ -10,7 +10,7 @@ require_once "../lib/Seller.php";
 
 <p>Invalid form. Please try again.</p>
 <script type="module">
-  import { redirect } from '../lib/utils.js';
+  import { redirect } from '../js/utils.js';
   redirect('/', 3000);
 </script>
 

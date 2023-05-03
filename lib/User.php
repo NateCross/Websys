@@ -1,6 +1,7 @@
 <?php
 
 require_once 'require.php';
+require_once 'Utils.php';
 
 /**
  * Model for the user type in the system
@@ -177,6 +178,10 @@ abstract class User {
     return $user['email'];
   }
 
+  public static function getUserImageAttribute($user) {
+    return $user['image_path'];
+  }
+
   public static function updateUser(
     int $id,
     string $email,
@@ -187,7 +192,7 @@ abstract class User {
       // Hash password first for better security
       $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
 
-      return Database::preparedQuery("
+      $result = Database::preparedQuery("
         UPDATE " 
         . static::getTableName()
         . " SET 
@@ -196,9 +201,69 @@ abstract class User {
           password = ?
         WHERE id = ?
       ", $email, $username, $hashedPassword, $id);
+
+      if (!$result) return false;
+
+      if (!self::relogin($id)) return false;
+
+      return true;
     } catch (Exception $e) {
       return false;
     }
+  }
 
+  /**
+   * Helps to reflect changes in session after editing
+   * the details of a user
+   */
+  public static function relogin(int $id) {
+    try {
+      return self::setCurrentUser(self::getUserViaId($id));
+    } catch (Exception $e) {
+      return false;
+    }
+  }
+
+  public static function updateUserImage(
+    int $user_id,
+    array $image,
+  ) {
+    try {
+      if (!$user = self::getUserViaId($user_id)) return false;
+
+      $old_image = self::getUserImageAttribute($user);
+
+      if ($old_image !== 'default.jpg') {
+        $old_file_path = "../_assets/$old_image";
+        if (!unlink($old_file_path)) return false;
+      }
+
+      $image_name = \Utils\generateFilename($image);
+      $image_path = "../_assets/$image_name";
+
+      if (!move_uploaded_file(
+        $image['tmp_name'], $image_path
+      )) return false;
+
+      $result = Database::preparedQuery("
+        UPDATE "
+        . static::getTableName() 
+        . " SET
+          image_path = ?
+        WHERE id = ?;
+      ", $image_name, $user_id);
+
+      if (!$result) return false;
+
+      if (!self::relogin($user_id)) return false;
+
+      return true;
+    } catch (Exception $e) {
+      return false;
+    }
+  }
+
+  public static function getImagePath($user) {
+    return "_assets/" . self::getUserImageAttribute($user);
   }
 }

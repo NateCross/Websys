@@ -18,6 +18,7 @@ try {
       `id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
       `email` VARCHAR(255) NOT NULL UNIQUE,
       `name` VARCHAR(255) NOT NULL UNIQUE,
+      `image_path` VARCHAR(255) NOT NULL DEFAULT 'default.jpg',
       `password` VARCHAR(255) NOT NULL,
       `last_modified` TIMESTAMP DEFAULT CURRENT_TIMESTAMP 
         ON UPDATE CURRENT_TIMESTAMP NOT NULL
@@ -27,6 +28,17 @@ try {
       `id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
       `email` VARCHAR(255) NOT NULL UNIQUE,
       `name` VARCHAR(255) NOT NULL UNIQUE,
+      `image_path` VARCHAR(255) NOT NULL DEFAULT 'default.jpg',
+      `password` VARCHAR(255) NOT NULL,
+      `last_modified` TIMESTAMP DEFAULT CURRENT_TIMESTAMP 
+        ON UPDATE CURRENT_TIMESTAMP NOT NULL
+    );
+
+    CREATE TABLE `admin` (
+      `id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+      `email` VARCHAR(255) NOT NULL UNIQUE,
+      `name` VARCHAR(255) NOT NULL UNIQUE,
+      `image_path` VARCHAR(255) NOT NULL DEFAULT 'default.jpg',
       `password` VARCHAR(255) NOT NULL,
       `last_modified` TIMESTAMP DEFAULT CURRENT_TIMESTAMP 
         ON UPDATE CURRENT_TIMESTAMP NOT NULL
