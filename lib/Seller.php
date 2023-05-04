@@ -151,4 +151,19 @@ class Seller extends User {
       return false;
     }
   }
+
+  public static function getProducts(int $seller_id) {
+    try {
+      $result = Database::query("
+        SELECT product.*
+        FROM seller
+          LEFT JOIN product
+          ON product.seller_id = seller.id
+          AND seller.id = $seller_id;
+      ");
+      return $result->fetch_all(MYSQLI_ASSOC);
+    } catch (Exception $e) {
+      return false;
+    }
+  }
 }

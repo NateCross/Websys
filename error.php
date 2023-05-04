@@ -3,19 +3,24 @@
 require_once 'lib/require.php';
 
 $error = Session::get('error');
+$duration = Session::get('error_duration');
 
 ?>
 
-<?php if (!$error): ?>
+<?php if (!$error || !$duration): ?>
   <script type="module">
-    import { redirect } from 'lib/utils.js';
+    import { redirect } from './js/utils.js';
     redirect('/');
   </script>
 <?php die(); endif; ?>
 
 <?php
 
+// We use the session variables as a way of passing
+// parameters to another page. So we unset them here
+// since they are no longer necessary
 Session::delete('error');
+Session::delete('error_duration');
 
 ?>
 
@@ -23,8 +28,8 @@ Session::delete('error');
   <p>Error: <?= $error; ?></p>
   <p>Redirecting to home page...</p>
   <script type="module">
-    import { redirect } from 'lib/utils.js';
-    redirect('/', 3000);
+    import { redirect } from './js/utils.js';
+    redirect('/', <?= $duration ?>);
   </script>
 </div>
 
