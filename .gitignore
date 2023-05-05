@@ -1,3 +1,4 @@
 _assets/
 .env
 .vscode/
+!_assets/default.jpg

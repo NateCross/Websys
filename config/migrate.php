@@ -8,6 +8,8 @@ $db = Database::getDb();
 
 ['DATABASE' => $database] = Database::parseEnv();
 
+$hashedAdminPassword = password_hash('admin', PASSWORD_BCRYPT);
+
 try {
   $db->multi_query("
     DROP DATABASE IF EXISTS `$database`;
@@ -30,6 +32,7 @@ try {
       `name` VARCHAR(255) NOT NULL UNIQUE,
       `image_path` VARCHAR(255) NOT NULL DEFAULT 'default.jpg',
       `password` VARCHAR(255) NOT NULL,
+      `status` ENUM('active', 'suspended', 'banned') NOT NULL default 'active',
       `last_modified` TIMESTAMP DEFAULT CURRENT_TIMESTAMP 
         ON UPDATE CURRENT_TIMESTAMP NOT NULL
     );
@@ -91,6 +94,8 @@ try {
       `member_id` INT NOT NULL,
       `member_address` VARCHAR(1000) NOT NULL,
       `contact_number` VARCHAR(255) NOT NULL,
+      `last_modified` TIMESTAMP DEFAULT CURRENT_TIMESTAMP 
+        ON UPDATE CURRENT_TIMESTAMP NOT NULL,
 
       FOREIGN KEY (`member_id`)
         REFERENCES `member`(`id`)
@@ -103,6 +108,8 @@ try {
       `product_id` INT NOT NULL,
       `bill_id` INT NOT NULL,
       `quantity` INT NOT NULL DEFAULT 0, 
+      `last_modified` TIMESTAMP DEFAULT CURRENT_TIMESTAMP 
+        ON UPDATE CURRENT_TIMESTAMP NOT NULL,
 
       FOREIGN KEY (`product_id`)
         REFERENCES `product`(`id`)
@@ -120,6 +127,8 @@ try {
       `rating` INT NOT NULL DEFAULT 3 CHECK (5 >= `rating` AND `rating` >= 1),
       `member_id` INT NOT NULL,
       `product_id` INT NOT NULL,
+      `last_modified` TIMESTAMP DEFAULT CURRENT_TIMESTAMP 
+        ON UPDATE CURRENT_TIMESTAMP NOT NULL,
 
       FOREIGN KEY (`member_id`)
         REFERENCES `member`(`id`)
@@ -171,11 +180,17 @@ try {
       UPDATE `product`
       SET `quantity` = `quantity` + qty
       WHERE `id` = `product_id`;
+
+    -- Insert a default admin
+    -- Must replace credentials immediately
+    INSERT INTO admin
+      (email, name, password)
+    VALUES
+      ('admin@site.com', 'admin', '$hashedAdminPassword');
   ");
 
 
   echo "Successfully migrated";
 } catch (mysqli_sql_exception $e) {
-  echo $e;
-  // throw new mysqli_sql_exception($e->getMessage(), $e->getCode());
+  echo $e->getMessage();
 }

@@ -7,12 +7,9 @@ $duration = Session::get('error_duration');
 
 ?>
 
-<?php if (!$error || !$duration): ?>
-  <script type="module">
-    import { redirect } from './js/utils.js';
-    redirect('/');
-  </script>
-<?php die(); endif; ?>
+<?php
+  if (!$error || $duration) header('Location: /');
+?>
 
 <?php
 
