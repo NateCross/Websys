@@ -166,4 +166,11 @@ class Seller extends User {
       return false;
     }
   }
+
+  public static function searchSeller(string $query) {
+    return Database::query("
+      SELECT * FROM seller
+      WHERE name LIKE '%$query%';
+    ")->fetch_all(MYSQLI_ASSOC);
+  }
 }

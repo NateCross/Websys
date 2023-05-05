@@ -39,6 +39,10 @@ if ($user) {
     method="GET"
   >
     <input type="text" name="search" id="search">
+    <select name="type" id="type">
+      <option value="product">Product</option>
+      <option value="seller">Seller</option>
+    </select>
 
     <input type="submit" value="Search">
   </form>
