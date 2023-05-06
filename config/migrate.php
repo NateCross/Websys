@@ -32,7 +32,7 @@ try {
       `name` VARCHAR(255) NOT NULL UNIQUE,
       `image_path` VARCHAR(255) NOT NULL DEFAULT 'default.jpg',
       `password` VARCHAR(255) NOT NULL,
-      `status` ENUM('active', 'suspended', 'banned') NOT NULL default 'active',
+      `suspended_until` DATE DEFAULT NULL,
       `last_modified` TIMESTAMP DEFAULT CURRENT_TIMESTAMP 
         ON UPDATE CURRENT_TIMESTAMP NOT NULL
     );
@@ -177,9 +177,28 @@ try {
 
     CREATE PROCEDURE update_product_quantity
       (IN product_id INT, IN qty INT)
+    BEGIN
       UPDATE `product`
       SET `quantity` = `quantity` + qty
       WHERE `id` = `product_id`;
+    END;
+  
+    CREATE PROCEDURE unsuspend_seller
+      (IN seller_id INT)
+    BEGIN
+      UPDATE `seller` SET 
+      `suspended_until` = NULL
+      WHERE `id` = `seller_id`;
+    END;
+
+    CREATE PROCEDURE suspend_seller
+      (IN seller_id INT, IN days_suspended INT)
+    BEGIN
+      UPDATE `seller` SET 
+      `suspended_until` = DATE_ADD(NOW(), INTERVAL `days_suspended` DAY)
+      WHERE `id` = `seller_id`;
+    END;
+
 
     -- Insert a default admin
     -- Must replace credentials immediately
