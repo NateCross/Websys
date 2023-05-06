@@ -15,6 +15,79 @@ class Seller extends User {
     return self::getCurrentUserType() === 'seller';
   }
 
+  /** 
+   * Creating a new login function for sellers
+   * to account for suspended sellers
+   */
+  public static function login(
+    string $email,
+    string $password,
+  ): bool {
+    try {
+      $user = self::getUserViaEmail($email);
+
+      if (!$user) {
+        return false;
+      }
+
+      [
+        'password' => $memberPassword
+      ] = $user;
+
+      if (!self::verifyPassword($password, $memberPassword))
+        throw new Exception('Incorrect password');
+
+      if ($date_suspended = new DateTime(self::getSuspendedDateAttribute($user))) {
+        $date_today = new DateTime();
+        if ($date_today >= $date_suspended) {
+          self::unsuspendSeller(
+            self::getUserIdAttribute($user)
+          );
+        } else {
+          $date_suspended_readable = $date_suspended->format('Y-m-d');
+          throw new Exception("
+            User is suspended until $date_suspended_readable
+          ");
+        }
+      }
+      
+      // Remove password since this will not be necessary
+      // and it could pose a security risk
+      unset($user['password']);
+
+      self::setCurrentUser($user);
+
+      return true;
+    } catch (Exception $e) {
+      return false;
+    }
+  }
+
+  public static function suspendSeller(
+    int $id, 
+    int $days_suspended,
+  ) {
+    try {
+      return Database::preparedQuery("
+        CALL suspend_seller(?, ?);
+      ", $id, $days_suspended);
+    } catch (Exception $e) {
+      return false;
+    }
+  }
+
+  public static function unsuspendSeller(
+    int $id, 
+  ) {
+    try {
+      return Database::preparedQuery("
+        CALL unsuspend_seller(?);
+      ", $id);
+    } catch (Exception $e) {
+      return false;
+    }
+  }
+
   /**
    * Checks if the file is a valid upload
    * Ensures protection from attacks and errors
@@ -172,5 +245,9 @@ class Seller extends User {
       SELECT * FROM seller
       WHERE name LIKE '%$query%';
     ")->fetch_all(MYSQLI_ASSOC);
+  }
+
+  public static function getSuspendedDateAttribute($seller) {
+    return $seller['suspended_until'];
   }
 }

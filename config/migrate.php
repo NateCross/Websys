@@ -199,7 +199,6 @@ try {
       WHERE `id` = `seller_id`;
     END;
 
-
     -- Insert a default admin
     -- Must replace credentials immediately
     INSERT INTO admin
