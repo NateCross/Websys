@@ -33,6 +33,10 @@ $seller = Product::getSellerByProduct($product);
     && User::getUserIdAttribute($user)
       === Seller::getUserIdAttribute($seller)
   );
+
+  $user_is_a_member = isset($user) && (
+    User::getCurrentUserType() === 'member'
+  );
 ?>
 
 <h1><?= Product::getProductNameAttribute($product); ?></h1>
@@ -51,4 +55,40 @@ $seller = Product::getSellerByProduct($product);
   </form>
 <?php endif; ?>
 
+<?php if($user_is_a_member): ?>
+  <dialog id="reportDialog">
+    <form 
+      action="scripts/_report_seller.php"
+      method="POST"
+    >
+      <input 
+        type="hidden" 
+        name="member_id" 
+        value="<?= User::getUserIdAttribute($user) ?>"
+      >
+      <input 
+        type="hidden" 
+        name="seller_id" 
+        value="<?= Seller::getUserIdAttribute($seller) ?>"
+      >
+
+      <button value="cancel" formmethod="dialog">Cancel</button>
+
+      <label for="message">Report Message</label>
+      <textarea 
+        name="message" 
+        id="message" 
+        cols="30" 
+        rows="10"
+      ></textarea>
+
+      <input type="submit" name="submit" value="Submit">
+    </form>
+  </dialog>
+  <div class="dialog-button-container">
+    <button id="showDialog">Report Seller</button>
+  </div>
+<?php endif; ?>
+
 <script src="js/fetch.js"></script>
+<script src="js/product.js"></script>

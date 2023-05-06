@@ -13,6 +13,24 @@ class Member extends User {
     return 'member';
   }
 
+  public static function reportSeller(
+    int $member_id,
+    int $seller_id,
+    string $message,
+  ): bool {
+    try {
+      return Database::preparedQuery("
+        INSERT INTO `report` (
+          `message`,
+          `member_id`,
+          `seller_id`
+        ) VALUES (?, ?, ?);
+      ", $message, $member_id, $seller_id);
+    } catch (Exception $e) {
+      return false;
+    }
+  }
+
   // TODO
   public static function getBills(int $member_id) {
     $result = Database::query("

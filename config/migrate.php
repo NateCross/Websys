@@ -140,6 +140,36 @@ try {
         ON DELETE CASCADE
     );
 
+    CREATE TABLE `report` (
+      `id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+      `message` VARCHAR(10000) NOT NULL,
+      `seller_id` INT NOT NULL,
+      `member_id` INT NOT NULL,
+      `status` ENUM ('open', 'closed') DEFAULT 'open' NOT NULL,
+      `last_modified` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+
+      FOREIGN KEY (`seller_id`)
+        REFERENCES `seller`(`id`)
+        ON UPDATE CASCADE
+        ON DELETE CASCADE,
+      FOREIGN KEY (`member_id`)
+        REFERENCES `member`(`id`)
+        ON UPDATE CASCADE
+        ON DELETE CASCADE
+    );
+
+    CREATE VIEW `report_with_users` AS
+      SELECT
+        report.*,
+        seller.name seller_name,
+        member.name member_name
+      FROM
+        report
+        INNER JOIN seller
+          ON report.seller_id = seller.id
+        INNER JOIN member
+          ON report.member_id = member.id;
+
     CREATE VIEW `review_average` AS
       SELECT
         p.`id`,
@@ -195,8 +225,16 @@ try {
       (IN seller_id INT, IN days_suspended INT)
     BEGIN
       UPDATE `seller` SET 
-      `suspended_until` = DATE_ADD(NOW(), INTERVAL `days_suspended` DAY)
+        `suspended_until` = DATE_ADD(NOW(), INTERVAL `days_suspended` DAY)
       WHERE `id` = `seller_id`;
+    END;
+
+    CREATE PROCEDURE toggle_report_status
+      (IN report_id INT)
+    BEGIN
+      UPDATE `report` SET
+        `status` = IF(`status` = 'open', 'closed', 'open')
+      WHERE `id` = `report_id`;
     END;
 
     -- Insert a default admin
