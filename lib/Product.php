@@ -25,23 +25,36 @@ class Product {
    */
   public static function getProducts(
     int $id = null, 
+    bool $include_suspend = false,
     bool $randomize = false,
     int $limit = null,
   ) {
-    if ($id) {
-      $result = Database::query("
-        SELECT * FROM product WHERE id = '$id';
-      ");
-    } else {
-      $result = Database::query(
-        "SELECT * FROM product "
-        . ($randomize ? "ORDER BY rand() " : "")
-        . ($limit ? "LIMIT {$limit} " : "")
-        . "WHERE quantity != 0"
-        . "; "
-      );
+    try {
+      if ($id) {
+        $result = Database::query("
+          SELECT product.* 
+          FROM product WHERE product.id = '$id'
+        ");
+      } else {
+        $result = Database::query(
+          "SELECT product.* FROM product "
+          . (!$include_suspend ? "
+             INNER JOIN seller
+               ON seller.id = product.seller_id
+             " : "")
+          . ($randomize ? "ORDER BY rand() " : "")
+          . ($limit ? "LIMIT {$limit} " : "")
+          . "WHERE quantity != 0 "
+          . (!$include_suspend ? "
+              AND seller.suspended_until IS NULL
+            " : "")
+          . "; "
+        );
+      }
+      return $result->fetch_all(MYSQLI_ASSOC);
+    } catch (Exception $e) {
+      return false;
     }
-    return $result->fetch_all(MYSQLI_ASSOC);
   }
 
   public static function getProductByName(string $name) {
