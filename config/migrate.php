@@ -162,6 +162,7 @@ try {
       SELECT
         report.*,
         seller.name seller_name,
+        seller.suspended_until seller_suspended_until,
         member.name member_name
       FROM
         report

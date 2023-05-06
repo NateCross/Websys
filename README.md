@@ -11,6 +11,11 @@
 
 - `_assets/` is for images
 - The files in `scripts/` are executed for forms and the like
+- Access the admin panel through `/admin.php`
+  - Default Email: `admin@site.com`
+  - Default Password: `admin`
+  - It is recommended to change the details of the admin account
+
 
 # Todo
 

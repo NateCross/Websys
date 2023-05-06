@@ -28,3 +28,16 @@ function getImageExtension($file): int | string | false {
     true,
   );
 }
+
+/**
+ * Redirects the user to a location
+ * done only through PHP
+ * Note that this does not allow for automatic
+ * redirection from a timer,
+ * hence why this is also implemented in JavaScript
+ * However, this is instant and as such is preferred
+ */
+function redirect(string $location) {
+  header("Location: $location");
+  die();
+}
