@@ -152,10 +152,22 @@ class Product {
     return Database::preparedQuery();
   }
 
-  public static function searchProduct(string $query) {
+  public static function searchProduct(
+    string $query, 
+    bool $include_suspend = false,
+  ) {
     return Database::query("
-      SELECT * FROM product
-      WHERE name LIKE '%$query%';
+      SELECT product.* FROM product "
+      . (!$include_suspend ? "
+          INNER JOIN seller
+            ON seller.id = product.seller_id
+          " : "")
+      . "WHERE product.name 
+        LIKE '%$query%' "
+      . (!$include_suspend ? "
+          AND seller.suspended_until IS NULL
+        " : "")
+      . ";
     ")->fetch_all(MYSQLI_ASSOC);
   }
 }
