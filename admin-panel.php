@@ -12,7 +12,6 @@ require_once 'lib/Report.php';
 
 if (Admin::getCurrentUserType() !== 'admin')
   redirect('admin.php');
-
 ?>
 
 <h1>Admin Panel</h1>
@@ -102,6 +101,28 @@ if (Admin::getCurrentUserType() !== 'admin')
       </form>
     </dialog>
   <?php endif; ?>
+</div>
+
+<div class="admin-account-create-container">
+  <h2 class="admin-account-create-header">Create Admin Account</h2>
+  
+  <form action="scripts/_register.php" method="POST">
+    <input type="hidden" name="type" value="Admin">
+
+    <label for="Email">Email</label>
+    <input type="email" name="email" id="email" required>
+
+    <label for="username">Username</label>
+    <input type="text" name="username" id="username" required>
+
+    <label for="password">Password</label>
+    <input type="password" name="password" id="password" required>
+
+    <label for="confirm_password">Confirm Password</label>
+    <input type="password" name="confirm_password" id="confirm_password" required>
+
+    <input type="submit" name="submit" value="Submit">
+  </form>
 </div>
 
 <script src="js/admin-panel.js"></script>

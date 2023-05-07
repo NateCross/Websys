@@ -5,6 +5,7 @@ if (!isset($_POST['submit'])) return;
 require_once "../lib/require.php";
 require_once "../lib/Member.php";
 require_once "../lib/Seller.php";
+require_once "../lib/Admin.php";
 
 $email = filter_input(
   INPUT_POST,
@@ -51,9 +52,13 @@ if ($type === "Member") {
 } else if ($type === "Seller") {
   if (Seller::register($email, $username, $password))
     header('Location: /');
+} else if ($type === "Admin") {
+  if (Admin::register($email, $username, $password))
+    Utils\redirect('../admin-panel.php');
 }
 
 echo "Unable to create account. Please try again.";
+
 ?>
 
 <script type="module">
