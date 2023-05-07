@@ -74,4 +74,8 @@ class Report {
   public static function getLastModified($report) {
     return $report['last_modified'];
   }
+
+  public static function getSellerSuspendedUntil($report) {
+    return $report['seller_suspended_until'];
+  }
 }

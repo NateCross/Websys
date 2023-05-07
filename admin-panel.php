@@ -30,6 +30,7 @@ if (Admin::getCurrentUserType() !== 'admin')
       <tr>
         <th>Status</th>
         <th>Seller</th>
+        <th>Seller Suspended Until</th>
         <th>Member</th>
         <th>Message</th>
         <th>Last Modified</th>
@@ -44,6 +45,9 @@ if (Admin::getCurrentUserType() !== 'admin')
             >
               <?= Report::getSellerName($report) ?>
             </a>
+          </td>
+          <td>
+            <?= Report::getSellerSuspendedUntil($report) ?>
           </td>
           <td>
             <a 
@@ -68,7 +72,7 @@ if (Admin::getCurrentUserType() !== 'admin')
             </form>
             <button
               class="toggle-suspend-dialog"
-              value="<?= Report::getSellerId($report) ?>"
+              value="<?= Report::getId($report) ?> <?= Report::getSellerId($report) ?>"
             >
               Suspend User
             </button>
@@ -86,6 +90,11 @@ if (Admin::getCurrentUserType() !== 'admin')
           type="hidden" 
           name="seller_id" 
           id="seller_id"
+        >
+        <input 
+          type="hidden" 
+          name="report_id" 
+          id="report_id"
         >
         <label for="days_suspended">Days Suspended</label>
         <input type="number" name="days_suspended" id="days_suspended" min="0">

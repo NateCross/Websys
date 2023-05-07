@@ -5,6 +5,7 @@ require_once 'User.php';
 require_once 'Category.php';
 require_once 'Product.php';
 require_once 'Utils.php';
+require_once 'Report.php';
 
 class Seller extends User {
   protected static function getTableName(): string {
@@ -64,13 +65,21 @@ class Seller extends User {
   }
 
   public static function suspendSeller(
-    int $id, 
+    int $seller_id, 
     int $days_suspended,
+    int $report_id = null,
   ) {
     try {
-      return Database::preparedQuery("
+      $result = Database::preparedQuery("
         CALL suspend_seller(?, ?);
-      ", $id, $days_suspended);
+      ", $seller_id, $days_suspended);
+
+      if ($report_id) {
+        if (!Report::toggleReportStatus($report_id))
+          return false;
+      }
+
+      return $result;
     } catch (Exception $e) {
       return false;
     }
