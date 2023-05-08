@@ -202,7 +202,7 @@ try {
     ON review FOR EACH ROW
     BEGIN
       INSERT INTO notification_seller(`seller_id`, `message`)
-      VALUES (get_seller_id_of_product(1), 'Your product has been reviewed.');
+      VALUES (get_seller_id_of_product(new.product_id), CONCAT('Your product ', get_name_of_product(new.product_id), ' has been reviewed.'));
     END;
 
     CREATE VIEW `report_with_users` AS
@@ -268,6 +268,20 @@ try {
       RETURN return_value;
     END;
 
+    CREATE FUNCTION get_name_of_product(
+      product_id INT
+    )
+    RETURNS VARCHAR(255)
+    DETERMINISTIC
+    BEGIN
+      DECLARE return_value VARCHAR(255);
+      SET return_value = (
+        SELECT name
+        FROM product
+        WHERE id = product_id
+      );
+      RETURN return_value;
+    END;
 
     CREATE PROCEDURE update_product_quantity
       (IN product_id INT, IN qty INT)
