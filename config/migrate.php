@@ -235,7 +235,7 @@ try {
     BEGIN
       UPDATE `report` SET
         `status` = IF(`status` = 'open', 'closed', 'open')
-      WHERE `id` = `report_id`;
+      WHERE `id` = report_id`;
     END;
 
     -- Insert a default admin

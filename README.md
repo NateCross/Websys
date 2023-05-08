@@ -15,6 +15,10 @@
   - Default Email: `admin@site.com`
   - Default Password: `admin`
   - It is recommended to change the details of the admin account
+- Header and Footer are in `lib/HtmlComponent.php`
+  - Must execute Header after any error checks and redirects
+  - Then execute Footer at the end, after any JS
+  - Do this for every page. See `index.php` for a sample
 
 
 # Todo
