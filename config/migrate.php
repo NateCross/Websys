@@ -158,6 +158,53 @@ try {
         ON DELETE CASCADE
     );
 
+    CREATE TABLE `notification_member` (
+      `id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+      `message` VARCHAR(10000) NOT NULL,
+      `member_id` INT NOT NULL,
+      `is_read` BOOLEAN NOT NULL DEFAULT false,
+      `last_modified` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+
+      FOREIGN KEY (`member_id`)
+        REFERENCES `member`(`id`)
+        ON UPDATE CASCADE
+        ON DELETE CASCADE
+    );
+
+    CREATE TABLE `notification_seller` (
+      `id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+      `message` VARCHAR(10000) NOT NULL,
+      `seller_id` INT NOT NULL,
+      `is_read` BOOLEAN NOT NULL DEFAULT false,
+      `last_modified` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+
+      FOREIGN KEY (`seller_id`)
+        REFERENCES `seller`(`id`)
+        ON UPDATE CASCADE
+        ON DELETE CASCADE
+    );
+
+    CREATE TABLE `notification_admin` (
+      `id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+      `message` VARCHAR(10000) NOT NULL,
+      `admin_id` INT NOT NULL,
+      `is_read` BOOLEAN NOT NULL DEFAULT false,
+      `last_modified` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+
+      FOREIGN KEY (`admin_id`)
+        REFERENCES `admin`(`id`)
+        ON UPDATE CASCADE
+        ON DELETE CASCADE
+    );
+
+    CREATE TRIGGER notify_seller_review
+    AFTER INSERT
+    ON review FOR EACH ROW
+    BEGIN
+      INSERT INTO notification_seller(`seller_id`, `message`)
+      VALUES (get_seller_id_of_product(1), 'Your product has been reviewed.');
+    END;
+
     CREATE VIEW `report_with_users` AS
       SELECT
         report.*,
@@ -205,6 +252,22 @@ try {
           ON
             b.`member_id` = m.`id`
       GROUP BY b.`id`;
+
+    CREATE FUNCTION get_seller_id_of_product(
+      product_id INT
+    )
+    RETURNS INT
+    DETERMINISTIC
+    BEGIN
+      DECLARE return_value INT;
+      SET return_value = (
+        SELECT seller_id
+        FROM product
+        WHERE id = product_id
+      );
+      RETURN return_value;
+    END;
+
 
     CREATE PROCEDURE update_product_quantity
       (IN product_id INT, IN qty INT)
