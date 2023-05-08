@@ -27,8 +27,12 @@ class Session {
    * Gets the value of a given key in the session superglobal
    */
   public static function get($key) {
-    if (self::has($key)) return $_SESSION[$key];
-    return false;
+    try {
+      if (self::has($key)) return $_SESSION[$key];
+      return false;
+    } catch (Exception $e) {
+      return false;
+    }
   }
 
   /**

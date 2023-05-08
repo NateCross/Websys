@@ -158,6 +158,44 @@ try {
         ON DELETE CASCADE
     );
 
+    CREATE TABLE `message_seller_member` (
+      `id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+      `message` VARCHAR(10000) NOT NULL,
+      `seller_id` INT NOT NULL,
+      `member_id` INT NOT NULL,
+      `last_modified` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+
+      FOREIGN KEY (`seller_id`)
+        REFERENCES `seller`(`id`)
+        ON UPDATE CASCADE
+        ON DELETE CASCADE,
+      FOREIGN KEY (`member_id`)
+        REFERENCES `member`(`id`)
+        ON UPDATE CASCADE
+        ON DELETE CASCADE
+    );
+
+    CREATE TABLE `message_seller_admin` (
+      `id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+      `message` VARCHAR(10000) NOT NULL,
+      `seller_id` INT NOT NULL,
+      `admin_id` INT NOT NULL,
+      `last_modified` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+
+      FOREIGN KEY (`admin_id`)
+        REFERENCES `admin`(`id`)
+        ON UPDATE CASCADE
+        ON DELETE CASCADE,
+      FOREIGN KEY (`member_id`)
+        REFERENCES `member`(`id`)
+        ON UPDATE CASCADE
+        ON DELETE CASCADE
+    );
+
+    -- CREATE VIEW `message_seller` AS
+    --   SELECT
+    --    message_seller_member.id
+
     CREATE VIEW `report_with_users` AS
       SELECT
         report.*,
@@ -245,7 +283,6 @@ try {
     VALUES
       ('admin@site.com', 'admin', '$hashedAdminPassword');
   ");
-
 
   echo "Successfully migrated";
 } catch (mysqli_sql_exception $e) {

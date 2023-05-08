@@ -5,13 +5,7 @@ require_once 'lib/require.php';
 $error = Session::get('error');
 $duration = Session::get('error_duration');
 
-?>
-
-<?php
-  if (!$error || $duration) header('Location: /');
-?>
-
-<?php
+if (!$error || $duration) header('Location: /');
 
 // We use the session variables as a way of passing
 // parameters to another page. So we unset them here
