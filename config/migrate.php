@@ -197,6 +197,22 @@ try {
         ON DELETE CASCADE
     );
 
+    CREATE TABLE `product_wishlist` (
+      `id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+      `member_id` INT NOT NULL,
+      `product_id` INT NOT NULL,
+      `last_modified` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+
+      FOREIGN KEY (`member_id`)
+        REFERENCES `member`(`id`)
+        ON UPDATE CASCADE
+        ON DELETE CASCADE,
+      FOREIGN KEY (`product_id`)
+        REFERENCES `product`(`id`)
+        ON UPDATE CASCADE
+        ON DELETE CASCADE
+    );
+
     CREATE TRIGGER notify_seller_review
     AFTER INSERT
     ON review FOR EACH ROW
@@ -252,6 +268,21 @@ try {
           ON
             b.`member_id` = m.`id`
       GROUP BY b.`id`;
+
+    CREATE FUNCTION get_review_rating_average(
+      product_id INT
+    )
+    RETURNS DECIMAL(14, 4)
+    DETERMINISTIC
+    BEGIN
+      DECLARE return_value DECIMAL(14, 4);
+      SET return_value = (
+        SELECT *
+        FROM review_average
+        WHERE `product_id` = review_average.product_id
+      );
+      RETURN return_value;
+    END;
 
     CREATE FUNCTION get_seller_id_of_product(
       product_id INT
@@ -312,7 +343,31 @@ try {
     BEGIN
       UPDATE `report` SET
         `status` = IF(`status` = 'open', 'closed', 'open')
-      WHERE `id` = report_id`;
+      WHERE `id` = `report_id`;
+    END;
+
+    CREATE PROCEDURE toggle_notification_read_member
+      (IN notification_member_id INT)
+    BEGIN
+      UPDATE `notification_member` SET
+        `is_read` = 1 - `is_read`
+      WHERE `id` = `notification_member_id`;
+    END;
+
+    CREATE PROCEDURE toggle_notification_read_seller
+      (IN notification_seller_id INT)
+    BEGIN
+      UPDATE `notification_seller` SET
+        `is_read` = 1 - `is_read`
+      WHERE `id` = `notification_seller_id`;
+    END;
+
+    CREATE PROCEDURE toggle_notification_read_admin
+      (IN notification_admin_id INT)
+    BEGIN
+      UPDATE `notification_admin` SET
+        `is_read` = 1 - `is_read`
+      WHERE `id` = `notification_admin_id`;
     END;
 
     -- Insert a default admin
