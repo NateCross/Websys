@@ -113,17 +113,30 @@ class Cart {
 
       $user = Member::getCurrentUser();
       if (!$user) return false;
+      if (Member::getCurrentUserType() !== 'member')
+        return false;
 
       $user_id = Member::getUserIdAttribute($user);
 
       Database::preparedQuery(
-        "INSERT INTO "
-      );
+        "INSERT INTO bill (member_id)
+        VALUES (?);"
+      , $user_id);
+
+      $bill_id = Database::query("
+        SELECT LAST_INSERT_ID();
+      ")->fetch_all(MYSQLI_ASSOC)[0];
 
       foreach ($cart as $product) {
         Database::preparedQuery("
-
-        ");
+            INSERT INTO product_bill
+              (product_id, bill_id, quantity)
+            VALUES (?, ?, ?);
+          ",
+          Product::getProductIdAttribute($product),
+          $bill_id,
+          Cart::getProductQuantityPurchased($product),
+        );
       }
 
     } catch (Exception $e) {

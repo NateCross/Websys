@@ -213,7 +213,7 @@ abstract class User {
       $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
 
       $result = Database::preparedQuery("
-        UPDATE " 
+        UPDATE IGNORE " 
         . static::getTableName()
         . " SET 
           email = ?,

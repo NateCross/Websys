@@ -225,6 +225,15 @@ try {
       VALUES (get_seller_id_of_product(new.product_id), CONCAT('Your product ', get_name_of_product(new.product_id), ' has been reviewed.'));
     END;
 
+    CREATE TRIGGER update_product_quantity_after_sale
+    AFTER INSERT
+    ON product_bill FOR EACH ROW
+    BEGIN
+      UPDATE product SET
+        quantity = quantity - new.quantity
+      WHERE id = new.product_id;
+    END;
+
     CREATE VIEW `report_with_users` AS
       SELECT
         report.*,

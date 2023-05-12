@@ -148,9 +148,9 @@ class Product {
    * When a product_bill is added, we subtract that much
    * to the quantity of the original product
    */
-  public static function buyProduct(int $id, int $quantity) {
-    return Database::preparedQuery();
-  }
+  // public static function buyProduct(int $id, int $quantity) {
+  //   return Database::preparedQuery();
+  // }
 
   public static function searchProduct(
     string $query, 
