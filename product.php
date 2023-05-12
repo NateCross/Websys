@@ -40,8 +40,11 @@ $seller = Product::getSellerByProduct($product);
 ?>
 
 <h1><?= Product::getProductNameAttribute($product); ?></h1>
+
+<!-- TODO: Change these elements and make them presentable -->
 <img src="<?= Product::getImagePath($product) ?>">
 <p>Seller: <?= Seller::getUserNameAttribute($seller) ?></p>
+<p>Quantity: <?= Product::getProductQuantityAttribute($product) ?></p>
 
 <?php if($user_is_seller): ?>
   <a href="product_edit.php?id=<?= $id ?>">Edit Product</a>
@@ -56,6 +59,26 @@ $seller = Product::getSellerByProduct($product);
 <?php endif; ?>
 
 <?php if($user_is_a_member): ?>
+  <div class="add-to-cart-container">
+    <form 
+      action="scripts/_add_to_cart.php"
+      method="POST"
+    >
+      <input type="hidden" name="product_id" value="<?= $id ?>">
+      <input 
+        type="number" 
+        name="quantity_purchased" 
+        id="quantity_purchased"
+        value="1"
+        min="1"
+        max="<?= Product::getProductQuantityAttribute($product) ?>"
+        required
+      >
+      <input type="submit" name="submit" value="Add to Cart">
+
+    </form>
+  </div>
+
   <dialog id="reportDialog">
     <form 
       action="scripts/_report_seller.php"

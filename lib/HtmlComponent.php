@@ -25,7 +25,13 @@ function Header(string $title) { ?>
       </div>
       <div class="header-account-container">
         <?php if (\User::getCurrentUser()): ?>
-          <button id="logout">Logout</button>
+          <form 
+            action="scripts/_logout.php"
+            method="POST"
+          >
+            <input type="submit" name="submit" value="Logout">
+          </form>
+          <!-- <button id="logout">Logout</button> -->
           <a href="account.php">Account</a>
         <?php else: ?>
           <a href="login.php">Login</a>
@@ -35,6 +41,8 @@ function Header(string $title) { ?>
       <div class="header-actions-container">
         <?php if (\User::getCurrentUserType() === 'seller'): ?>
           <a href="product_add.php">Add Product For Sale</a>
+        <?php elseif (\User::getCurrentUserType() === 'member'): ?>
+          <a href="cart.php">Cart</a>
         <?php endif; ?>
       </div>
       <div class="header-search-container">
