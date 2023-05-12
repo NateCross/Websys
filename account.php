@@ -72,7 +72,6 @@ $type = User::getCurrentUserType();
     type="password" 
     name="password" 
     id="password" 
-    required
   >
 
   <input type="submit" name="submit" value="Submit">

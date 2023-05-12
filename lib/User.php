@@ -199,6 +199,7 @@ abstract class User {
     return $user['image_path'];
   }
 
+  // TODO: Remove password from update user. Make it its own function
   public static function updateUser(
     int $id,
     string $email,
