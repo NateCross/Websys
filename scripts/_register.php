@@ -27,6 +27,16 @@ $confirm_password = filter_input(
   'confirm_password',
   FILTER_SANITIZE_SPECIAL_CHARS,
 );
+$address = filter_input(
+  INPUT_POST,
+  'address',
+  FILTER_SANITIZE_SPECIAL_CHARS,
+);
+$contact_number = filter_input(
+  INPUT_POST,
+  'contact_number',
+  FILTER_SANITIZE_SPECIAL_CHARS,
+);
 $type = filter_input(
   INPUT_POST,
   'type',
@@ -47,13 +57,31 @@ $type = filter_input(
 <?php
 
 if ($type === "Member") {
-  if (Member::register($email, $username, $password))
+  if (Member::register(
+      $email, 
+      $username, 
+      $password, 
+      $address, 
+      $contact_number
+    ))
     header('Location: /');
 } else if ($type === "Seller") {
-  if (Seller::register($email, $username, $password))
+  if (Seller::register(
+    $email, 
+    $username, 
+    $password,
+    $address,
+    $contact_number,
+  ))
     header('Location: /');
 } else if ($type === "Admin") {
-  if (Admin::register($email, $username, $password))
+  if (Admin::register(
+    $email, 
+    $username, 
+    $password,
+    $address,
+    $contact_number,
+  ))
     Utils\redirect('../admin-panel.php');
 }
 

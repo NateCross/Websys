@@ -22,6 +22,8 @@ try {
       `name` VARCHAR(255) NOT NULL UNIQUE,
       `image_path` VARCHAR(255) NOT NULL DEFAULT 'default.jpg',
       `password` VARCHAR(255) NOT NULL,
+      `address` VARCHAR(1000) NOT NULL,
+      `contact_number` VARCHAR(255) NOT NULL,
       `last_modified` TIMESTAMP DEFAULT CURRENT_TIMESTAMP 
         ON UPDATE CURRENT_TIMESTAMP NOT NULL
     );
@@ -32,6 +34,8 @@ try {
       `name` VARCHAR(255) NOT NULL UNIQUE,
       `image_path` VARCHAR(255) NOT NULL DEFAULT 'default.jpg',
       `password` VARCHAR(255) NOT NULL,
+      `address` VARCHAR(1000) NOT NULL,
+      `contact_number` VARCHAR(255) NOT NULL,
       `suspended_until` DATE DEFAULT NULL,
       `last_modified` TIMESTAMP DEFAULT CURRENT_TIMESTAMP 
         ON UPDATE CURRENT_TIMESTAMP NOT NULL
@@ -43,6 +47,8 @@ try {
       `name` VARCHAR(255) NOT NULL UNIQUE,
       `image_path` VARCHAR(255) NOT NULL DEFAULT 'default.jpg',
       `password` VARCHAR(255) NOT NULL,
+      `address` VARCHAR(1000),
+      `contact_number` VARCHAR(255),
       `last_modified` TIMESTAMP DEFAULT CURRENT_TIMESTAMP 
         ON UPDATE CURRENT_TIMESTAMP NOT NULL
     );
@@ -92,8 +98,6 @@ try {
     CREATE TABLE `bill` (
       `id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
       `member_id` INT NOT NULL,
-      `member_address` VARCHAR(1000) NOT NULL,
-      `contact_number` VARCHAR(255) NOT NULL,
       `last_modified` TIMESTAMP DEFAULT CURRENT_TIMESTAMP 
         ON UPDATE CURRENT_TIMESTAMP NOT NULL,
 

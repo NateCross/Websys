@@ -17,6 +17,12 @@ require_once 'lib/require.php';
   <label for="confirm_password">Confirm Password</label>
   <input type="password" name="confirm_password" id="confirm_password" required>
 
+  <label for="address">Address</label>
+  <input type="text" name="address" id="address" required>
+
+  <label for="contact_number">Contact Number</label>
+  <input type="text" name="contact_number" id="contact_number" required>
+
   <label for="member">Member</label>
   <input 
     type="radio" 

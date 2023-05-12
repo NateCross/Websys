@@ -3,15 +3,19 @@
 require_once 'Database.php';
 require_once 'Session.php';
 require_once 'Product.php';
+require_once 'Member.php';
 
 class Cart {
   public static function getCart() {
     return Session::get('cart');
   }
 
-  public static function cartContainsProductId(
+  /**
+   * Returns the index of the product
+   */
+  public static function getProductInCart(
     int $product_id,
-  ): array | null {
+  ): int | null {
     $cart = Session::get('cart');
     if (!$cart) return null;
     foreach ($cart as $index => $product) {
@@ -27,6 +31,10 @@ class Cart {
     return $product['quantity_purchased'];
   }
 
+  /**
+   * Execute this function after modifying the cart
+   * so it saves in the session
+   */
   public static function updateCart($cart) {
     try {
       return Session::set('cart', $cart);
@@ -42,7 +50,7 @@ class Cart {
     try {
       $cart = self::getCart();
       if (!$cart) return false;
-      if ($index = self::cartContainsProductId($product_id)) {
+      if ($index = self::getProductInCart($product_id)) {
         $cart[$index]['quantity_purchased'] += $quantity;
         return self::updateCart($cart);
         // $product = $cart[$index];
@@ -69,5 +77,70 @@ class Cart {
       return false;
     }
   }
+
+  public static function editProductQuantityPurchased(
+    int $index,
+    int $quantity,
+  ) {
+    try {
+      $cart = self::getCart();
+      if (!$cart) return false;
+
+      $cart[$index]['quantity_purchased'] += $quantity;
+      return self::updateCart($cart);
+    } catch (Exception $e) {
+      return null;
+    }
+  }
+
+  public static function deleteProduct(int $index) {
+    try {
+      $cart = self::getCart();
+      if (!$cart) return false;
+
+      // Preferred over unset because it reindexes array
+      array_splice($cart, $index, 1);
+      return self::updateCart($cart);
+    } catch (Exception $e) {
+      return null;
+    }
+  }
+
+  public static function placeOrder() {
+    try {
+      $cart = self::getCart();
+      if (!$cart) return false;
+
+      $user = Member::getCurrentUser();
+      if (!$user) return false;
+
+      $user_id = Member::getUserIdAttribute($user);
+
+      Database::preparedQuery(
+        "INSERT INTO "
+      );
+
+      foreach ($cart as $product) {
+        Database::preparedQuery("
+
+        ");
+      }
+
+    } catch (Exception $e) {
+      return false;
+    }
+  }
+
+  // public static function getProductsInCart() {
+  //   try {
+  //     $cart = self::getCart();
+  //     if (!$cart) return null;
+
+  //     $products = Database::preparedQuery();
+
+  //   } catch (Exception $e) {
+  //     return null;
+  //   }
+  // }
 }
 

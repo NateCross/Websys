@@ -60,6 +60,8 @@ abstract class User {
     string $email,
     string $username,
     string $password,
+    string $address,
+    string $contact_number,
   ): bool {
     try {
       // Hash password first for better security
@@ -68,9 +70,15 @@ abstract class User {
       return Database::preparedQuery("
         INSERT INTO "
         . static::getTableName()
-        . " (email, name, password) 
-        VALUES (?, ?, ?);
-      ", $email, $username, $hashedPassword);
+        . " (email, name, password, address, contact_number) 
+        VALUES (?, ?, ?, ?, ?);
+        ", 
+        $email, 
+        $username, 
+        $hashedPassword,
+        $address,
+        $contact_number,
+      );
     } catch (Exception $e) {
       return false;
     }
@@ -179,6 +187,14 @@ abstract class User {
     return $user['email'];
   }
 
+  public static function getUserAddressAttribute($user) {
+    return $user['address'];
+  }
+
+  public static function getUserContactNumberAttribute($user) {
+    return $user['contact_number'];
+  }
+
   public static function getUserImageAttribute($user) {
     return $user['image_path'];
   }
@@ -188,6 +204,8 @@ abstract class User {
     string $email,
     string $username,
     string $password,
+    string $address,
+    string $contact_number,
   ) {
     try {
       // Hash password first for better security
@@ -199,9 +217,18 @@ abstract class User {
         . " SET 
           email = ?,
           name = ?,
-          password = ?
+          password = ?,
+          address = ?,
+          contact_number = ?
         WHERE id = ?
-      ", $email, $username, $hashedPassword, $id);
+        ", 
+        $email, 
+        $username, 
+        $hashedPassword, 
+        $address,
+        $contact_number,
+        $id,
+      );
 
       if (!$result) return false;
 

@@ -49,6 +49,24 @@ $type = User::getCurrentUserType();
     value="<?= User::getUserNameAttribute($user) ?>"
   >
 
+  <label for="address">Address</label>
+  <input 
+    type="text" 
+    name="address" 
+    id="address" 
+    required
+    value="<?= User::getUserAddressAttribute($user) ?>"
+  >
+
+  <label for="contact_number">Contact Number</label>
+  <input 
+    type="text" 
+    name="contact_number" 
+    id="contact_number" 
+    required
+    value="<?= User::getUserContactNumberAttribute($user) ?>"
+  >
+
   <label for="password">Password</label>
   <input 
     type="password" 
