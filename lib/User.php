@@ -26,7 +26,7 @@ abstract class User {
     ");
     if ($result)
       return $result->fetch_all(MYSQLI_ASSOC)[0];
-    return false;
+    return null;
   }
 
   public static function getUserViaName(string $name): array | null {
@@ -37,7 +37,7 @@ abstract class User {
     ");
     if ($result)
       return $result->fetch_all(MYSQLI_ASSOC)[0];
-    return false;
+    return null;
   }
 
   public static function getUserViaId(int $id): array | null {
@@ -48,7 +48,7 @@ abstract class User {
     ");
     if ($result)
       return $result->fetch_all(MYSQLI_ASSOC)[0];
-    return false;
+    return null;
   }
 
   /**
@@ -90,6 +90,7 @@ abstract class User {
       return password_verify($loginPassword, $memberPassword);
     } catch (Exception $e) {
       echo $e->getMessage();
+      return false;
     }
   }
 
@@ -240,6 +241,8 @@ abstract class User {
 
       $image_name = \Utils\generateFilename($image);
       $image_path = "../_assets/$image_name";
+
+      Utils\createAssetsFolderIfNotExists();
 
       if (!move_uploaded_file(
         $image['tmp_name'], $image_path

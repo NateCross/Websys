@@ -141,6 +141,8 @@ class Seller extends User {
     $file_name = Utils\generateFilename($file);
     $file_path = "../_assets/" . $file_name;
 
+    Utils\createAssetsFolderIfNotExists();
+
     if(!move_uploaded_file(
       $file['tmp_name'], $file_path
     )) return false;
@@ -219,6 +221,8 @@ class Seller extends User {
 
       $image_name = \Utils\generateFilename($image);
       $image_path = "../_assets/" . $image_name;
+
+      Utils\createAssetsFolderIfNotExists();
 
       if(!move_uploaded_file(
         $image['tmp_name'], $image_path

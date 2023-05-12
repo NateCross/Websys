@@ -41,3 +41,9 @@ function redirect(string $location) {
   header("Location: $location");
   die();
 }
+
+function createAssetsFolderIfNotExists() {
+  if (!is_dir('../_assets')) {
+    mkdir('../_assets', 0777, true);
+  }
+}
