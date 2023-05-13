@@ -295,9 +295,9 @@ try {
     BEGIN
       DECLARE return_value DECIMAL(14, 4);
       SET return_value = (
-        SELECT *
+        SELECT rating_average
         FROM review_average
-        WHERE `product_id` = review_average.product_id
+        WHERE `product_id` = review_average.id
       );
       RETURN return_value;
     END;

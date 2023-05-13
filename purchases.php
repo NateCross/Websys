@@ -55,11 +55,59 @@ Component\Header('Purchases');
       <td><?= Utils\formatCurrency($product['price']) ?></td>
       <td><?= $product['quantity_purchased'] ?></td>
       <td><?= Utils\formatCurrency($product['price'] * $product['quantity_purchased']) ?></td>
-      <td>Insert Review Code here</td>
+      <td>
+        <button
+          class="submit_review"
+          value="<?= Product::getProductIdAttribute($product) ?>"
+        >
+          Submit Review
+        </button>
+      </td>
     </tr>
   <?php endforeach; ?>
-
 </table>
+
+<dialog id="review_dialog">
+  <form 
+    action="scripts/_review_product.php"
+    method="POST"
+  >
+    <input 
+      type="hidden" 
+      name="member_id" 
+      id="member_id"
+      value="<?= Member::getUserIdAttribute($user) ?>"
+    >
+    <!-- Change the value of product_id in the JS -->
+    <input 
+      type="hidden" 
+      name="product_id" 
+      id="product_id"
+    >
+
+    <div class="review-rating-container">
+      <label for="rating">Rating</label>
+      <input 
+        type="number" 
+        name="rating" 
+        id="rating"
+        value="5"
+        min="1"
+        max="5"
+      >
+    </div>
+    <div class="review-comment-container">
+      <label for="comment">Comment</label>
+      <textarea name="comment" id="comment" cols="30" rows="10"></textarea>
+    </div>
+    <div class="review-buttons-container">
+      <button type="submit" name="submit" value="submit">Submit</button>
+      <button value="cancel" id="cancel" formmethod="dialog">Cancel</button>
+    </div>
+  </form>
+</dialog>
+
+<script src="js/purchases.js"></script>
 
 <?php else: ?>
 

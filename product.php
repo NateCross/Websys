@@ -12,6 +12,7 @@ require_once 'lib/require.php';
 require_once 'lib/Product.php';
 require_once 'lib/User.php';
 require_once 'lib/Seller.php';
+require_once 'lib/Review.php';
 
 $type = User::getCurrentUserType();
 
@@ -23,6 +24,8 @@ else if ($type === 'admin')
   $user = Admin::getCurrentUser();
 $product = Product::getProducts($id)[0];
 $seller = Product::getSellerByProduct($product);
+
+Component\Header(Product::getProductNameAttribute($product));
 
 ?>
 
@@ -48,9 +51,11 @@ $seller = Product::getSellerByProduct($product);
 
 <h1><?= Product::getProductNameAttribute($product); ?></h1>
 
+<!-- Display product details -->
 <!-- TODO: Change these elements and make them presentable -->
 <img src="<?= Product::getImagePath($product) ?>">
 <p>Seller: <?= Seller::getUserNameAttribute($seller) ?></p>
+<p>Rating: <?= Review::getAverageRating(Product::getProductIdAttribute($product)) ?> / 5</p>
 <p>Quantity: <?= Product::getProductQuantityAttribute($product) ?></p>
 
 <?php if($user_is_seller): ?>
@@ -129,3 +134,5 @@ $seller = Product::getSellerByProduct($product);
 
 <script src="js/fetch.js"></script>
 <script src="js/product.js"></script>
+
+<?php Component\Footer(); ?>
