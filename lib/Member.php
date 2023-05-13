@@ -66,10 +66,10 @@ class Member extends User {
         FROM
           bill
           LEFT JOIN product_bill
-            WHERE product_bill.bill_id = bill.id
+            ON product_bill.bill_id = bill.id
             AND bill.member_id = $member_id
           LEFT JOIN product
-            WHERE product_bill.product_id = product.id;
+            ON product_bill.product_id = product.id;
       ");
       return $result->fetch_all(MYSQLI_ASSOC);
     } catch (Exception $e) {

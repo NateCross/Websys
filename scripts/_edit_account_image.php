@@ -21,8 +21,14 @@ require_once "../lib/Seller.php";
   $user_id = filter_input(INPUT_POST, 'user_id', FILTER_SANITIZE_SPECIAL_CHARS);
   $image = $_FILES['image'];
 
-  $user = User::getCurrentUser();
   $type = User::getCurrentUserType();
+
+  if ($type === 'member')
+    $user = Member::getCurrentUser();
+  else if ($type === 'seller')
+    $user = Seller::getCurrentUser();
+  else if ($type === 'admin')
+    $user = Admin::getCurrentUser();
 ?>
 
 <!-- Check for errors -->

@@ -3,6 +3,9 @@
 namespace Component;
 
 require_once 'User.php';
+require_once 'Member.php';
+require_once 'Seller.php';
+require_once 'Admin.php';
 
 /**
  * Header component to be executed at the start of every page
@@ -10,6 +13,17 @@ require_once 'User.php';
  * checks, or else it will break that functionality
  */
 function Header(string $title) { ?>
+  <?php $type = \User::getCurrentUserType(); ?>
+  <?php 
+    if ($type === 'member')
+      $user = \Member::getCurrentUser();
+    else if ($type === 'seller')
+      $user = \Seller::getCurrentUser();
+    else if ($type === 'admin')
+      $user = \Admin::getCurrentUser();
+    else $user = null;
+  ?>
+
   <!DOCTYPE html>
   <html lang="en">
   <head>
@@ -24,7 +38,7 @@ function Header(string $title) { ?>
         <a href="index.php">Insert Store Name Here</a>
       </div>
       <div class="header-account-container">
-        <?php if ($user = \User::getCurrentUser()): ?>
+        <?php if ($user): ?>
           <form 
             action="scripts/_logout.php"
             method="POST"

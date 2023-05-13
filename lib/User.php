@@ -107,7 +107,7 @@ abstract class User {
    */
   public static function setCurrentUser($member): bool {
     if (
-      Session::set('user', $member)
+      Session::set('user', self::getUserIdAttribute($member))
       && Session::set('type', static::getTableName())
     )
       return true;
@@ -118,7 +118,12 @@ abstract class User {
    * Uses sessions to get current user
    */
   public static function getCurrentUser() {
-    return Session::get('user');
+    try {
+      $id = Session::get('user');
+      return static::getUserViaId($id);
+    } catch (Exception $e) {
+      return null;
+    }
   }
 
   /**

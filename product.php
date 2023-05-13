@@ -13,7 +13,14 @@ require_once 'lib/Product.php';
 require_once 'lib/User.php';
 require_once 'lib/Seller.php';
 
-$user = User::getCurrentUser();
+$type = User::getCurrentUserType();
+
+if ($type === 'member')
+  $user = Member::getCurrentUser();
+else if ($type === 'seller')
+  $user = Seller::getCurrentUser();
+else if ($type === 'admin')
+  $user = Admin::getCurrentUser();
 $product = Product::getProducts($id)[0];
 $seller = Product::getSellerByProduct($product);
 

@@ -3,8 +3,14 @@
 require_once "lib/require.php";
 require_once "lib/User.php";
 
-$user = User::getCurrentUser();
 $type = User::getCurrentUserType();
+
+if ($type === 'member')
+  $user = Member::getCurrentUser();
+else if ($type === 'seller')
+  $user = Seller::getCurrentUser();
+else if ($type === 'admin')
+  $user = Admin::getCurrentUser();
 
 ?>
 

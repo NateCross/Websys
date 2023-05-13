@@ -20,8 +20,14 @@ require_once "../lib/Seller.php";
   $product_id = filter_input(INPUT_POST, 'product_id', FILTER_SANITIZE_SPECIAL_CHARS);
   $image = $_FILES['image'];
 
-  $user = User::getCurrentUser();
   $type = User::getCurrentUserType();
+
+  if ($type === 'member')
+    $user = Member::getCurrentUser();
+  else if ($type === 'seller')
+    $user = Seller::getCurrentUser();
+  else if ($type === 'admin')
+    $user = Admin::getCurrentUser();
   $product = Product::getProducts($product_id)[0];
   $seller = Product::getSellerById($product_id);
 ?>

@@ -2,10 +2,20 @@
 
 require_once "lib/require.php";
 require_once "lib/User.php";
+require_once "lib/Member.php";
+require_once "lib/Seller.php";
+require_once "lib/Admin.php";
 require_once "lib/Product.php";
 
-$user = User::getCurrentUser();
 $type = User::getCurrentUserType();
+
+if ($type === 'member')
+  $user = Member::getCurrentUser();
+else if ($type === 'seller')
+  $user = Seller::getCurrentUser();
+else if ($type === 'admin')
+  $user = Admin::getCurrentUser();
+
 $product_id = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_ENCODED);
 $product = Product::getProducts($product_id)[0];
 $seller = Product::getSellerById($product_id);

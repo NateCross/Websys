@@ -35,8 +35,14 @@ require_once "../lib/Product.php";
     'product_id' => FILTER_VALIDATE_INT,
   ]);
 
-  $user = User::getCurrentUser();
   $type = User::getCurrentUserType();
+
+  if ($type === 'member')
+    $user = Member::getCurrentUser();
+  else if ($type === 'seller')
+    $user = Seller::getCurrentUser();
+  else if ($type === 'admin')
+    $user = Admin::getCurrentUser();
   $product = Product::getProducts($product_id)[0];
   $seller = Product::getSellerById($product_id);
 ?>
