@@ -10,11 +10,14 @@ if (!$member = Member::getCurrentUser())
 
 Component\Header('Cart');
 
+$cart = Cart::getCart();
+if ($cart) rsort($cart);
+
 ?>
 
 <h1>Cart</h1>
 
-<?php if ($cart = Cart::getCart()): ?>
+<?php if ($cart): ?>
 <div class="clear-cart-container">
   <form 
     action="scripts/_clear_cart.php"

@@ -69,7 +69,8 @@ class Member extends User {
             ON product_bill.bill_id = bill.id
             AND bill.member_id = $member_id
           LEFT JOIN product
-            ON product_bill.product_id = product.id;
+            ON product_bill.product_id = product.id
+        ORDER BY bill_timestamp DESC;
       ");
       return $result->fetch_all(MYSQLI_ASSOC);
     } catch (Exception $e) {

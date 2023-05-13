@@ -58,6 +58,7 @@ function Header(string $title) { ?>
           <a href="product_add.php">Add Product For Sale</a>
         <?php elseif (\User::getCurrentUserType() === 'member'): ?>
           <a href="cart.php">Cart</a>
+          <a href="purchases.php">Purchases</a>
         <?php endif; ?>
       </div>
       <div class="header-search-container">
