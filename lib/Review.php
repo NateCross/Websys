@@ -34,6 +34,30 @@ class Review {
   }
 
   /**
+   * Edit the comment and rating of a review
+   * @param int $review_id The ID of the review to be edited
+   * @param int $rating Rating from 1 to 5
+   * @param string $comment Comment displayed alongside review
+   * @return bool True if successful, false otherwise
+   */
+  public static function updateReview(
+    int $review_id,
+    int $rating,
+    string $comment,
+  ): bool {
+    try {
+      return Database::preparedQuery("
+        UPDATE review SET
+          rating = ?,
+          comment = ?
+        WHERE id = ?
+      ", $rating, $comment, $review_id);
+    } catch (Exception $e) {
+      return false;
+    }
+  }
+
+  /**
    * Get all the reviews for a certain product
    * @param $product_id The ID of the product
    * @return array An array of all the reviews
@@ -100,5 +124,9 @@ class Review {
 
   public static function getTimestamp($review) {
     return $review['last_modified'];
+  }
+
+  public static function getId($review) {
+    return $review['id'];
   }
 }

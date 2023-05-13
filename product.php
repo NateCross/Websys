@@ -150,8 +150,66 @@ Component\Header(Product::getProductNameAttribute($product));
         <p class="review-comment">
           <?= Review::getComment($review) ?>
         </p>
+        <?php if ($type === 'member' 
+          && Member::getUserIdAttribute($user) 
+            === Review::getMemberId($review)
+        ): ?>
+          <div class="review-actions-container">
+            <button
+              class="review-actions-edit"
+              value="<?= Review::getId($review) ?>"
+            >
+              Edit
+            </button>
+            <form 
+              action="scripts/_delete_review.php"
+              method="POST"
+            >
+              <input 
+                type="hidden" 
+                name="review_id"
+                value="<?= Review::getId($review) ?>"
+              >
+              <button name="submit" value="submit" type="submit">Delete</button>
+            </form>
+          </div>
+        <?php endif; ?>
       </div>
     <?php endforeach ?>
+    <dialog
+      id="edit_review_dialog"
+    >
+      <form 
+        action="scripts/_edit_review.php"
+        method="POST"
+      >
+        <!-- Change the value of review_id in the JS -->
+        <input 
+          type="hidden" 
+          name="review_id" 
+          id="review_id"
+        >
+        <div class="review-rating-container">
+          <label for="rating">Rating</label>
+          <input 
+            type="number" 
+            name="rating" 
+            id="rating"
+            value="5"
+            min="1"
+            max="5"
+          >
+        </div>
+        <div class="review-comment-container">
+          <label for="comment">Comment</label>
+          <textarea name="comment" id="comment" cols="30" rows="10"></textarea>
+        </div>
+        <div class="review-buttons-container">
+          <button type="submit" name="submit" value="submit">Submit</button>
+          <button value="cancel" id="cancel" formmethod="dialog">Cancel</button>
+        </div>
+      </form>
+    </dialog>
   </div>
 <?php endif; ?>
 

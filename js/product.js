@@ -28,3 +28,17 @@ formatSubtotal();
 quantity_purchased?.addEventListener('change', () => {
   formatSubtotal();
 });
+
+///// Reviews /////
+const edit_review_dialog = document.getElementById('edit_review_dialog');
+const review_actions_edit = document.querySelectorAll('.review-actions-edit');
+const review_id = document.getElementById('review_id');
+
+review_actions_edit?.forEach((button) => {
+  const {value} = button;
+
+  button.addEventListener('click', () => {
+    review_id.value = value;
+    edit_review_dialog?.showModal();
+  })
+});

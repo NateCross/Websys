@@ -19,8 +19,6 @@ Component\Header('Purchases');
 
 <?php $products = Member::getBillsWithProducts(Member::getUserIdAttribute($user)) ?>
 
-<?php var_dump($products) ?>
-
 <?php if ($products): ?>
 
 <table>

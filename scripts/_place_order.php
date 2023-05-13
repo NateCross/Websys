@@ -1,6 +1,7 @@
 <?php
 
 require_once "../lib/require.php";
+require_once "../lib/Member.php";
 require_once "../lib/Cart.php";
 
 if (!isset($_POST['submit'])) {
