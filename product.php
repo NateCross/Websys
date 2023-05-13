@@ -55,7 +55,9 @@ Component\Header(Product::getProductNameAttribute($product));
 <!-- TODO: Change these elements and make them presentable -->
 <img src="<?= Product::getImagePath($product) ?>">
 <p>Seller: <?= Seller::getUserNameAttribute($seller) ?></p>
-<p>Rating: <?= Review::getAverageRating(Product::getProductIdAttribute($product)) ?> / 5</p>
+<?php if ($average_rating = Review::getAverageRating(Product::getProductIdAttribute($product))): ?>
+  <p>Rating: <?= $average_rating ?> / 5</p>
+<?php endif; ?>
 <p>Quantity: <?= Product::getProductQuantityAttribute($product) ?></p>
 
 <?php if($user_is_seller): ?>
@@ -129,6 +131,27 @@ Component\Header(Product::getProductNameAttribute($product));
   </dialog>
   <div class="dialog-button-container">
     <button id="showDialog">Report Seller</button>
+  </div>
+<?php endif; ?>
+
+<?php if ($reviews = Review::getReviews(Product::getProductIdAttribute($product))): ?>
+  <div class="reviews-container">
+    <?php foreach ($reviews as $review): ?>
+      <div class="review-post-container">
+        <p class="review-author">
+          <?= Review::getMemberName($review) ?>
+        </p>
+        <p class="review-timestamp">
+          <?= Review::getTimestamp($review) ?>
+        </p>
+        <p class="review-rating">
+          <?= Review::getRating($review) ?> / 5
+        </p>
+        <p class="review-comment">
+          <?= Review::getComment($review) ?>
+        </p>
+      </div>
+    <?php endforeach ?>
   </div>
 <?php endif; ?>
 

@@ -43,8 +43,12 @@ class Review {
   ): array | null {
     try {
       $result = Database::query("
-        SELECT *
+        SELECT 
+          review.*,
+          member.name member_name
         FROM review
+          LEFT JOIN member
+            ON member.id = review.member_id
         WHERE product_id = $product_id
       ");
       return $result->fetch_all(MYSQLI_ASSOC);
@@ -76,5 +80,25 @@ class Review {
     } catch (Exception $e) {
       return false;
     }
+  }
+
+  public static function getComment($review) {
+    return $review['comment'];
+  }
+
+  public static function getRating($review) {
+    return $review['rating'];
+  }
+
+  public static function getMemberName($review) {
+    return $review['member_name'];
+  }
+
+  public static function getMemberId($review) {
+    return $review['member_id'];
+  }
+
+  public static function getTimestamp($review) {
+    return $review['last_modified'];
   }
 }
