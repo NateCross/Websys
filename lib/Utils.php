@@ -42,8 +42,31 @@ function redirect(string $location) {
   die();
 }
 
+/**
+ * Run this function before accessing the assets folder
+ * PHP does not automatically create it when we move files
+ */
 function createAssetsFolderIfNotExists() {
   if (!is_dir('../_assets')) {
     mkdir('../_assets', 0777, true);
+  }
+}
+
+/**
+ * IMPORTANT: Uncomment `extension=intl` in php.ini first!
+ * 
+ * Formats a number to currency in PHP
+ * Note that float is not ideal for storing currency
+ * because of rounding errors.
+ * However, due to the requirement for a 
+ * simple implementation, this will suffice
+ */
+function formatCurrency(float $amount) {
+  try {
+    $formatter = new \NumberFormatter('en', \NumberFormatter::CURRENCY);
+    $formatter->setAttribute($formatter::FRACTION_DIGITS, 2);
+    return $formatter->formatCurrency($amount, 'PHP');
+  } catch (\Exception $e) {
+    return null;
   }
 }

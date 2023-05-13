@@ -5,6 +5,8 @@
 - This copies the `.env.example` to `.env`
 - Fill in each field. Replace as necessary 
   - If you have not yet created a user that can access the database, do so first
+- Uncomment `extension=intl` in `php.ini` by deleting the semicolon at the beginning
+  - Allows use of the Number Formatter for currency
 - Serve the website
 
 # Notes

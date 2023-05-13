@@ -44,9 +44,11 @@ Component\Header('Cart');
         </a>
       </td>
       <td>
-        <?= $price = Product::getProductPriceAttribute($product) ?>
+        <?php $price = Product::getProductPriceAttribute($product); ?>
+        <?= Utils\formatCurrency($price); ?>
       </td>
       <td>
+        <p>In stock: <?= Product::getProductQuantityAttribute($product) ?></p>
         <form 
           action="scripts/_edit_cart_item.php"
           method="POST"
@@ -56,6 +58,8 @@ Component\Header('Cart');
             name="quantity_purchased" 
             id="quantity_purchased"
             value="<?= $quantity_purchased = Cart::getProductQuantityPurchased($product) ?>"
+            min="1"
+            max="<?= Product::getProductQuantityAttribute($product) ?>"
           >
           <input 
             type="hidden" 
@@ -67,7 +71,7 @@ Component\Header('Cart');
       </td>
       <td>
         <?php $subtotal += $price * $quantity_purchased ?>
-        ₱<?= $price * $quantity_purchased ?>
+        <?= Utils\formatCurrency($price * $quantity_purchased) ?>
       </td>
       <td>
         <div class="cart-delete-container">
@@ -91,15 +95,26 @@ Component\Header('Cart');
 <!-- Display the subtotal in frontend -->
 <!-- But it will be recalculated in backend so don't pass this -->
 <div class="subtotal-container">
-  Subtotal: ₱<?= $subtotal ?>
+  Subtotal: <?= Utils\formatCurrency($subtotal) ?>
 </div>
 
-<form 
-  action="scripts/_place_order.php"
-  method="POST"
->
-  <input type="submit" name="submit" value="Place Order">
-</form>
+<dialog id="submitOrderDialog">
+  <h2>Checkout</h2>
+  <p class="submit-order-text-container">
+    Your order for <?= count($cart) ?> 
+    <?= count($cart) ? "items" : "item" ?>
+    amounts to ₱<?= $subtotal ?>.
+  </p>
+  <form 
+    action="scripts/_place_order.php"
+    method="POST"
+  >
+    <input type="submit" name="submit" value="Place Order">
+  </form>
+</dialog>
+
+
+<script src="js/cart.js"></script>
 
 <?php else: ?>
 
