@@ -98,21 +98,71 @@ Component\Header('Cart');
   Subtotal: <?= Utils\formatCurrency($subtotal) ?>
 </div>
 
+<div class="checkout-container">
+  <button id="showDialog">Checkout</button>
+</div>
+
+<!-- Modal that displpays when submit order is clicked -->
 <dialog id="submitOrderDialog">
   <h2>Checkout</h2>
   <p class="submit-order-text-container">
     Your order for <?= count($cart) ?> 
-    <?= count($cart) ? "items" : "item" ?>
-    amounts to ₱<?= $subtotal ?>.
+    <?= count($cart) > 1 ? "items" : "item" ?>
+    amounts to <?= Utils\formatCurrency($subtotal) ?>.
   </p>
   <form 
     action="scripts/_place_order.php"
     method="POST"
   >
+    <div class="place-order-bank">
+      <label for="bank">Bank</label>
+      <select name="bank" id="bank">
+        <option value="bdo">BDO</option>
+        <option value="bpi">BPI</option>
+        <option value="other">Other</option>
+      </select>
+      <!-- <input type="text" name="owner" id="owner" required> -->
+    </div>
+
+    <div class="place-order-owner">
+      <label for="owner">Owner</label>
+      <input type="text" name="owner" id="owner" required>
+    </div>
+
+    <div class="place-order-cvv">
+      <label for="cvv">CVV</label>
+      <input type="text" name="cvv" id="cvv" required>
+    </div>
+
+    <div class="place-order-card-number">
+      <label for="card_number">Card Number</label>
+      <input type="text" name="card_number" id="card_number" required>
+    </div>
+
+    <div class="place-order-expiration-date">
+      <label>Expiration Date</label>
+      <select name="expiration_date_month" id="expiration_date_month">
+        <option value="01">January</option>
+        <option value="02">February </option>
+        <option value="03">March</option>
+        <option value="04">April</option>
+        <option value="05">May</option>
+        <option value="06">June</option>
+        <option value="07">July</option>
+        <option value="08">August</option>
+        <option value="09">September</option>
+        <option value="10">October</option>
+        <option value="11">November</option>
+        <option value="12">December</option>
+      </select>
+      <input type="number" min="00" max="99" name="expiration_date_year" id="expiration_date_year">
+    </div>
+    <!-- <input type="text" name="card_number" id="card_number" required> -->
+
     <input type="submit" name="submit" value="Place Order">
+    <button value="cancel" formmethod="dialog">Cancel</button>
   </form>
 </dialog>
-
 
 <script src="js/cart.js"></script>
 

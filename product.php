@@ -58,7 +58,7 @@ $seller = Product::getSellerByProduct($product);
   </form>
 <?php endif; ?>
 
-<?php if($user_is_a_member): ?>
+<?php if($user_is_a_member && Product::getProductQuantityAttribute($product)): ?>
   <div class="add-to-cart-container">
     <form 
       action="scripts/_add_to_cart.php"
@@ -77,6 +77,13 @@ $seller = Product::getSellerByProduct($product);
       <input type="submit" name="submit" value="Add to Cart">
 
     </form>
+    <output class="add-to-cart-total">
+      <!-- This is unused in the form, it's just -->
+      <!-- for manipulating subtotal display -->
+      <input type="hidden" id="product_price" name="product_price" value="<?= Product::getProductPriceAttribute($product) ?>">
+
+      Total: <span id="subtotal"> - </span>
+    </output>
   </div>
 
   <dialog id="reportDialog">

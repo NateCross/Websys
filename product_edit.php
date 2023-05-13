@@ -102,7 +102,7 @@ $seller = Product::getSellerById($product_id);
     min=1
     step="any"
     required
-    value="<?= Product::getProductQuantityAttribute($product) ?>"
+    value="<?= Product::getProductPriceAttribute($product) ?>"
   >
   <input type="submit" name="submit" value="Submit">
 </form>

@@ -24,7 +24,7 @@ function Header(string $title) { ?>
         <a href="index.php">Insert Store Name Here</a>
       </div>
       <div class="header-account-container">
-        <?php if (\User::getCurrentUser()): ?>
+        <?php if ($user = \User::getCurrentUser()): ?>
           <form 
             action="scripts/_logout.php"
             method="POST"
@@ -40,6 +40,7 @@ function Header(string $title) { ?>
       </div>
       <div class="header-actions-container">
         <?php if (\User::getCurrentUserType() === 'seller'): ?>
+          <a href="seller.php?id=<?= \User::getUserIdAttribute($user) ?>">My Store</a>
           <a href="product_add.php">Add Product For Sale</a>
         <?php elseif (\User::getCurrentUserType() === 'member'): ?>
           <a href="cart.php">Cart</a>

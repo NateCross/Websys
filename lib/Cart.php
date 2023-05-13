@@ -22,8 +22,9 @@ class Cart {
     foreach ($cart as $index => $product) {
       if (
         $product_id === Product::getProductIdAttribute($product)
-      )
+      ) {
         return $index;
+      }
     }
     return null;
   }
@@ -50,7 +51,10 @@ class Cart {
   ): bool {
     try {
       $cart = self::getCart();
-      if ($index = self::getProductInCart($product_id)) {
+      $index = self::getProductInCart($product_id);
+
+      if (isset($index)) {
+        echo "nice";
         $cart[$index]['quantity_purchased'] += $quantity;
         return self::updateCart($cart);
         // $product = $cart[$index];
