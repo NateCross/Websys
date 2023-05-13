@@ -3,6 +3,10 @@
 require_once 'lib/require.php';
 require_once 'lib/Cart.php';
 require_once 'lib/Product.php';
+require_once 'lib/Member.php';
+
+if (!$member = Member::getCurrentUser())
+  Utils\redirect('index.php');
 
 Component\Header('Cart');
 
@@ -114,53 +118,76 @@ Component\Header('Cart');
     action="scripts/_place_order.php"
     method="POST"
   >
-    <div class="place-order-bank">
-      <label for="bank">Bank</label>
-      <select name="bank" id="bank">
-        <option value="bdo">BDO</option>
-        <option value="bpi">BPI</option>
-        <option value="other">Other</option>
-      </select>
-      <!-- <input type="text" name="owner" id="owner" required> -->
-    </div>
+    <div class="bank-details-container">
+      <div class="place-order-bank">
+        <label for="bank">Bank</label>
+        <select name="bank" id="bank">
+          <option value="bdo">BDO</option>
+          <option value="bpi">BPI</option>
+          <option value="other">Other</option>
+        </select>
+        <input type="text" name="bank_other" id="bank_other" hidden>
+      </div>
 
-    <div class="place-order-owner">
-      <label for="owner">Owner</label>
-      <input type="text" name="owner" id="owner" required>
-    </div>
+      <div class="place-order-owner">
+        <label for="owner">Owner</label>
+        <input type="text" name="owner" id="owner" required>
+      </div>
 
-    <div class="place-order-cvv">
-      <label for="cvv">CVV</label>
-      <input type="text" name="cvv" id="cvv" required>
-    </div>
+      <div class="place-order-cvv">
+        <label for="cvv">CVV</label>
+        <input type="text" name="cvv" id="cvv" required>
+      </div>
 
-    <div class="place-order-card-number">
-      <label for="card_number">Card Number</label>
-      <input type="text" name="card_number" id="card_number" required>
-    </div>
+      <div class="place-order-card-number">
+        <label for="card_number">Card Number</label>
+        <input type="text" name="card_number" id="card_number" required>
+      </div>
 
-    <div class="place-order-expiration-date">
-      <label>Expiration Date</label>
-      <select name="expiration_date_month" id="expiration_date_month">
-        <option value="01">January</option>
-        <option value="02">February </option>
-        <option value="03">March</option>
-        <option value="04">April</option>
-        <option value="05">May</option>
-        <option value="06">June</option>
-        <option value="07">July</option>
-        <option value="08">August</option>
-        <option value="09">September</option>
-        <option value="10">October</option>
-        <option value="11">November</option>
-        <option value="12">December</option>
-      </select>
-      <input type="number" min="00" max="99" name="expiration_date_year" id="expiration_date_year">
+      <div class="place-order-expiration-date">
+        <label>Expiration Date</label>
+        <select name="expiration_date_month" id="expiration_date_month">
+          <option value="01">January</option>
+          <option value="02">February </option>
+          <option value="03">March</option>
+          <option value="04">April</option>
+          <option value="05">May</option>
+          <option value="06">June</option>
+          <option value="07">July</option>
+          <option value="08">August</option>
+          <option value="09">September</option>
+          <option value="10">October</option>
+          <option value="11">November</option>
+          <option value="12">December</option>
+        </select>
+        <input type="number" min="00" max="99" name="expiration_date_year" id="expiration_date_year" required>
+      </div>
     </div>
-    <!-- <input type="text" name="card_number" id="card_number" required> -->
+    <div class="shipping-details-container">
+      <div class="shipping-details-address">
+        <label for="address">Address</label>
+        <input 
+          type="text" 
+          name="address" 
+          id="address"
+          value="<?= Member::getUserAddressAttribute($member) ?>"
+          required
+        >
+      </div>
+      <div class="shipping-details-contact-number">
+        <label for="contact_number">Contact Number</label>
+        <input 
+          type="text" 
+          name="contact_number" 
+          id="contact)number"
+          value="<?= Member::getUserContactNumberAttribute($member) ?>"
+          required
+        >
+      </div>
+    </div>
 
     <input type="submit" name="submit" value="Place Order">
-    <button value="cancel" formmethod="dialog">Cancel</button>
+    <button value="cancel" id="cancel" formmethod="dialog">Cancel</button>
   </form>
 </dialog>
 

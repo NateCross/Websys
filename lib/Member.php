@@ -53,4 +53,27 @@ class Member extends User {
     //     LEFT JOIN 
     // ");
   }
+
+  public static function getBillsWithProducts(int $member_id) {
+    try {
+      $result = Database::query("
+        SELECT 
+          bill.id bill_id,
+          bill.last_modified bill_timestamp,
+          product.*, 
+          product_bill.quantity quantity_purchased,
+          product_bill.is_reviewed
+        FROM
+          bill
+          LEFT JOIN product_bill
+            WHERE product_bill.bill_id = bill.id
+            AND bill.member_id = $member_id
+          LEFT JOIN product
+            WHERE product_bill.product_id = product.id;
+      ");
+      return $result->fetch_all(MYSQLI_ASSOC);
+    } catch (Exception $e) {
+      return false;
+    }
+  }
 }

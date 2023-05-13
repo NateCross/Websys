@@ -57,9 +57,6 @@ class Cart {
         echo "nice";
         $cart[$index]['quantity_purchased'] += $quantity;
         return self::updateCart($cart);
-        // $product = $cart[$index];
-        // $product['quantity_purchased'] += $quantity;
-        // return true;
       } else {
         $product = Product::getProducts($product_id)[0];
         if (!$product) return false;
@@ -131,7 +128,12 @@ class Cart {
    * Function to place order after items have
    * been added to the cart
    */
-  public static function placeOrder() {
+  public static function placeOrder(
+    string $bank,
+    string | null $bank_other = null,
+    string $address,
+    string $contact_number,
+  ) {
     try {
       if (self::cartIsEmpty()) return false;
       $cart = self::getCart();
@@ -143,13 +145,15 @@ class Cart {
 
       $user_id = Member::getUserIdAttribute($user);
 
-      // var_dump(Cart::getProductQuantityPurchased($cart[0]));
-      // die();
-
       Database::preparedQuery(
-        "INSERT INTO bill (member_id)
-        VALUES (?);"
-      , $user_id);
+        "INSERT INTO bill (
+          member_id,
+          bank,
+          bank_other,
+          address,
+          contact_number
+        ) VALUES (?, ?, ?, ?, ?);"
+      , $user_id, $bank, $bank_other, $address, $contact_number);
 
       $bill_id = Database::query("
         SELECT LAST_INSERT_ID();

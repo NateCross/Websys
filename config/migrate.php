@@ -98,6 +98,10 @@ try {
     CREATE TABLE `bill` (
       `id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
       `member_id` INT NOT NULL,
+      `bank` ENUM ('bdo', 'bpi', 'other') DEFAULT 'bdo' NOT NULL,
+      `bank_other` VARCHAR(1000),
+      `address` VARCHAR(1000) NOT NULL,
+      `contact_number` VARCHAR(255) NOT NULL,
       `last_modified` TIMESTAMP DEFAULT CURRENT_TIMESTAMP 
         ON UPDATE CURRENT_TIMESTAMP NOT NULL,
 
@@ -112,6 +116,7 @@ try {
       `product_id` INT NOT NULL,
       `bill_id` INT NOT NULL,
       `quantity` INT NOT NULL DEFAULT 0, 
+      `is_reviewed` BOOLEAN NOT NULL DEFAULT false,
       `last_modified` TIMESTAMP DEFAULT CURRENT_TIMESTAMP 
         ON UPDATE CURRENT_TIMESTAMP NOT NULL,
 
@@ -297,6 +302,21 @@ try {
       RETURN return_value;
     END;
 
+    CREATE FUNCTION get_bill_total(
+      bill_id_input INT
+    )
+    RETURNS INT
+    DETERMINISTIC
+    BEGIN
+      DECLARE return_value INT;
+      SET return_value = (
+          SELECT bill_total.bill_total
+          FROM bill_total
+          WHERE bill_total.bill_id = bill_id_input
+        );
+      RETURN return_value;
+    END;
+
     CREATE FUNCTION get_seller_id_of_product(
       product_id INT
     )
@@ -351,12 +371,28 @@ try {
       WHERE `id` = `seller_id`;
     END;
 
+    CREATE PROCEDURE select_bills_of_member
+      (IN member_id INT)
+    BEGIN
+      UPDATE `seller` SET 
+        `suspended_until` = DATE_ADD(NOW(), INTERVAL `days_suspended` DAY)
+      WHERE `id` = `seller_id`;
+    END;
+
     CREATE PROCEDURE toggle_report_status
       (IN report_id INT)
     BEGIN
       UPDATE `report` SET
         `status` = IF(`status` = 'open', 'closed', 'open')
       WHERE `id` = `report_id`;
+    END;
+
+    CREATE PROCEDURE toggle_reviewed_status
+      (IN product_bill_id INT)
+    BEGIN
+      UPDATE `product_bill` SET
+        `is_reviewed` = 1 - `is_reviewed`
+      WHERE `id` = `product_bill_id`;
     END;
 
     CREATE PROCEDURE toggle_notification_read_member
