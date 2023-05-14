@@ -42,12 +42,12 @@ class Product {
              INNER JOIN seller
                ON seller.id = product.seller_id
              " : "")
-          . ($randomize ? "ORDER BY rand() " : "")
           . ($limit ? "LIMIT {$limit} " : "")
           . "WHERE quantity != 0 "
           . (!$include_suspend ? "
-              AND seller.suspended_until IS NULL
+              AND seller.suspended_until IS NULL 
             " : "")
+          . ($randomize ? "ORDER BY rand() " : "ORDER BY last_modified DESC ")
           . "; "
         );
       }
@@ -65,14 +65,24 @@ class Product {
   }
 
   public static function getCategories(int $id) {
+    // $result = Database::query("
+    //   SELECT category.id, category.name
+    //   FROM category
+    //     LEFT JOIN product_category
+    //     ON product_category.category_id = category.id
+    //     LEFT JOIN product
+    //     ON product_category.product_id = product.id
+    //     AND product.id = $id;
+    // ");
     $result = Database::query("
       SELECT category.id, category.name
-      FROM category
-        LEFT JOIN product_category
-        ON product_category.category_id = category.id
-        LEFT JOIN product
-        ON product_category.product_id = product.id
-        AND product.id = $id;
+      FROM product
+        INNER JOIN product_category
+          ON product_category.product_id = product.id
+          AND product.id = $id
+        INNER JOIN category
+          ON product_category.category_id = category.id
+          AND category.id IS NOT NULL;
     ");
     return $result->fetch_all(MYSQLI_ASSOC);
   }
@@ -82,14 +92,18 @@ class Product {
   }
 
   public static function getSellerById(int $id) {
-    $result = Database::query("
-      SELECT seller.id, seller.name
-      FROM seller
-        LEFT JOIN product
-        ON product.seller_id = seller.id
-        AND product.id = $id;
-    ");
-    return $result->fetch_all(MYSQLI_ASSOC)[0];
+    try {
+      $result = Database::query("
+        SELECT seller.id, seller.name
+        FROM seller
+          LEFT JOIN product
+          ON product.seller_id = seller.id
+          AND product.id = $id;
+      ");
+      return $result->fetch_all(MYSQLI_ASSOC)[0];
+    } catch (Exception $e) {
+      return false;
+    }
   }
 
   public static function getSellerByProduct($product) {
@@ -121,6 +135,8 @@ class Product {
   }
 
   public static function getProductCategoryAttribute($product) {
+    // $category = self::getCategories($product['id']);
+    // var_dump($category);
     return self::getCategories($product['id'])[0];
   }
 

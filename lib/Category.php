@@ -29,6 +29,7 @@ class Category {
       $result = Database::query("
         SELECT * FROM category WHERE id = '$id';
       ");
+      return $result->fetch_all(MYSQLI_ASSOC)[0];
     } else {
       $result = Database::query(
         "SELECT * FROM category "
@@ -36,22 +37,31 @@ class Category {
         . ($limit ? "LIMIT {$limit} " : "")
         . "; "
       );
+      return $result->fetch_all(MYSQLI_ASSOC);
     }
-    return $result->fetch_all(MYSQLI_ASSOC);
   }
 
   /**
    * Gets all products in a category
    */
   public static function getProducts(int $id) {
+    // $result = Database::query("
+    //   SELECT product.*
+    //   FROM product
+    //     LEFT JOIN product_category
+    //     ON product_category.product_id = product.id
+    //     LEFT JOIN category
+    //     ON product_category.category_id = category.id
+    //     AND category.id = $id;
+    // ");
     $result = Database::query("
       SELECT product.*
-      FROM product
-        LEFT JOIN product_category
-        ON product_category.product_id = product.id
-        LEFT JOIN category
-        on product_category.category_id = category.id
-        AND category.id = $id;
+      FROM category
+        INNER JOIN product_category
+          ON product_category.product_id = category.id
+          AND category.id = $id
+        INNER JOIN product
+          ON product_category.product_id = product.id;
     ");
     return $result->fetch_all(MYSQLI_ASSOC);
   }
@@ -87,5 +97,31 @@ class Category {
       ) VALUES (?, ?);
     ", $product_id, $category_id);
     return $result;
+  }
+
+  public static function getId($category) {
+    return $category['id'];
+  }
+
+  public static function getName($category) {
+    return $category['name'];
+  }
+
+  /**
+   * Used for clearing the categories listed on a product
+   * Do this whenever a product and its categories
+   * are updated
+   */
+  public static function removeCategoriesFromProduct(
+    int $product_id
+  ) {
+    try {
+      return Database::preparedQuery("
+        DELETE FROM product_category 
+        WHERE product_id = ?;
+      ", $product_id);
+    } catch (Exception $e) {
+      return false;
+    }
   }
 }

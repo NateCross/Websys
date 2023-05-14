@@ -6,6 +6,7 @@ require_once 'User.php';
 require_once 'Member.php';
 require_once 'Seller.php';
 require_once 'Admin.php';
+require_once 'Session.php';
 
 /**
  * Header component to be executed at the start of every page
@@ -21,7 +22,14 @@ function Header(string $title) { ?>
       $user = \Seller::getCurrentUser();
     else if ($type === 'admin')
       $user = \Admin::getCurrentUser();
-    else $user = null;
+    else {
+      $user = null;
+    }
+
+    if (!$user) {
+      \Session::delete('user');
+      \Session::delete('type');
+    }
   ?>
 
   <!DOCTYPE html>

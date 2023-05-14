@@ -197,12 +197,33 @@ class Seller extends User {
 
       if (!Category::createCategory($category)) return false;
 
+      if (!Category::removeCategoriesFromProduct($product_id))
+        return false;
+
       $category_id = Category::getCategoryByName($category)['id'];
 
       return Category::linkProductToCategory($product_id, $category_id);
     } catch (Exception $e) {
       return false;
     }
+  }
+
+  /**
+   * Whenever a product is updated and its category is changed,
+   * the older category still remains. But because we only
+   * have one, we can simply remove the prior entry.
+   * This is in place to maintain single category
+   * functionality while leaving the database
+   * structurally able to support multiple categories
+   */
+  private static function deleteLastCategory(
+    int $product_id,
+  ) {
+    return Database::preparedQuery("
+      DELETE FROM product_category
+      WHERE product_id = ?
+      LIMIT 1;
+    ", $product_id);
   }
 
   public static function updateProductImage(

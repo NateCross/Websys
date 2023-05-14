@@ -22,7 +22,10 @@ else if ($type === 'seller')
   $user = Seller::getCurrentUser();
 else if ($type === 'admin')
   $user = Admin::getCurrentUser();
+
 $product = Product::getProducts($id)[0];
+if (!$product) Utils\redirect('index.php');
+
 $seller = Product::getSellerByProduct($product);
 
 Component\Header(Product::getProductNameAttribute($product));

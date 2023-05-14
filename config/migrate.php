@@ -230,6 +230,14 @@ try {
       VALUES (get_seller_id_of_product(new.product_id), CONCAT('Your product ', get_name_of_product(new.product_id), ' has been reviewed.'));
     END;
 
+    CREATE TRIGGER notify_seller_report
+    AFTER INSERT
+    ON report FOR EACH ROW
+    BEGIN
+      INSERT INTO notification_seller(`seller_id`, `message`)
+      VALUES (new.seller_id, CONCAT('You have been reported: ', new.message));
+    END;
+
     CREATE TRIGGER update_product_quantity_after_sale
     AFTER INSERT
     ON product_bill FOR EACH ROW
