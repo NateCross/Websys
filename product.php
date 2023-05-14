@@ -161,7 +161,13 @@ Component\Header(Product::getProductNameAttribute($product));
             >
               Edit
             </button>
-            <form 
+            <button
+              class="review-actions-delete"
+              value="<?= Review::getId($review) ?>"
+            >
+              Delete
+            </button>
+            <!-- <form 
               action="scripts/_delete_review.php"
               method="POST"
             >
@@ -171,7 +177,7 @@ Component\Header(Product::getProductNameAttribute($product));
                 value="<?= Review::getId($review) ?>"
               >
               <button name="submit" value="submit" type="submit">Delete</button>
-            </form>
+            </form> -->
           </div>
         <?php endif; ?>
       </div>
@@ -210,10 +216,31 @@ Component\Header(Product::getProductNameAttribute($product));
         </div>
       </form>
     </dialog>
+    <dialog id="delete_review_dialog">
+      <p>Do you wish to delete this review?</p>
+
+      <form 
+        action="scripts/_delete_review.php"
+        method="POST"
+      >
+        <!-- The value of this is supplied in the JS -->
+        <!-- There is a conflict in ID names so we append -->
+        <!-- "_delete" to it -->
+        <input 
+          type="hidden" 
+          name="review_id_delete"
+          id="review_id_delete"
+        >
+
+        <div class="review-buttons-container">
+          <button type="submit" name="submit" value="submit">Delete</button>
+          <button value="cancel" id="cancel" formmethod="dialog">Cancel</button>
+        </div>
+      </form>
+    </dialog>
   </div>
 <?php endif; ?>
 
-<script src="js/fetch.js"></script>
 <script src="js/product.js"></script>
 
 <?php Component\Footer(); ?>

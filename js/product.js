@@ -34,11 +34,24 @@ const edit_review_dialog = document.getElementById('edit_review_dialog');
 const review_actions_edit = document.querySelectorAll('.review-actions-edit');
 const review_id = document.getElementById('review_id');
 
+const review_actions_delete = document.querySelectorAll('.review-actions-delete');
+const delete_review_dialog = document.getElementById('delete_review_dialog');
+const review_id_delete = document.getElementById('review_id_delete');
+
 review_actions_edit?.forEach((button) => {
   const {value} = button;
 
   button.addEventListener('click', () => {
     review_id.value = value;
     edit_review_dialog?.showModal();
-  })
+  });
+});
+
+review_actions_delete?.forEach((button) => {
+  const {value} = button;
+
+  button.addEventListener('click', () => {
+    review_id_delete.value = value;
+    delete_review_dialog?.showModal();
+  });
 });

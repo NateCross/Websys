@@ -58,6 +58,23 @@ class Review {
   }
 
   /**
+   * Deletes a review through a simple query
+   * @param int $review_id The ID of the review
+   * @return bool True if successful, false otherwise
+   */
+  public static function deleteReview(
+    int $review_id,
+  ): bool {
+    try {
+      return Database::preparedQuery("
+        DELETE FROM review WHERE id = ?;
+      ", $review_id);
+    } catch (Exception $e) {
+      return false;
+    }
+  }
+
+  /**
    * Get all the reviews for a certain product
    * @param $product_id The ID of the product
    * @return array An array of all the reviews
