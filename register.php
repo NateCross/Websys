@@ -2,6 +2,8 @@
 
 require_once 'lib/require.php';
 
+Component\Header('Register');
+
 ?>
 
 <form action="scripts/_register.php" method="POST">
@@ -41,3 +43,5 @@ require_once 'lib/require.php';
 
   <input type="submit" name="submit" value="Submit">
 </form>
+
+<?php Component\Footer(); ?>

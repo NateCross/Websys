@@ -11,6 +11,8 @@ if (!$seller = Seller::getUserViaId($id))
 
 $products = Seller::getProducts($id);
 
+Component\Header("Seller: " . Seller::getUserNameAttribute($seller));
+
 ?>
 
 <h1><?= Seller::getUserNameAttribute($seller) ?></h1>
@@ -38,3 +40,5 @@ of just the array -->
     </li>
   <?php endforeach; ?>
 </ul>
+
+<?php Component\Footer(); ?>

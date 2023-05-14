@@ -19,6 +19,8 @@ $duration = Session::get('error_duration');
 Session::delete('error');
 Session::delete('error_duration');
 
+Component\Header('Error');
+
 ?>
 
 <div class="error-container">
@@ -29,5 +31,7 @@ Session::delete('error_duration');
     redirect('/', <?= $duration ?>);
   </script>
 </div>
+
+<?php Component\Footer(); ?>
 
 <?php die(); ?>

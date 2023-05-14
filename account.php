@@ -26,6 +26,12 @@ else if ($type === 'admin')
   <?php die(); ?>
 <?php endif; ?>
 
+<?php
+
+Component\Header(User::getUserIdAttribute($user));
+
+?>
+
 <h1>Hello, <?= User::getUserNameAttribute($user) ?></h1>
 
 <h2>Edit Account Information</h2>
@@ -101,3 +107,9 @@ else if ($type === 'admin')
   <input type="file" name="image" id="image">
   <input type="submit" name="submit" value="Submit">
 </form>
+
+<?php
+
+Component\Footer();
+
+?>

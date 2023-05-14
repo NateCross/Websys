@@ -18,6 +18,8 @@ $type = filter_input(
 
 if (!$query) return false;
 
+Component\Header("Search: $query");
+
 ?>
 
 <?php if ($type === "product"): ?>
@@ -62,3 +64,5 @@ if (!$query) return false;
     <?php endforeach; ?>
   </ul>
 <?php endif; ?>
+
+<?php Component\Footer(); ?>

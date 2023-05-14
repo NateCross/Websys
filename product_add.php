@@ -12,6 +12,8 @@ else if ($type === 'seller')
 else if ($type === 'admin')
   $user = Admin::getCurrentUser();
 
+Component\Header('Add Product');
+
 ?>
 
 <?php if (!$user): ?>
@@ -69,5 +71,6 @@ else if ($type === 'admin')
   <input type="submit" name="submit" value="Submit">
 </form>
 
-
 <?php endif; ?>
+
+<?php Component\Footer(); ?>

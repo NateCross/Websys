@@ -2,6 +2,8 @@
 
 require_once 'lib/require.php';
 
+Component\Header('Login');
+
 ?>
 
 <form action="scripts/_login.php" method="POST">
@@ -29,3 +31,7 @@ require_once 'lib/require.php';
 
   <input type="submit" name="submit" value="Submit">
 </form>
+
+<?php
+
+Component\Footer();

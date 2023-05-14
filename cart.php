@@ -8,10 +8,10 @@ require_once 'lib/Member.php';
 if (!$member = Member::getCurrentUser())
   Utils\redirect('index.php');
 
-Component\Header('Cart');
-
 $cart = Cart::getCart();
 if ($cart) rsort($cart);
+
+Component\Header('Cart');
 
 ?>
 

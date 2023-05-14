@@ -12,6 +12,9 @@ require_once 'lib/Report.php';
 
 if (Admin::getCurrentUserType() !== 'admin')
   redirect('admin.php');
+
+Component\Header("Admin Panel");
+
 ?>
 
 <h1>Admin Panel</h1>
@@ -126,3 +129,5 @@ if (Admin::getCurrentUserType() !== 'admin')
 </div>
 
 <script src="js/admin-panel.js"></script>
+
+<?php Component\Footer(); ?>

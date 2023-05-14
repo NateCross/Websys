@@ -20,6 +20,8 @@ $product_id = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_ENCODED);
 $product = Product::getProducts($product_id)[0];
 $seller = Product::getSellerById($product_id);
 
+Component\Header('Edit Product');
+
 ?>
 
 <!-- Check for errors -->
@@ -135,5 +137,6 @@ $seller = Product::getSellerById($product_id);
   <input type="submit" name="submit" value="Submit">
 </form>
 
-
 <?php endif; ?>
+
+<?php Component\Footer(); ?>

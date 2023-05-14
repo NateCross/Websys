@@ -2,6 +2,8 @@
 
 require_once 'lib/require.php';
 
+Component\Header("Admin Login");
+
 ?>
 
 <h1>Admin Login</h1>
@@ -17,3 +19,7 @@ require_once 'lib/require.php';
 
   <input type="submit" name="submit" value="Submit">
 </form>
+
+<?php
+
+Component\Footer();
