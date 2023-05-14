@@ -7,12 +7,12 @@ require_once '../lib/Product.php';
 require_once '../lib/Review.php';
 
 if (!isset($_POST['submit']))
-  ErrorHandler::handleError('Invalid POST request');
+  Redirect::handleError('Invalid POST request');
   // Utils\redirect('../index.php');
 
 $type = User::getCurrentUserType();
 if (!$type || $type !== 'member')
-  ErrorHandler::handleError('Not a member');
+  Redirect::handleError('Not a member');
 
 [
   'member_id' => $member_id,
@@ -27,17 +27,17 @@ if (!$type || $type !== 'member')
 ]);
 
 if (!$member = Member::getUserViaId($member_id))
-  ErrorHandler::handleError('No member');
+  Redirect::handleError('No member');
 
 if (!$product = Product::getProducts($product_id))
-  ErrorHandler::handleError('No product');
+  Redirect::handleError('No product');
 
 if (!Review::addReview(
   $member_id,
   $product_id,
   $rating,
   $comment,
-)) ErrorHandler::handleError('Failed to add review');
+)) Redirect::handleError('Failed to add review');
 
 Utils\redirect("../product.php?id=" . $product_id);
 

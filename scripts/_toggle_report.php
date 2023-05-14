@@ -8,7 +8,7 @@ if (Admin::getCurrentUserType() !== 'admin')
   Utils\redirect('../admin.php');
 
 if (!isset($_POST['submit'])) {
-  ErrorHandler::handleError("Invalid form");
+  Redirect::handleError("Invalid form");
 }
 
 $report_id = filter_input(
@@ -18,13 +18,13 @@ $report_id = filter_input(
 );
 
 if (!$report_id) {
-  ErrorHandler::handleError("No report");
+  Redirect::handleError("No report");
 }
 
 if (!$report = Report::getReport($report_id)) 
-  ErrorHandler::handleError("No report");
+  Redirect::handleError("No report");
 
 if (!Report::toggleReportStatus($report_id))
-  ErrorHandler::handleError("Unable to toggle report");
+  Redirect::handleError("Unable to toggle report");
 
 Utils\redirect('../admin-panel.php');

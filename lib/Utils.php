@@ -43,6 +43,28 @@ function redirect(string $location) {
 }
 
 /**
+ * Redirects the user to a page with a message
+ * that then redirects the user to a location
+ * Meant to be used for error or success messages
+ * that then automatically redirect the user
+ */
+function redirectPage(
+  string $message,
+  string $location = 'index.php',
+  int $duration = 3000,
+) {
+  \Session::set('redirect_message', $message);
+  \Session::set('redirect_location', $location);
+  \Session::set('redirect_duration', $duration);
+
+  redirect('../redirect.php');
+
+  // Using require allows this to redirect to the info page
+  // no matter when this occurs 
+  // require_once "../redirect.php";
+}
+
+/**
  * Run this function before accessing the assets folder
  * PHP does not automatically create it when we move files
  */

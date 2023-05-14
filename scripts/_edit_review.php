@@ -5,10 +5,10 @@ require_once "../lib/Member.php";
 require_once "../lib/Review.php";
 
 if (!isset($_POST['submit'])) {
-  ErrorHandler::handleError("Invalid form");
+  Redirect::handleError("Invalid form");
 }
 if (!Member::getCurrentUser())
-  ErrorHandler::handleError("Not currently logged in");
+  Redirect::handleError("Not currently logged in");
 
 [
   'review_id' => $review_id,
@@ -25,6 +25,6 @@ if (!Review::updateReview(
   $rating,
   $comment,
 ))
-  ErrorHandler::handleError('Unable to update review');
+  Redirect::handleError('Unable to update review');
 
 Utils\redirect("../purchases.php");

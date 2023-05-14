@@ -5,10 +5,10 @@ require_once "../lib/Member.php";
 require_once "../lib/Cart.php";
 
 if (!isset($_POST['submit'])) {
-  ErrorHandler::handleError("Invalid form");
+  Utils\redirectPage('ERROR: Invalid form');
 }
 if (!Member::getCurrentUser())
-  ErrorHandler::handleError("Not currently logged in");
+  Utils\redirectPage('ERROR: Not currently logged in');
 
 [
   'product_id' => $product_id,
@@ -19,5 +19,5 @@ if (!Member::getCurrentUser())
 ]);
 
 if (!Cart::addToCart($product_id, $quantity_purchased))
-  ErrorHandler::handleError('Unable to add product to cart');
+  Utils\redirectPage('ERROR: Unable to add product to cart');
 Utils\redirect('../cart.php');

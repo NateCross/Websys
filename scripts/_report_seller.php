@@ -5,7 +5,7 @@ require_once '../lib/Member.php';
 require_once '../lib/Seller.php';
 
 if (!isset($_POST['submit'])) {
-  ErrorHandler::handleError("Invalid form. Please try again.");
+  Redirect::handleError("Invalid form. Please try again.");
 }
 
 [
@@ -19,11 +19,11 @@ if (!isset($_POST['submit'])) {
 ]);
 
 if (!Member::getUserViaId($member_id))
-  ErrorHandler::handleError("No member");
+  Redirect::handleError("No member");
 else if (!Seller::getUserViaId($seller_id))
-  ErrorHandler::handleError("No seller");
+  Redirect::handleError("No seller");
 else if (!$message)
-  ErrorHandler::handleError("No message");
+  Redirect::handleError("No message");
 
 ?>
 

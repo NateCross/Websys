@@ -5,10 +5,10 @@ require_once "../lib/Member.php";
 require_once "../lib/Cart.php";
 
 if (!isset($_POST['submit'])) {
-  ErrorHandler::handleError("Invalid form");
+  Redirect::handleError("Invalid form");
 }
 if (!Member::getCurrentUser())
-  ErrorHandler::handleError("Not currently logged in");
+  Redirect::handleError("Not currently logged in");
 
 [
   'index' => $index,
@@ -17,5 +17,5 @@ if (!Member::getCurrentUser())
 ]);
 
 if (!Cart::deleteProduct($index))
-  ErrorHandler::handleError('Unable to delete product in cart');
+  Redirect::handleError('Unable to delete product in cart');
 Utils\redirect('../cart.php');

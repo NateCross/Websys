@@ -1,6 +1,6 @@
 <?php
 
-class ErrorHandler {
+class Redirect {
   public static function handleError(string $message, int $duration = 3000) {
     Session::set('error', $message);
     Session::set('error_duration', $duration);
