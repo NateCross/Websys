@@ -9,7 +9,7 @@ if (Admin::getCurrentUserType() !== 'admin')
   Utils\redirect('../admin.php');
 
 if (!isset($_POST['submit'])) {
-  Redirect::handleError("Invalid form");
+  Utils\redirectPage("ERROR: Invalid form");
 }
 
 [
@@ -23,24 +23,24 @@ if (!isset($_POST['submit'])) {
 ]);
 
 if (!$seller_id) {
-  Redirect::handleError("No seller");
+  Utils\redirectPage("ERROR: Seller does not exist");
 }
 
 if (!$report_id) {
-  Redirect::handleError("No report");
+  Utils\redirectPage("ERROR: Report does not exist");
 }
 
 if (!$days_suspended) {
-  Redirect::handleError("No days suspended");
+  Utils\redirectPage("ERROR: No days suspended");
 }
 
 if (!$seller = Seller::getUserViaId($seller_id)) 
-  Redirect::handleError("No seller");
+  Utils\redirectPage("ERROR: Seller does not exist");
 
 if (!$report = Report::getReport($report_id))
-  Redirect::handleError("No report");
+  Utils\redirectPage("ERROR: Report does not exist");
 
 if (!Seller::suspendSeller($seller_id, $days_suspended, $report_id))
-  Redirect::handleError("Unable to suspend seller");
+  Utils\redirectPage("ERROR: Unable to suspend seller");
 
 Utils\redirect('../admin-panel.php');

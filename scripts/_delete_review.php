@@ -5,10 +5,10 @@ require_once "../lib/Member.php";
 require_once "../lib/Review.php";
 
 if (!isset($_POST['submit'])) {
-  Redirect::handleError("Invalid form");
+  Utils\redirectPage('ERROR: Invalid form');
 }
 if (!Member::getCurrentUser())
-  Redirect::handleError("Not currently logged in");
+  Utils\redirectPage('ERROR: Not currently logged in');
 
 [
   'review_id_delete' => $review_id,
@@ -19,6 +19,6 @@ if (!Member::getCurrentUser())
 if (!Review::deleteReview(
   $review_id,
 ))
-  Redirect::handleError('Unable to delete review');
+  Utils\redirectPage('ERROR: Unable to delete review');
 
 Utils\redirect("../purchases.php");

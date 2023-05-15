@@ -433,6 +433,15 @@ try {
       (email, name, password)
     VALUES
       ('admin@site.com', 'admin', '$hashedAdminPassword');
+
+    -- Insert the set categories for the website
+    -- TODO: CHANGE THESE CATEGORIES
+    INSERT INTO category
+      (name)
+    VALUES
+      ('Foo'),
+      ('Bar'),
+      ('Baz');
   ");
 
 

@@ -25,7 +25,7 @@ class Seller extends User {
     string $password,
   ): bool {
     try {
-      $user = self::getUserViaEmail($email);
+      $user = self::getUserByEmail($email);
 
       if (!$user) {
         return false;

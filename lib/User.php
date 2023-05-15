@@ -18,7 +18,7 @@ abstract class User {
   // This is used in the various functions
   abstract protected static function getTableName(): string;
 
-  public static function getUserViaEmail(string $email): array | null {
+  public static function getUserByEmail(string $email): array | null {
     $result = Database::query("
       SELECT * FROM "
       . static::getTableName()
@@ -68,6 +68,7 @@ abstract class User {
       $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
 
       return Database::preparedQuery("
+      
         INSERT INTO "
         . static::getTableName()
         . " (email, name, password, address, contact_number) 
@@ -145,7 +146,7 @@ abstract class User {
     string $password
   ): bool {
     try {
-      $user = self::getUserViaEmail($email);
+      $user = self::getUserByEmail($email);
 
       if (!$user) {
         return false;

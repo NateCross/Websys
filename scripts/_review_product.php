@@ -7,12 +7,12 @@ require_once '../lib/Product.php';
 require_once '../lib/Review.php';
 
 if (!isset($_POST['submit']))
-  Redirect::handleError('Invalid POST request');
+  Utils\redirectPage("ERROR: Invalid form");
   // Utils\redirect('../index.php');
 
 $type = User::getCurrentUserType();
 if (!$type || $type !== 'member')
-  Redirect::handleError('Not a member');
+  Utils\redirectPage("ERROR: Not a member");
 
 [
   'member_id' => $member_id,
@@ -27,17 +27,16 @@ if (!$type || $type !== 'member')
 ]);
 
 if (!$member = Member::getUserViaId($member_id))
-  Redirect::handleError('No member');
+  Utils\redirectPage("ERROR: Member does not exist");
 
 if (!$product = Product::getProducts($product_id))
-  Redirect::handleError('No product');
+  Utils\redirectPage("ERROR: Product does not exist");
 
 if (!Review::addReview(
   $member_id,
   $product_id,
   $rating,
   $comment,
-)) Redirect::handleError('Failed to add review');
+)) Utils\redirectPage("ERROR: Failed to add review");
 
 Utils\redirect("../product.php?id=" . $product_id);
-

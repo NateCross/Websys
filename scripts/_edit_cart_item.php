@@ -5,10 +5,10 @@ require_once "../lib/Member.php";
 require_once "../lib/Cart.php";
 
 if (!isset($_POST['submit'])) {
-  Redirect::handleError("Invalid form");
+  Utils\redirectPage('ERROR: Invalid form');
 }
 if (!Member::getCurrentUser())
-  Redirect::handleError("Not currently logged in");
+  Utils\redirectPage('ERROR: Not currently logged in');
 
 [
   'index' => $index,
@@ -19,5 +19,6 @@ if (!Member::getCurrentUser())
 ]);
 
 if (!Cart::editProductQuantityPurchased($index, $quantity_purchased))
-  Redirect::handleError('Unable to edit product in cart');
+  Utils\redirectPage('ERROR: Unable to edit product in cart');
+
 Utils\redirect('../cart.php');

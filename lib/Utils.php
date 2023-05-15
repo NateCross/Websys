@@ -8,9 +8,10 @@ function generateFilename($file): string {
   . getImageExtension($file);
 }
 
-/** * Check file MIME type
+/** 
+ * Check file MIME type
  * Determines the true type of the file     
- * $file The file uploaded from a POST request
+ * @param array $file The file uploaded from a POST request
  */
 function getImageExtension($file): int | string | false {
   $fileinfo = new \finfo(FILEINFO_MIME_TYPE);
@@ -44,9 +45,12 @@ function redirect(string $location) {
 
 /**
  * Redirects the user to a page with a message
- * that then redirects the user to a location
- * Meant to be used for error or success messages
+ * that then redirects the user to a location;
+ * meant to be used for error or success messages
  * that then automatically redirect the user
+ * @param string $message Message to be displayed in the page
+ * @param string $location Location to be redirected to
+ * @param int $duration Time in milliseconds to redirect the user
  */
 function redirectPage(
   string $message,

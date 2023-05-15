@@ -5,10 +5,10 @@ require_once "../lib/Member.php";
 require_once "../lib/Cart.php";
 
 if (!isset($_POST['submit'])) {
-  Redirect::handleError("Invalid form");
+  Utils\redirectPage("ERROR: Invalid form");
 }
 if (!Member::getCurrentUser())
-  Redirect::handleError("Not currently logged in");
+  Utils\redirectPage("ERROR: Not currently logged in");
 
 [
   'bank' => $bank,
@@ -28,9 +28,9 @@ if (!Cart::placeOrder(
   $address,
   $contact_number,
 ))
-  Redirect::handleError('Unable to order items');
+  Utils\redirectPage("ERROR: Unable to order items");
 
 if (!Cart::clearCart())
-  Redirect::handleError('Unable to clear items in cart');
+  Utils\redirectPage("ERROR: Unable to clear items in cart");
 
 Utils\redirect('../index.php');

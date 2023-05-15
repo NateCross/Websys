@@ -4,10 +4,10 @@ require_once 'lib/require.php';
 require_once 'lib/Seller.php';
 
 if (!$id = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT))
-  Redirect::handleError("No ID");
+  Utils\redirectPage("No ID");
 
 if (!$seller = Seller::getUserViaId($id))
-  Redirect::handleError("No Seller");
+  Utils\redirectPage("No Seller");
 
 $products = Seller::getProducts($id);
 
