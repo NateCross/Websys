@@ -5,14 +5,8 @@ require_once "../lib/User.php";
 
 $logout = User::logout();
 
-?>
-
-<?php if ($logout): ?>
-
-<p>Successfully logged out. <a href="/">Click to return</a></p>
-
-<?php else: ?>
-
-<p>Unable to log out. <a href="/">Click to return</a></p>
-
-<?php endif; ?>
+if ($logout) {
+  Utils\redirectPage("Successfully logged out");
+} else {
+  Utils\redirectPage("ERROR: Unable to log out");
+}

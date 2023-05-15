@@ -74,10 +74,7 @@ require_once "../lib/Seller.php";
 <?php if (Seller::updateProductImage(
   $product_id,
   $image,
-)): ?>
-  <p>Successfully edited product.</p>
-  <a href="/">Click to return</a>
-<?php else: ?>
-  <p>An error has occurred.</p>
-  <a href="/">Click to return</a>
-<?php endif; ?>
+))
+  Utils\redirectPage("Successfully edited product image");
+else
+  Utils\redirectPage("ERROR: Unable to edit product image");

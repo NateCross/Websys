@@ -91,6 +91,7 @@ class Review {
           LEFT JOIN member
             ON member.id = review.member_id
         WHERE product_id = $product_id
+        ORDER BY last_modified DESC;
       ");
       return $result->fetch_all(MYSQLI_ASSOC);
     } catch (Exception $e) {

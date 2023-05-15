@@ -27,4 +27,4 @@ if (!Review::updateReview(
 ))
   Utils\redirectPage("ERROR: Unable to update review");
 
-Utils\redirect("../purchases.php");
+Utils\redirectPage("Successfully edited review");

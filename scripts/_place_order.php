@@ -30,7 +30,4 @@ if (!Cart::placeOrder(
 ))
   Utils\redirectPage("ERROR: Unable to order items");
 
-// if (!Cart::clearCart())
-//   Utils\redirectPage("ERROR: Unable to clear items in cart");
-
-Utils\redirect('../index.php');
+Utils\redirectPage('Purchase successful!', 'purchases.php');

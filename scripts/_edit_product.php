@@ -81,10 +81,9 @@ require_once "../lib/Product.php";
   <?php endif; ?>
 <?php endif; ?>
 
-<?php if (Seller::updateProduct($product_id, $name, $description, $quantity, $price, $category)): ?>
-  <p>Successfully edited product.</p>
-  <a href="/">Click to return</a>
-<?php else: ?>
-  <p>An error has occurred.</p>
-  <a href="/">Click to return</a>
-<?php endif; ?>
+<?php 
+
+if (Seller::updateProduct($product_id, $name, $description, $quantity, $price, $category))
+  Utils\redirectPage("Successfully edited product");
+else
+    Utils\redirectPage("ERROR: Unable to edit product");

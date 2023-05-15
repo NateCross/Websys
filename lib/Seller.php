@@ -264,7 +264,8 @@ class Seller extends User {
         FROM seller
           LEFT JOIN product
           ON product.seller_id = seller.id
-          AND seller.id = $seller_id;
+          AND seller.id = $seller_id
+        ORDER BY last_modified DESC;
       ");
       return $result->fetch_all(MYSQLI_ASSOC);
     } catch (Exception $e) {

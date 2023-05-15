@@ -59,10 +59,7 @@ $type = User::getCurrentUserType();
   $password,
   $address,
   $contact_number,
-))): ?>
-  <p>Successfully edited user.</p>
-  <a href="/">Click to return</a>
-<?php else: ?>
-  <p>An error has occurred.</p>
-  <a href="/">Click to return</a>
-<?php endif; ?>
+)))
+  Utils\redirectPage("Successfully edited user");
+else
+  Utils\redirectPage("ERROR: Unable to edit user");

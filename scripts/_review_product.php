@@ -39,4 +39,4 @@ if (!Review::addReview(
   $comment,
 )) Utils\redirectPage("ERROR: Failed to add review");
 
-Utils\redirect("../product.php?id=" . $product_id);
+Utils\redirectPage("Successfully reviewed product", "product.php?id=" . $product_id);

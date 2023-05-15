@@ -30,10 +30,10 @@ $type = filter_input(INPUT_POST, 'type', FILTER_SANITIZE_SPECIAL_CHARS);
 
 if ($type === "Member") {
   if (Member::register($email, $username, $password, $address, $contact_number))
-    header('Location: /');
+    Utils\redirectPage("Registered as $username", 'login.php');
 } else if ($type === "Seller") {
   if (Seller::register($email, $username, $password, $address, $contact_number))
-    header('Location: /');
+    Utils\redirectPage("Registered as $username", 'login.php');
 } else if ($type === "Admin") {
   if (Admin::register($email, $username, $password, $address, $contact_number))
     Utils\redirect('../admin-panel.php');

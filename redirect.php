@@ -29,11 +29,12 @@ Component\Header('Redirecting...');
 <div class="redirect-container">
   <p><?= $message; ?></p>
   <p>Redirecting...</p>
-  <script type="module">
-    import { redirect } from './js/utils.js';
-    redirect('<?= $location ?>', <?= $duration ?>);
-  </script>
 </div>
+
+<script type="module">
+  import { redirect } from './js/utils.js';
+  redirect('<?= $location ?>', <?= $duration ?>);
+</script>
 
 <?php Component\Footer(); ?>
 

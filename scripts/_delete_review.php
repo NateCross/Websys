@@ -21,4 +21,4 @@ if (!Review::deleteReview(
 ))
   Utils\redirectPage('ERROR: Unable to delete review');
 
-Utils\redirect("../purchases.php");
+Utils\redirectPage('Successfully deleted review');

@@ -53,10 +53,7 @@ require_once "../lib/Seller.php";
 )) || ($type === 'seller' && Seller::updateUserImage(
   $user_id,
   $image,
-))): ?>
-  <p>Successfully edited image.</p>
-  <a href="../account.php">Click to return</a>
-<?php else: ?>
-  <p>An error has occurred.</p>
-  <a href="../account.php">Click to return</a>
-<?php endif; ?>
+)))
+  Utils\redirectPage("Successfully edited image");
+else
+  Utils\redirectPage("ERROR: Unable to edit account image");

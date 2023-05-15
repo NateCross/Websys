@@ -13,13 +13,14 @@ $type = filter_input(INPUT_POST, 'type', FILTER_SANITIZE_SPECIAL_CHARS);
 
 if ($type === "Member") {
   if (Member::login($email, $password))
-    header('Location: /');
+    Utils\redirectPage("Logged in as $email");
 } else if ($type === "Seller") {
   if (Seller::login($email, $password))
-    header('Location: /');
+    Utils\redirectPage("Logged in as $email");
 } else if ($type === "Admin") {
   if (Admin::login($email, $password))
-    header('Location: ../admin-panel.php');
+    Utils\redirectPage("Logged in as $email", 'admin-panel.php');
+    // header('Location: ../admin-panel.php');
 }
 
 echo "Unable to login. Redirecting to home page...";
