@@ -24,7 +24,7 @@ function formatSubtotal() {
     currency: 'PHP',
   }).format(value >= 0 ? value : 0);
 }
-formatSubtotal();
+if (subtotal) formatSubtotal();
 quantity_purchased?.addEventListener('change', () => {
   formatSubtotal();
 });

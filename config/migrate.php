@@ -439,9 +439,9 @@ try {
     INSERT INTO category
       (name)
     VALUES
-      ('Foo'),
-      ('Bar'),
-      ('Baz');
+      ('Board Games'),
+      ('Gaming Accessories'),
+      ('Technology');
   ");
 
 

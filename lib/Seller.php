@@ -181,8 +181,6 @@ class Seller extends User {
     try {
       if (!Product::getProducts($product_id)) 
         return false;
-      if (!self::getCurrentUser()) return false;
-      if (!self::currentUserIsSeller()) return false;
 
       $result = Database::preparedQuery("
         UPDATE product SET

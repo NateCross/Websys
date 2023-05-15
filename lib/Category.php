@@ -58,7 +58,7 @@ class Category {
       SELECT product.*
       FROM category
         INNER JOIN product_category
-          ON product_category.product_id = category.id
+          ON product_category.category_id = category.id
           AND category.id = $id
         INNER JOIN product
           ON product_category.product_id = product.id;

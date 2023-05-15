@@ -38,23 +38,25 @@ Component\Header('Edit Product');
     redirect();
   </script>
   <?php die(); ?>
-<?php elseif (!$type === 'seller'): ?>
-  <p>Not a seller. Please try again.</p>
-  <script type="module">
-    import { redirect } from './js/utils.js';
-    redirect('/', 3000);
-  </script>
-  <?php die(); ?>
-<?php elseif (
-  User::getUserIdAttribute($user) 
-  !== User::getUserIdAttribute($seller)
-): ?>
-  <p>Not the seller of this product. Please try again.</p>
-  <script type="module">
-    import { redirect } from './js/utils.js';
-    redirect('/', 3000);
-  </script>
-  <?php die(); ?>
+<?php elseif ($type !== 'admin'): ?>
+  <?php if (!$type === 'seller'): ?>
+    <p>Not a seller. Please try again.</p>
+    <script type="module">
+      import { redirect } from './js/utils.js';
+      redirect('/', 3000);
+    </script>
+    <?php die(); ?>
+  <?php elseif (
+    User::getUserIdAttribute($user) 
+    !== User::getUserIdAttribute($seller)
+  ): ?>
+    <p>Not the seller of this product. Please try again.</p>
+    <script type="module">
+      import { redirect } from './js/utils.js';
+      redirect('/', 3000);
+    </script>
+    <?php die(); ?>
+  <?php endif; ?>
 <?php else: ?>
 
 <h1>Edit Product</h1>

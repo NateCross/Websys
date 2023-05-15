@@ -109,7 +109,7 @@ Component\Header('Cart');
   <button id="showDialog">Checkout</button>
 </div>
 
-<!-- Modal that displpays when submit order is clicked -->
+<!-- Modal that displays when submit order is clicked -->
 <dialog id="submitOrderDialog">
   <h2>Checkout</h2>
   <p class="submit-order-text-container">
@@ -182,7 +182,7 @@ Component\Header('Cart');
         <input 
           type="text" 
           name="contact_number" 
-          id="contact)number"
+          id="contact_number"
           value="<?= Member::getUserContactNumberAttribute($member) ?>"
           required
         >

@@ -43,8 +43,14 @@ Component\Header('Add Product');
   <label for="description">Description</label>
   <textarea name="description" id="description" cols="30" rows="10"></textarea>
 
+  <!-- <label for="category">Category</label>
+  <input type="text" name="category" id="category" required> -->
   <label for="category">Category</label>
-  <input type="text" name="category" id="category" required>
+  <select name="category" id="category">
+    <option value="Board Games">Board Games</option>
+    <option value="Gaming Accessories">Gaming Accessories</option>
+    <option value="Technology">Technology</option>
+  </select>
 
   <label for="quantity">Quantity</label>
   <input 

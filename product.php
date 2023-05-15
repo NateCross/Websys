@@ -1,12 +1,7 @@
-<?php if (!$id = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_ENCODED)): ?>
-  <script type="module">
-    import { redirect } from './js/utils.js';
-    redirect();
-  </script>
-  <?php die(); ?>
-<?php endif; ?>
+<?php 
 
-<?php
+if (!$id = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_ENCODED))
+  Utils\redirect('index.php');
 
 require_once 'lib/require.php';
 require_once 'lib/Product.php';
@@ -30,17 +25,11 @@ $seller = Product::getSellerByProduct($product);
 
 Component\Header(Product::getProductNameAttribute($product));
 
-?>
+// if (!$product) 
+//   Utils\redirectPage(
+//     "Product not found. Redirecting to home page..."
+//   );
 
-<?php if(!$product): ?>
-  <p>Product not found. Redirecting to home page...</p>
-  <script type="module">
-    import { redirect } from 'lib/utils.js';
-    redirect('/', 3000);
-  </script>
-<?php die(); endif; ?>
-
-<?php
   $user_is_seller = isset($user) && (
     User::getCurrentUserType() === 'seller'
     && User::getUserIdAttribute($user)
@@ -49,6 +38,10 @@ Component\Header(Product::getProductNameAttribute($product));
 
   $user_is_a_member = isset($user) && (
     User::getCurrentUserType() === 'member'
+  );
+
+  $user_is_admin = isset($user) && (
+    User::getCurrentUserType() === 'admin'
   );
 ?>
 
@@ -63,7 +56,7 @@ Component\Header(Product::getProductNameAttribute($product));
 <?php endif; ?>
 <p>Quantity: <?= Product::getProductQuantityAttribute($product) ?></p>
 
-<?php if($user_is_seller): ?>
+<?php if($user_is_seller || $user_is_admin): ?>
   <a href="product_edit.php?id=<?= $id ?>">Edit Product</a>
   <form action="scripts/_delete_product.php" method="POST">
     <input 
@@ -99,7 +92,7 @@ Component\Header(Product::getProductNameAttribute($product));
       <!-- for manipulating subtotal display -->
       <input type="hidden" id="product_price" name="product_price" value="<?= Product::getProductPriceAttribute($product) ?>">
 
-      Total: <span id="subtotal"> - </span>
+      Total: <span id="subtotal">-</span>
     </output>
   </div>
 
@@ -153,10 +146,12 @@ Component\Header(Product::getProductNameAttribute($product));
         <p class="review-comment">
           <?= Review::getComment($review) ?>
         </p>
-        <?php if ($type === 'member' 
-          && Member::getUserIdAttribute($user) 
-            === Review::getMemberId($review)
-        ): ?>
+        <?php 
+          if (($type === 'member' 
+            && Member::getUserIdAttribute($user) 
+              === Review::getMemberId($review)
+          ) || $type === 'admin' ): 
+        ?>
           <div class="review-actions-container">
             <button
               class="review-actions-edit"
@@ -170,17 +165,6 @@ Component\Header(Product::getProductNameAttribute($product));
             >
               Delete
             </button>
-            <!-- <form 
-              action="scripts/_delete_review.php"
-              method="POST"
-            >
-              <input 
-                type="hidden" 
-                name="review_id"
-                value="<?= Review::getId($review) ?>"
-              >
-              <button name="submit" value="submit" type="submit">Delete</button>
-            </form> -->
           </div>
         <?php endif; ?>
       </div>

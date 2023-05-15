@@ -13,6 +13,7 @@
 
 require_once "../lib/require.php";
 require_once "../lib/Seller.php";
+require_once "../lib/Admin.php";
 require_once "../lib/Product.php";
 
 $product = Product::getProducts($id)[0];
@@ -46,26 +47,29 @@ $seller_id = Product::getProductSellerIdAttribute($product);
 <?php endif; ?>
 
 <!-- Error checks before delete -->
-<?php if (Seller::getCurrentUserType() !== 'seller'): ?>
-  <p>User is not a seller. Redirecting to home page...</p>
-  <script type="module">
-    import {
-      redirect
-    } from '../js/utils.js';
-    redirect('/', 3000);
-  </script>
-  <?php die(); ?>
-<?php endif; ?>
+<?php if (Admin::getCurrentUserType() !== 'admin'): ?>
+  <?php 
+    if (Seller::getCurrentUserType() !== 'seller'): ?>
+    <p>User is not a seller. Redirecting to home page...</p>
+    <script type="module">
+      import {
+        redirect
+      } from '../js/utils.js';
+      redirect('/', 3000);
+    </script>
+    <?php die(); ?>
+  <?php endif; ?>
 
-<?php if ($user_id !== $seller_id): ?>
-  <p>User is not the seller of this item. Redirecting to home page...</p>
-  <script type="module">
-    import {
-      redirect
-    } from '../js/utils.js';
-    redirect('/', 3000);
-  </script>
-  <?php die(); ?>
+  <?php if ($user_id !== $seller_id): ?>
+    <p>User is not the seller of this item. Redirecting to home page...</p>
+    <script type="module">
+      import {
+        redirect
+      } from '../js/utils.js';
+      redirect('/', 3000);
+    </script>
+    <?php die(); ?>
+  <?php endif; ?>
 <?php endif; ?>
 
 <?php if (!Product::deleteProduct($id)): ?>

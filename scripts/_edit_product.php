@@ -5,14 +5,13 @@ require_once "../lib/User.php";
 require_once "../lib/Seller.php";
 require_once "../lib/Product.php";
 
-
 ?>
 
 <?php if (!isset($_POST['submit'])): ?>
 
 <p>Invalid form. Please try again.</p>
 <script type="module">
-  import { redirect } from '.././js/utils.js';
+  import { redirect } from '../js/utils.js';
   redirect('/', 3000);
 </script>
 
@@ -61,33 +60,28 @@ require_once "../lib/Product.php";
     redirect();
   </script>
   <?php die(); ?>
-<?php elseif (!$type === 'seller'): ?>
-  <p>Not a seller. Please try again.</p>
-  <script type="module">
-    import { redirect } from '../js/utils.js';
-    redirect('/', 3000);
-  </script>
-  <?php die(); ?>
-<?php elseif (
-  User::getUserIdAttribute($user) 
-  !== User::getUserIdAttribute($seller)
-): ?>
-  <p>Not the seller of this product. Please try again.</p>
-  <script type="module">
-    import { redirect } from '../js/utils.js';
-    redirect('/', 3000);
-  </script>
-  <?php die(); ?>
+<?php elseif($type !== 'admin'): ?>
+  <?php if (!$type === 'seller'): ?>
+    <p>Not a seller. Please try again.</p>
+    <script type="module">
+      import { redirect } from '../js/utils.js';
+      redirect('/', 3000);
+    </script>
+    <?php die(); ?>
+  <?php elseif (
+    User::getUserIdAttribute($user) 
+    !== User::getUserIdAttribute($seller)
+  ): ?>
+    <p>Not the seller of this product. Please try again.</p>
+    <script type="module">
+      import { redirect } from '../js/utils.js';
+      redirect('/', 3000);
+    </script>
+    <?php die(); ?>
+  <?php endif; ?>
 <?php endif; ?>
 
-<?php if (Seller::updateProduct(
-  $product_id,
-  $name, 
-  $description, 
-  $quantity, 
-  $price, 
-  $category,
-)): ?>
+<?php if (Seller::updateProduct($product_id, $name, $description, $quantity, $price, $category)): ?>
   <p>Successfully edited product.</p>
   <a href="/">Click to return</a>
 <?php else: ?>
