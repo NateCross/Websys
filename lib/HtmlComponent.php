@@ -39,11 +39,12 @@ function Header(string $title) { ?>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?= $title; ?></title>
+    <link rel="stylesheet" href="style.css">
   </head>
   <body>
     <header>
       <div class="store-logo">
-        <a href="index.php">Insert Store Name Here</a>
+        <a href="index.php">Turn Zero Online</a>
       </div>
       <div class="header-account-container">
         <?php if ($user): ?>
@@ -53,10 +54,10 @@ function Header(string $title) { ?>
           >
             <input type="submit" name="submit" value="Logout">
           </form>
-          <!-- <button id="logout">Logout</button> -->
           <a href="account.php">Account</a>
         <?php else: ?>
           <a href="login.php">Login</a>
+          <a> | </a>
           <a href="register.php">Register</a>
         <?php endif; ?>
       </div>
@@ -83,14 +84,23 @@ function Header(string $title) { ?>
     </header>
 <?php } ?>
 
-<?php
+<?php 
+
 /**
  * Footer component to be placed at the bottom of every page
  * Primary purpose is to properly close the HTML
  */
-?>
-<?php function Footer() { ?>
+function Footer() { 
 
+?>
+<footer>
+  <div class="content-wrapper">
+    <p> 
+      &copy; <script type="text/javascript">document.write( new Date().getFullYear() );</script>
+  Turn Zero Online
+    </p>
+  </div>
+</footer>
 </body>
 </html>
 

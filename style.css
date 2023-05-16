@@ -1,0 +1,63 @@
+* {
+	box-sizing: border-box;
+	font-family: -apple-system, BlinkMacSystemFont, "segoe ui", roboto, oxygen, ubuntu, cantarell, "fira sans", "droid sans", "helvetica neue", Arial, sans-serif;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+header{
+    width: auto;
+	margin: 0 auto;
+    padding: 30px;
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid #EEEEEE;
+
+}
+
+.store-logo{
+    font-weight: bold;
+    font-size: large;
+}
+.header-account-container{
+   
+
+}
+
+.header-account-container{
+   
+}
+
+.header-search-container{
+    
+}
+
+a{
+    text-decoration: none;
+    color:inherit;
+}
+
+body {
+	position: relative;
+	min-height: 100%;
+	color: #555555;
+	background-color: #FFFFFF;
+	margin: 0;
+	padding-bottom: 50px; /* Same height as footer */
+}
+
+img{
+    height: 200px;
+    width: 200px;
+}
+
+footer{
+    width: auto;
+    border-top: 1px solid #EEEEEE;
+    z-index: 10;
+    margin-top: 1000px;
+    position: relative;
+    clear: both;
+    padding-top: 50px;
+    padding-left: 200px;
+}
