@@ -8,7 +8,10 @@ if (!isset($_POST['submit'])) {
   Utils\redirectPage('ERROR: Invalid form');
 }
 if (!Member::getCurrentUser())
-  Utils\redirectPage('ERROR: Not currently logged in');
+  Utils\redirect("../login.php");
+
+if (Member::getCurrentUserType() !== 'member')
+  Utils\redirect("../login.php");
 
 [
   'product_id' => $product_id,

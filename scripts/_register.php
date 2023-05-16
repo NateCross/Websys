@@ -36,14 +36,7 @@ if ($type === "Member") {
     Utils\redirectPage("Registered as $username", 'login.php');
 } else if ($type === "Admin") {
   if (Admin::register($email, $username, $password, $address, $contact_number))
-    Utils\redirect('../admin-panel.php');
+    Utils\redirectPage("Registered as $username", 'admin-panel.php');
 }
 
-echo "Unable to create account. Please try again.";
-
-?>
-
-<script type="module">
-  import { redirect } from '../js/utils.js';
-  redirect('/', 3000);
-</script>
+Utils\redirectPage("ERROR: Unable to register", "register.php");

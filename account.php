@@ -28,7 +28,7 @@ else if ($type === 'admin')
 
 <?php
 
-Component\Header(User::getUserIdAttribute($user));
+Component\Header(User::getUserNameAttribute($user));
 
 ?>
 
@@ -43,50 +43,62 @@ Component\Header(User::getUserIdAttribute($user));
     value="<?= User::getUserIdAttribute($user) ?>"
   >
 
-  <label for="email">Email</label>
-  <input 
-    type="email" 
-    name="email" 
-    id="email" 
-    required
-    value="<?= User::getUserEmailAttribute($user) ?>"
-  >
+  <div class="form-input-container">
+    <label for="email">Email</label>
+    <input 
+      type="email" 
+      name="email" 
+      id="email" 
+      required
+      value="<?= User::getUserEmailAttribute($user) ?>"
+    >
+  </div>
 
-  <label for="username">Username</label>
-  <input 
-    type="text" 
-    name="username" 
-    id="username" 
-    required
-    value="<?= User::getUserNameAttribute($user) ?>"
-  >
+  <div class="form-input-container">
+    <label for="username">Username</label>
+    <input 
+      type="text" 
+      name="username" 
+      id="username" 
+      required
+      value="<?= User::getUserNameAttribute($user) ?>"
+    >
+  </div>
 
-  <label for="address">Address</label>
-  <input 
-    type="text" 
-    name="address" 
-    id="address" 
-    required
-    value="<?= User::getUserAddressAttribute($user) ?>"
-  >
+  <div class="form-input-container">
+    <label for="address">Address</label>
+    <input 
+      type="text" 
+      name="address" 
+      id="address" 
+      required
+      value="<?= User::getUserAddressAttribute($user) ?>"
+    >
+  </div>
 
-  <label for="contact_number">Contact Number</label>
-  <input 
-    type="text" 
-    name="contact_number" 
-    id="contact_number" 
-    required
-    value="<?= User::getUserContactNumberAttribute($user) ?>"
-  >
+  <div class="form-input-container">
+    <label for="contact_number">Contact Number</label>
+    <input 
+      type="text" 
+      name="contact_number" 
+      id="contact_number" 
+      required
+      value="<?= User::getUserContactNumberAttribute($user) ?>"
+    >
+  </div>
 
-  <label for="password">Password</label>
-  <input 
-    type="password" 
-    name="password" 
-    id="password" 
-  >
+  <div class="form-input-container">
+    <label for="password">Password</label>
+    <input 
+      type="password" 
+      name="password" 
+      id="password" 
+    >
+  </div>
 
-  <input type="submit" name="submit" value="Submit">
+  <div class="form-input-container">
+    <input type="submit" name="submit" value="Submit">
+  </div>
 </form>
 
 <h2>Edit Profile Picture</h2>
@@ -104,8 +116,13 @@ Component\Header(User::getUserIdAttribute($user));
     value="<?= User::getUserIdAttribute($user) ?>"
   >
 
-  <input type="file" name="image" id="image">
-  <input type="submit" name="submit" value="Submit">
+  <div class="form-input-container">
+    <input type="file" name="image" id="image">
+  </div>
+
+  <div class="form-input-container">
+    <input type="submit" name="submit" value="Submit">
+  </div>
 </form>
 
 <?php

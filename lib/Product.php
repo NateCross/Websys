@@ -137,7 +137,7 @@ class Product {
   public static function getProductCategoryAttribute($product) {
     // $category = self::getCategories($product['id']);
     // var_dump($category);
-    return self::getCategories($product['id'])[0];
+    return self::getCategories($product['id'])[0]['name'];
   }
 
   public static function getProductQuantityAttribute($product) {

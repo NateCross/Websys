@@ -27,10 +27,11 @@ else if (!$message)
 
 ?>
 
-<?php if (Member::reportSeller($member_id, $seller_id, $message)): ?>
-  <p>Successfully reported seller.</p>
-  <a href="../index.php">Click to return</a>
-<?php else: ?>
-  <p>An error has occurred</p>
-  <a href="../index.php">Click to return</a>
-<?php endif; ?>
+<?php 
+
+if (Member::reportSeller($member_id, $seller_id, $message))
+  Utils\redirectPage('Successfully reported seller');
+else
+  Utils\redirectPage('ERROR: Seller report unsuccessful');
+
+?>

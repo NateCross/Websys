@@ -20,16 +20,6 @@ if ($type === "Member") {
 } else if ($type === "Admin") {
   if (Admin::login($email, $password))
     Utils\redirectPage("Logged in as $email", 'admin-panel.php');
-    // header('Location: ../admin-panel.php');
 }
 
-echo "Unable to login. Redirecting to home page...";
-
-?>
-
-<script type="module">
-  import {
-    redirect
-  } from '../js/utils.js';
-  redirect('/', 3000);
-</script>
+Utils\redirectPage("ERROR: Unable to login", 'login.php');
