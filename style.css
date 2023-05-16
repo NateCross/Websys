@@ -97,6 +97,10 @@ ul {
   margin-left: 0;
 }
 
+input[type="submit"] {
+  cursor: pointer;
+}
+
 .form-input-container {
   display: flex;
   flex-direction: column;
@@ -139,7 +143,8 @@ ul {
   text-align: center;
 }
 
-.product-image-container img {
+.product-image-container img,
+table img {
   border: 2px solid #555555;
   transition: border 0.2s ease-in-out;
 }
@@ -167,4 +172,42 @@ ul {
 
 .cart-quantity-container input[type="number"] {
   width: 4rem;
+}
+
+.subtotal-container {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.checkout-container button {
+  font-size: 1.25rem;
+}
+
+.cart-order-expiration-date {
+  display: flex;
+  flex-direction: row;
+  gap: 0.25rem;
+}
+
+.cart-order-expiration-date {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cart-order-expiration-date input {
+  width: 4rem;
+}
+
+#submitOrderDialog form {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.bank-input {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
 }

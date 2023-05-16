@@ -72,7 +72,7 @@ Component\Header('Cart');
             <input 
               type="hidden" 
               name="index" 
-              value="<?= $index ?>"
+              value="<?= count($cart) - 1 - $index ?>"
             >
             <input type="submit" value="Update Quantity" name="submit">
           </form>
@@ -103,9 +103,9 @@ Component\Header('Cart');
 
 <!-- Display the subtotal in frontend -->
 <!-- But it will be recalculated in backend so don't pass this -->
-<div class="subtotal-container">
+<p class="subtotal-container">
   Subtotal: <?= Utils\formatCurrency($subtotal) ?>
-</div>
+</p>
 
 <div class="checkout-container">
   <button id="showDialog">Checkout</button>
@@ -124,52 +124,57 @@ Component\Header('Cart');
     method="POST"
   >
     <div class="bank-details-container">
-      <div class="place-order-bank">
+      <div class="form-input-container">
         <label for="bank">Bank</label>
-        <select name="bank" id="bank">
-          <option value="bdo">BDO</option>
-          <option value="bpi">BPI</option>
-          <option value="other">Other</option>
-        </select>
-        <input type="text" name="bank_other" id="bank_other" hidden>
+        <div class="bank-input">
+          <select name="bank" id="bank">
+            <option value="bdo">BDO</option>
+            <option value="bpi">BPI</option>
+            <option value="other">Other</option>
+          </select>
+          <input type="text" name="bank_other" id="bank_other" hidden>
+        </div>
       </div>
 
-      <div class="place-order-owner">
+      <div class="form-input-container">
         <label for="owner">Owner</label>
         <input type="text" name="owner" id="owner" required>
       </div>
 
-      <div class="place-order-cvv">
+      <div class="form-input-container">
         <label for="cvv">CVV</label>
         <input type="text" name="cvv" id="cvv" required>
       </div>
 
-      <div class="place-order-card-number">
+      <div class="form-input-container">
         <label for="card_number">Card Number</label>
         <input type="text" name="card_number" id="card_number" required>
       </div>
 
-      <div class="place-order-expiration-date">
+      <div class="form-input-container">
         <label>Expiration Date</label>
-        <select name="expiration_date_month" id="expiration_date_month">
-          <option value="01">January</option>
-          <option value="02">February </option>
-          <option value="03">March</option>
-          <option value="04">April</option>
-          <option value="05">May</option>
-          <option value="06">June</option>
-          <option value="07">July</option>
-          <option value="08">August</option>
-          <option value="09">September</option>
-          <option value="10">October</option>
-          <option value="11">November</option>
-          <option value="12">December</option>
-        </select>
-        <input type="number" min="00" max="99" name="expiration_date_year" id="expiration_date_year" required>
+        <div class="cart-order-expiration-date">
+          <select name="expiration_date_month" id="expiration_date_month">
+            <option value="01">January</option>
+            <option value="02">February </option>
+            <option value="03">March</option>
+            <option value="04">April</option>
+            <option value="05">May</option>
+            <option value="06">June</option>
+            <option value="07">July</option>
+            <option value="08">August</option>
+            <option value="09">September</option>
+            <option value="10">October</option>
+            <option value="11">November</option>
+            <option value="12">December</option>
+          </select>
+          <input type="number" min="00" max="99" name="expiration_date_year" id="expiration_date_year" required>
+        </div>
       </div>
     </div>
+
     <div class="shipping-details-container">
-      <div class="shipping-details-address">
+      <div class="form-input-container">
         <label for="address">Address</label>
         <input 
           type="text" 
@@ -179,7 +184,7 @@ Component\Header('Cart');
           required
         >
       </div>
-      <div class="shipping-details-contact-number">
+      <div class="form-input-container">
         <label for="contact_number">Contact Number</label>
         <input 
           type="text" 
@@ -191,8 +196,10 @@ Component\Header('Cart');
       </div>
     </div>
 
-    <input type="submit" name="submit" value="Place Order">
-    <button value="cancel" id="cancel" formmethod="dialog">Cancel</button>
+    <div class="form-submit-container">
+      <input type="submit" name="submit" value="Place Order">
+      <button value="cancel" id="cancel" formmethod="dialog">Cancel</button>
+    </div>
   </form>
 </dialog>
 
