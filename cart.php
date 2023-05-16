@@ -56,25 +56,27 @@ Component\Header('Cart');
       </td>
       <td>
         <p>In stock: <?= Product::getProductQuantityAttribute($product) ?></p>
-        <form 
-          action="scripts/_edit_cart_item.php"
-          method="POST"
-        >
-          <input 
-            type="number" 
-            name="quantity_purchased" 
-            id="quantity_purchased"
-            value="<?= $quantity_purchased = Cart::getProductQuantityPurchased($product) ?>"
-            min="1"
-            max="<?= Product::getProductQuantityAttribute($product) ?>"
+        <div class="cart-quantity-container">
+          <form 
+            action="scripts/_edit_cart_item.php"
+            method="POST"
           >
-          <input 
-            type="hidden" 
-            name="index" 
-            value="<?= $index ?>"
-          >
-          <input type="submit" value="Update Quantity" name="submit">
-        </form>
+            <input 
+              type="number" 
+              name="quantity_purchased" 
+              id="quantity_purchased"
+              value="<?= $quantity_purchased = Cart::getProductQuantityPurchased($product) ?>"
+              min="1"
+              max="<?= Product::getProductQuantityAttribute($product) ?>"
+            >
+            <input 
+              type="hidden" 
+              name="index" 
+              value="<?= $index ?>"
+            >
+            <input type="submit" value="Update Quantity" name="submit">
+          </form>
+        </div>
       </td>
       <td>
         <?php $subtotal += $price * $quantity_purchased ?>

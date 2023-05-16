@@ -38,7 +38,8 @@ Component\Header('Home');
       </li>
     <?php endforeach; ?>
   </ul>
-
+<?php } else { ?>
+  <p>No products found.</p>
 <?php } ?>
 
 <script src='js/index.js'></script>

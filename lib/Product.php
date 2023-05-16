@@ -180,6 +180,7 @@ class Product {
           " : "")
       . "WHERE product.name 
         LIKE '%$query%' "
+      . "AND product.quantity > 0 "
       . (!$include_suspend ? "
           AND seller.suspended_until IS NULL
         " : "")

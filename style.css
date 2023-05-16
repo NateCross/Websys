@@ -20,7 +20,7 @@ header {
   font-size: large;
 }
 
-.header-categories-container {
+.header-categories-container, .header-actions-container {
   display: flex;
   flex-direction: column;
   gap: 0.25rem;
@@ -141,7 +141,7 @@ ul {
 
 .product-image-container img {
   border: 2px solid #555555;
-  transition: all 0.2s ease-in-out;
+  transition: border 0.2s ease-in-out;
 }
 
 .product-image-container img:hover {
@@ -159,4 +159,12 @@ ul {
   font-weight: bold !important;
   margin-top: 0.5rem !important;
   margin-bottom: 0.5rem !important;
+}
+
+.redirect-container {
+  font-size: 1.5rem;
+}
+
+.cart-quantity-container input[type="number"] {
+  width: 4rem;
 }

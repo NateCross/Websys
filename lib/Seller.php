@@ -262,7 +262,7 @@ class Seller extends User {
       $result = Database::query("
         SELECT product.*
         FROM seller
-          LEFT JOIN product
+          INNER JOIN product
           ON product.seller_id = seller.id
           AND seller.id = $seller_id
         ORDER BY last_modified DESC;
