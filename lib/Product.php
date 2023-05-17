@@ -96,7 +96,7 @@ class Product {
       $result = Database::query("
         SELECT seller.id, seller.name
         FROM seller
-          LEFT JOIN product
+          INNER JOIN product
           ON product.seller_id = seller.id
           AND product.id = $id;
       ");
@@ -107,7 +107,7 @@ class Product {
   }
 
   public static function getSellerByProduct($product) {
-    return self::getSellerById($product['seller_id']);
+    return self::getSellerById($product['id']);
   }
 
   public static function getImagePath($product) {

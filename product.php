@@ -19,6 +19,7 @@ else if ($type === 'seller')
 else if ($type === 'admin')
   $user = Admin::getCurrentUser();
 
+
 $product = Product::getProducts($id)[0];
 if (!$product) Utils\redirect('index.php');
 
@@ -26,24 +27,23 @@ $seller = Product::getSellerByProduct($product);
 
 Component\Header(Product::getProductNameAttribute($product));
 
-// if (!$product) 
-//   Utils\redirectPage(
-//     "Product not found. Redirecting to home page..."
-//   );
+if (!$product) 
+  Utils\redirectPage("Product not found");
 
-  $user_is_seller = isset($user) && (
-    User::getCurrentUserType() === 'seller'
-    && User::getUserIdAttribute($user)
-      === Seller::getUserIdAttribute($seller)
-  );
+$user_is_seller = isset($user) && (
+  User::getCurrentUserType() === 'seller'
+  && User::getUserIdAttribute($user)
+    === Seller::getUserIdAttribute($seller)
+);
 
-  $user_is_a_member = isset($user) && (
-    User::getCurrentUserType() === 'member'
-  );
+$user_is_a_member = isset($user) && (
+  User::getCurrentUserType() === 'member'
+);
 
-  $user_is_admin = isset($user) && (
-    User::getCurrentUserType() === 'admin'
-  );
+$user_is_admin = isset($user) && (
+  User::getCurrentUserType() === 'admin'
+);
+
 ?>
 
 <div class="product-display-main-container">
@@ -251,6 +251,10 @@ Component\Header(Product::getProductNameAttribute($product));
       <div class="dialog-button-container">
         <button id="showDialog">Report Seller</button>
       </div>
+    <?php elseif (
+       !Product::getProductQuantityAttribute($product)
+    ): ?>
+      <p><b>Out of stock!</b></p>
     <?php else: ?>
       <button>
         <a href="login.php">
@@ -261,10 +265,15 @@ Component\Header(Product::getProductNameAttribute($product));
   </div>
 </div>
 
-<div class="product-display-description-container">
-  <h2>Product Description</h2>
-  <p><?= Product::getProductDescriptionAttribute($product) ?></p>
-</div>
+<?php if (
+  Product::getProductDescriptionAttribute($product)
+): ?>
+  <div class="product-display-description-container">
+    <h2>Product Description</h2>
+    <p><?= Product::getProductDescriptionAttribute($product) ?></p>
+  </div>
+<?php endif; ?>
+
 
 <!-- Display product details -->
 <!-- TODO: Change these elements and make them presentable -->

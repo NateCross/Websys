@@ -61,7 +61,12 @@ class Category {
           ON product_category.category_id = category.id
           AND category.id = $id
         INNER JOIN product
-          ON product_category.product_id = product.id;
+          ON product_category.product_id = product.id
+        INNER JOIN seller
+          ON seller.id = product.seller_id
+          AND seller.suspended_until IS NULL
+      WHERE product.quantity != 0
+      ORDER BY last_modified DESC;
     ");
     return $result->fetch_all(MYSQLI_ASSOC);
   }

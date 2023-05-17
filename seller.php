@@ -28,7 +28,14 @@ Component\Header("Seller: " . Seller::getUserNameAttribute($seller));
           </div>
           <div class="product-details-container">
             <p class="product-details-name">
-              <?= Product::getProductNameAttribute($product); ?>
+              <?php
+                if (!Product::getProductQuantityAttribute($product)): ?>
+                <s>
+                  <?= Product::getProductNameAttribute($product); ?>
+                </s>
+              <?php else: ?>
+                <?= Product::getProductNameAttribute($product); ?>
+              <?php endif; ?>
             </p>
             <p>
               <?= Product::getProductCategoryAttribute($product); ?>
