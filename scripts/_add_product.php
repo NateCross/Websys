@@ -4,10 +4,6 @@ require_once "../lib/require.php";
 require_once "../lib/User.php";
 require_once "../lib/Seller.php";
 
-?>
-
-<?php 
-
 if (!isset($_FILES['image']) || !isset($_POST['submit'])) 
   Utils\redirect('../index.php');
 

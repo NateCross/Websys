@@ -95,19 +95,18 @@ try {
         ON DELETE CASCADE
     );
 
-    CREATE TABLE `voucher` (
-      `id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-      `code` VARCHAR(100) UNIQUE NOT NULL,
-      `discount_percent` INT NOT NULL,
-      `is_valid` BOOLEAN NOT NULL DEFAULT true,
-      `last_modified` TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-        ON UPDATE CURRENT_TIMESTAMP NOT NULL
+    CREATE TABLE coupon (
+      coupon_id int(11) NOT NULL AUTO_INCREMENT,
+      coupon_code varchar(20) NOT NULL,
+      discount int(10) NOT NULL,
+      status varchar(10) NOT NULL,
+      PRIMARY KEY (coupon_id)
     );
 
     CREATE TABLE `bill` (
       `id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
       `member_id` INT NOT NULL,
-      `voucher_id` INT,
+      `coupon_id` INT,
       `bank` ENUM ('cod', 'gcash', 'bdo', 'bpi', 'other') DEFAULT 'cod' NOT NULL,
       `bank_other` VARCHAR(1000),
       `address` VARCHAR(1000) NOT NULL,
@@ -119,8 +118,8 @@ try {
         REFERENCES `member`(`id`)
         ON UPDATE CASCADE
         ON DELETE CASCADE,
-      FOREIGN KEY (`voucher_id`)
-        REFERENCES `voucher`(`id`)
+      FOREIGN KEY (`coupon_id`)
+        REFERENCES `coupon`(`coupon_id`)
         ON UPDATE CASCADE
         ON DELETE CASCADE
     );
@@ -431,14 +430,6 @@ try {
       UPDATE `product_bill` SET
         `is_reviewed` = 1 - `is_reviewed`
       WHERE `id` = `product_bill_id`;
-    END;
-
-    CREATE PROCEDURE toggle_voucher_validity
-      (IN voucher_id INT)
-    BEGIN
-      UPDATE `voucher` SET
-        `is_valid` = 1 - `is_valid`
-      WHERE `id` = `voucher_id`;
     END;
 
     CREATE PROCEDURE toggle_notification_read_member

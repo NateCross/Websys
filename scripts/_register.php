@@ -8,11 +8,11 @@ require_once "../lib/Seller.php";
 require_once "../lib/Admin.php";
 
 $email = filter_input(INPUT_POST, 'email', FILTER_VALIDATE_EMAIL);
-$username = filter_input(INPUT_POST, 'username', FILTER_SANITIZE_SPECIAL_CHARS);
-$password = filter_input(INPUT_POST, 'password', FILTER_SANITIZE_SPECIAL_CHARS);
+$username = filter_input(INPUT_POST, 'username', FILTER_DEFAULT);
+$password = filter_input(INPUT_POST, 'password', FILTER_DEFAULT);
 $confirm_password = filter_input(INPUT_POST, 'confirm_password', FILTER_SANITIZE_SPECIAL_CHARS);
 $address = filter_input(INPUT_POST, 'address', FILTER_SANITIZE_SPECIAL_CHARS);
-$contact_number = filter_input(INPUT_POST, 'contact_number', FILTER_SANITIZE_SPECIAL_CHARS);
+$contact_number = filter_input(INPUT_POST, 'contact_number', FILTER_DEFAULT);
 $type = filter_input(INPUT_POST, 'type', FILTER_SANITIZE_SPECIAL_CHARS);
 
 if ($password !== $confirm_password)

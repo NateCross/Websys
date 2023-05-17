@@ -51,10 +51,10 @@ class Member extends User {
           product_bill.is_reviewed
         FROM
           bill
-          LEFT JOIN product_bill
+          INNER JOIN product_bill
             ON product_bill.bill_id = bill.id
             AND bill.member_id = $member_id
-          LEFT JOIN product
+          INNER JOIN product
             ON product_bill.product_id = product.id
         ORDER BY bill_timestamp DESC;
       ");

@@ -3,6 +3,7 @@
   font-family: -apple-system, BlinkMacSystemFont, "segoe ui", roboto, oxygen, ubuntu, cantarell, "fira sans", "droid sans", "helvetica neue", Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  text-overflow: ellipsis;
 }
 
 header {
@@ -81,6 +82,7 @@ input, select, button {
 
 table {
   width: calc(100% - 2rem);
+  max-width: calc(100% - 2rem);
   border-collapse: collapse;
   border: 3px solid #555555;
   margin: 1rem;
@@ -90,6 +92,9 @@ td {
   text-align: center;
   padding-top: 0.75rem;
   padding-bottom: 0.75rem;
+  overflow: hidden;
+  word-wrap: break-word;
+  text-overflow: ellipsis;
 }
 
 ul {
@@ -175,6 +180,15 @@ table img {
 
 .product-image-container img:hover {
   border: 2px solid black;
+
+}
+
+.product-details-container {
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+.product-details-container {
 
 }
 

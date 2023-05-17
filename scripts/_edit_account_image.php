@@ -5,7 +5,7 @@ require_once "../lib/User.php";
 require_once "../lib/Member.php";
 require_once "../lib/Seller.php";
 
-if (!$id = filter_input(INPUT_POST, 'id', FILTER_SANITIZE_SPECIAL_CHARS))
+if (!$id = filter_input(INPUT_POST, 'user_id', FILTER_SANITIZE_SPECIAL_CHARS))
   Utils\redirect('../index.php');
 
 $user_id = filter_input(INPUT_POST, 'user_id', FILTER_SANITIZE_SPECIAL_CHARS);

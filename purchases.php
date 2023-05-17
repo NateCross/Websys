@@ -17,7 +17,11 @@ Component\Header('Purchases');
 
 <h1>Purchases</h1>
 
-<?php $products = Member::getBillsWithProducts(Member::getUserIdAttribute($user)) ?>
+<?php 
+
+$products = Member::getBillsWithProducts(Member::getUserIdAttribute($user));
+
+?>
 
 <?php if ($products): ?>
 
