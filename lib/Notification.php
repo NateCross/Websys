@@ -16,7 +16,7 @@ class Notification {
         FROM `notification_member`
         WHERE `member_id` = `$member_id`;
       ");
-      return $result->fetch_all(MYSQLI_ASSOC);
+      return $result->fetch_all(MYSQLI_ASSOC)[0];
     } catch (Exception $e) {
       return false;
     }
@@ -31,7 +31,7 @@ class Notification {
         FROM `notification_seller`
         WHERE `seller_id` = `$seller_id`;
       ");
-      return $result->fetch_all(MYSQLI_ASSOC);
+      return $result->fetch_all(MYSQLI_ASSOC)[0];
     } catch (Exception $e) {
       return false;
     }
@@ -46,7 +46,7 @@ class Notification {
         FROM `notification_admin`
         WHERE `admin_id` = `$admin_id`;
       ");
-      return $result->fetch_all(MYSQLI_ASSOC);
+      return $result->fetch_all(MYSQLI_ASSOC)[0];
     } catch (Exception $e) {
       return false;
     }

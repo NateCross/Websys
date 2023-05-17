@@ -95,9 +95,19 @@ try {
         ON DELETE CASCADE
     );
 
+    CREATE TABLE `voucher` (
+      `id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+      `code` VARCHAR(100) UNIQUE NOT NULL,
+      `discount_percent` INT NOT NULL,
+      `is_valid` BOOLEAN NOT NULL DEFAULT true,
+      `last_modified` TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        ON UPDATE CURRENT_TIMESTAMP NOT NULL
+    );
+
     CREATE TABLE `bill` (
       `id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
       `member_id` INT NOT NULL,
+      `voucher_id` INT,
       `bank` ENUM ('cod', 'gcash', 'bdo', 'bpi', 'other') DEFAULT 'cod' NOT NULL,
       `bank_other` VARCHAR(1000),
       `address` VARCHAR(1000) NOT NULL,
@@ -107,6 +117,10 @@ try {
 
       FOREIGN KEY (`member_id`)
         REFERENCES `member`(`id`)
+        ON UPDATE CASCADE
+        ON DELETE CASCADE,
+      FOREIGN KEY (`voucher_id`)
+        REFERENCES `voucher`(`id`)
         ON UPDATE CASCADE
         ON DELETE CASCADE
     );
@@ -238,6 +252,21 @@ try {
       VALUES (new.seller_id, CONCAT('You have been reported: ', new.message));
     END;
 
+    CREATE TRIGGER notify_member_wishlist
+    AFTER UPDATE
+    ON product FOR EACH ROW
+    BEGIN
+      INSERT INTO notification_member
+        (`member_id`, `message`)
+      SELECT 
+        product_wishlist.member_id,
+        CONCAT('Your wishlisted product: ', new.name, ' has been updated')
+      FROM
+        product_wishlist
+      WHERE
+        new.id = product_wishlist.product_id;
+    END;
+
     CREATE TRIGGER update_product_quantity_after_sale
     AFTER INSERT
     ON product_bill FOR EACH ROW
@@ -246,6 +275,7 @@ try {
         quantity = quantity - new.quantity
       WHERE id = new.product_id;
     END;
+
 
     CREATE VIEW `report_with_users` AS
       SELECT
@@ -401,6 +431,14 @@ try {
       UPDATE `product_bill` SET
         `is_reviewed` = 1 - `is_reviewed`
       WHERE `id` = `product_bill_id`;
+    END;
+
+    CREATE PROCEDURE toggle_voucher_validity
+      (IN voucher_id INT)
+    BEGIN
+      UPDATE `voucher` SET
+        `is_valid` = 1 - `is_valid`
+      WHERE `id` = `voucher_id`;
     END;
 
     CREATE PROCEDURE toggle_notification_read_member
