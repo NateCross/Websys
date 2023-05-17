@@ -98,7 +98,7 @@ try {
     CREATE TABLE `bill` (
       `id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
       `member_id` INT NOT NULL,
-      `bank` ENUM ('bdo', 'bpi', 'other') DEFAULT 'bdo' NOT NULL,
+      `bank` ENUM ('cod', 'gcash', 'bdo', 'bpi', 'other') DEFAULT 'cod' NOT NULL,
       `bank_other` VARCHAR(1000),
       `address` VARCHAR(1000) NOT NULL,
       `contact_number` VARCHAR(255) NOT NULL,

@@ -125,11 +125,13 @@ Component\Header('Cart');
   >
     <div class="bank-details-container">
       <div class="form-input-container">
-        <label for="bank">Bank</label>
+        <label for="bank">Payment Method</label>
         <div class="bank-input">
           <select name="bank" id="bank">
+            <option value="cod">Cash on Delivery</option>
             <option value="bdo">BDO</option>
             <option value="bpi">BPI</option>
+            <option value="gcash">GCash</option>
             <option value="other">Other</option>
           </select>
           <input type="text" name="bank_other" id="bank_other" hidden>
@@ -137,24 +139,24 @@ Component\Header('Cart');
       </div>
 
       <div class="form-input-container">
-        <label for="owner">Owner</label>
-        <input type="text" name="owner" id="owner" required>
+        <label for="owner" id="owner_label" hidden>Owner</label>
+        <input type="text" name="owner" id="owner" hidden>
       </div>
 
       <div class="form-input-container">
-        <label for="cvv">CVV</label>
-        <input type="text" name="cvv" id="cvv" required>
+        <label for="cvv" id="cvv_label" hidden>CVV</label>
+        <input type="text" name="cvv" id="cvv" hidden>
       </div>
 
       <div class="form-input-container">
-        <label for="card_number">Card Number</label>
-        <input type="text" name="card_number" id="card_number" required>
+        <label for="card_number" id="card_number_label" hidden>Card Number</label>
+        <input type="text" name="card_number" id="card_number" hidden>
       </div>
 
-      <div class="form-input-container">
-        <label>Expiration Date</label>
+      <div class="form-input-container" id="expiration_date_container" hidden>
+        <label id="expiration_date_label" hidden>Expiration Date</label>
         <div class="cart-order-expiration-date">
-          <select name="expiration_date_month" id="expiration_date_month">
+          <select name="expiration_date_month" id="expiration_date_month" hidden>
             <option value="01">January</option>
             <option value="02">February </option>
             <option value="03">March</option>
@@ -168,7 +170,7 @@ Component\Header('Cart');
             <option value="11">November</option>
             <option value="12">December</option>
           </select>
-          <input type="number" min="00" max="99" name="expiration_date_year" id="expiration_date_year" required>
+          <input type="number" min="00" max="99" name="expiration_date_year" id="expiration_date_year" hidden>
         </div>
       </div>
     </div>

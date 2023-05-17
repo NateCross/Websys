@@ -54,7 +54,6 @@ class Cart {
       $index = self::getProductInCart($product_id);
 
       if (isset($index)) {
-        echo "nice";
         $cart[$index]['quantity_purchased'] += $quantity;
         return self::updateCart($cart);
       } else {

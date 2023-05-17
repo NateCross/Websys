@@ -86,7 +86,8 @@ class Review {
       $result = Database::query("
         SELECT 
           review.*,
-          member.name member_name
+          member.name member_name,
+          member.image_path
         FROM review
           LEFT JOIN member
             ON member.id = review.member_id

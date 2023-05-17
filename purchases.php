@@ -84,21 +84,33 @@ Component\Header('Purchases');
     >
 
     <div class="form-input-container">
-      <label for="rating">Rating</label>
-      <input 
-        type="number" 
-        name="rating" 
-        id="rating"
-        value="5"
-        min="1"
-        max="5"
-      >
+      <div>Rating</div>
+      <div class="form-radio-option-container">
+        <input type="radio" id="star1" name="rating" value="1" />
+        <label for="star1" title="1 Star">★</label>
+      </div>
+      <div class="form-radio-option-container">
+        <input type="radio" id="star2" name="rating" value="2" />
+        <label for="star2" title="2 Stars">★★</label>
+      </div>
+      <div class="form-radio-option-container">
+        <input type="radio" id="star3" name="rating" value="3" />
+        <label for="star3" title="3 Stars">★★★</label>
+      </div>
+      <div class="form-radio-option-container">
+        <input type="radio" id="star4" name="rating" value="4" />
+        <label for="star4" title="4 Stars">★★★★</label>
+      </div>
+      <div class="form-radio-option-container">
+        <input type="radio" id="star5" name="rating" value="5" checked>
+        <label for="star5" title="5 Stars">★★★★★</label>
+      </div>
     </div>
     <div class="form-input-container">
       <label for="comment">Comment</label>
       <textarea name="comment" id="comment" cols="30" rows="10"></textarea>
     </div>
-    <div>
+    <div class="review-buttons-container">
       <button type="submit" name="submit" value="submit">Submit</button>
       <button value="cancel" id="cancel" formmethod="dialog">Cancel</button>
     </div>

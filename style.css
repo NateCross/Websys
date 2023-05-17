@@ -129,6 +129,17 @@ input[type="submit"] {
   background-color: #555555;
 }
 
+.form-radio-option-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: row;
+}
+
+.form-radio-option-container input, .form-radio-option-container label {
+  flex: 1 1 0;
+}
+
 .admin-panel-button-container {
   display: flex;
   align-items: center;
@@ -237,4 +248,60 @@ table img {
   align-items: flex-start;
   justify-content: center;
   flex-direction: column;
+}
+
+.add-to-cart-container input[type="number"] {
+  width: 4rem;
+}
+
+.product-display-description-container {
+  background-color: #555;
+  color: white;
+  padding: 1rem;
+  margin-top: 2rem;
+  border-radius: 1rem;
+}
+
+.reviews-container {
+  padding: 1rem;
+}
+
+.review-post-container {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  border: 2px solid #555;
+  border-radius: 1rem;
+  padding: 1rem;
+}
+
+.review-author {
+  font-weight: bold;
+  font-size: 1.25rem;
+}
+
+.review-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.review-header-left {
+  display: flex;
+  gap: 1rem;
+}
+
+.review-header-left img {
+  width: 3rem;
+  height: 3rem;
+}
+
+.review-header-right {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.review-rating {
+  font-size: 1.25rem;
+  font-weight: bold;
 }
