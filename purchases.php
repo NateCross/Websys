@@ -112,7 +112,7 @@ $products = Member::getBillsWithProducts(Member::getUserIdAttribute($user));
     </div>
     <div class="form-input-container">
       <label for="comment">Comment</label>
-      <textarea name="comment" id="comment" cols="30" rows="10"></textarea>
+      <textarea name="comment" id="comment" cols="30" rows="10" required></textarea>
     </div>
     <div class="review-buttons-container">
       <button type="submit" name="submit" value="submit">Submit</button>

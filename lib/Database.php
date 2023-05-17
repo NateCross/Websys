@@ -62,7 +62,7 @@ class Database
    * Function for general queries. Do not use
    * for prepared statements (i.e. statements with WHERE)
    */
-  public static function query(string $query): mysqli_result | null {
+  public static function query(string $query) {
     if (!isset(self::$DB)) self::initializeDb();
     try {
       return self::$DB->query($query);

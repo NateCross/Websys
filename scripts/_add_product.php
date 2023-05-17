@@ -22,6 +22,11 @@ if (!isset($_FILES['image']) || !isset($_POST['submit']))
 ]);
 $image = $_FILES['image'];
 
+if (!$name || !$description || !$quantity || !$price || !$category)
+  Utils\redirect('../product_add.php');
+if (Product::getProductByName($name))
+  Utils\redirectPage('ERROR: A product with this name already exists', 'product_add.php');
+
 ?>
 
 <?php if (Seller::addProduct(

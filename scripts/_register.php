@@ -16,7 +16,7 @@ $contact_number = filter_input(INPUT_POST, 'contact_number', FILTER_DEFAULT);
 $type = filter_input(INPUT_POST, 'type', FILTER_SANITIZE_SPECIAL_CHARS);
 
 if ($password !== $confirm_password)
-  Utils\redirectPage("Passwords do not match", 'login.php');
+  Utils\redirectPage("ERROR: Passwords do not match", 'login.php');
 if ($type === "Member") {
   if (Member::register($email, $username, $password, $address, $contact_number))
     Utils\redirectPage("Registered as $email", 'login.php');

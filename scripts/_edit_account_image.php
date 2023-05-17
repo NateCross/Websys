@@ -31,6 +31,9 @@ if (($type === 'member' && Member::updateUserImage(
 )) || ($type === 'seller' && Seller::updateUserImage(
   $user_id,
   $image,
+)) || ($type === 'admin' && Admin::updateUserImage(
+  $user_id,
+  $image,
 )))
   Utils\redirectPage("Successfully edited image");
 else

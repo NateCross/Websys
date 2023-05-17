@@ -55,6 +55,11 @@ class Cart {
 
       if (isset($index)) {
         $cart[$index]['quantity_purchased'] += $quantity;
+        
+        if ($cart[$index]['quantity_purchased'] > $cart[$index['quantity']])
+          $cart[$index]['quantity_purchased']
+            = $cart[$index]['quantity'];
+
         return self::updateCart($cart);
       } else {
         $product = Product::getProducts($product_id)[0];
