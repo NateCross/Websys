@@ -15,19 +15,8 @@ $address = filter_input(INPUT_POST, 'address', FILTER_SANITIZE_SPECIAL_CHARS);
 $contact_number = filter_input(INPUT_POST, 'contact_number', FILTER_SANITIZE_SPECIAL_CHARS);
 $type = filter_input(INPUT_POST, 'type', FILTER_SANITIZE_SPECIAL_CHARS);
 
-?>
-
-<?php if ($password !== $confirm_password) : ?>
-  <p>Passwords do not match. Redirecting to register page...</p>
-  <script type="module">
-    import { redirect } from '../js/utils.js';
-    redirect('/register.php', 3000);
-  </script>
-  <?php die(); ?>
-<?php endif; ?>
-
-<?php
-
+if ($password !== $confirm_password)
+  Utils\redirectPage("Passwords do not match", 'login.php');
 if ($type === "Member") {
   if (Member::register($email, $username, $password, $address, $contact_number))
     Utils\redirectPage("Registered as $email", 'login.php');

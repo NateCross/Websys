@@ -6,31 +6,26 @@ require_once "../lib/Seller.php";
 
 ?>
 
-<?php if (!isset($_FILES['image']) || !isset($_POST['submit'])): ?>
+<?php 
 
-<p>Invalid form. Please try again.</p>
-<script type="module">
-  import { redirect } from '../js/utils.js';
-  redirect('/', 3000);
-</script>
+if (!isset($_FILES['image']) || !isset($_POST['submit'])) 
+  Utils\redirect('../index.php');
 
-<?php die(); endif; ?>
+[
+  'name' => $name,
+  'description' => $description,
+  'quantity' => $quantity,
+  'price' => $price,
+  'category' => $category,
+] = filter_input_array(INPUT_POST, [
+  'name' => FILTER_SANITIZE_SPECIAL_CHARS,
+  'description' => FILTER_SANITIZE_SPECIAL_CHARS,
+  'quantity' => FILTER_VALIDATE_INT,
+  'price' => FILTER_VALIDATE_FLOAT,
+  'category' => FILTER_SANITIZE_SPECIAL_CHARS,
+]);
+$image = $_FILES['image'];
 
-<?php
-  [
-    'name' => $name,
-    'description' => $description,
-    'quantity' => $quantity,
-    'price' => $price,
-    'category' => $category,
-  ] = filter_input_array(INPUT_POST, [
-    'name' => FILTER_SANITIZE_SPECIAL_CHARS,
-    'description' => FILTER_SANITIZE_SPECIAL_CHARS,
-    'quantity' => FILTER_VALIDATE_INT,
-    'price' => FILTER_VALIDATE_FLOAT,
-    'category' => FILTER_SANITIZE_SPECIAL_CHARS,
-  ]);
-  $image = $_FILES['image'];
 ?>
 
 <?php if (Seller::addProduct(
@@ -40,10 +35,7 @@ require_once "../lib/Seller.php";
   $price, 
   $category,
   $image, 
-)): ?>
-  <p>Successfully added product.</p>
-  <a href="/">Click to return</a>
-<?php else: ?>
-  <p>An error has occurred.</p>
-  <a href="/">Click to return</a>
-<?php endif; ?>
+))
+  Utils\redirectPage("Successfully added product");
+else
+  Utils\redirectPage("ERROR: Unable to add product");

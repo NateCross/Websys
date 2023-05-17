@@ -24,42 +24,21 @@ $seller = Product::getSellerById($product_id);
 
 Component\Header('Edit Product');
 
-?>
-
-<!-- Check for errors -->
-<?php if (!$user): ?>
-  <p>No user. Please try again.</p>
-  <script type="module">
-    import { redirect } from './js/utils.js';
-    redirect('/', 3000);
-  </script>
-  <?php die(); ?>
-<?php elseif (!$product_id): ?>
-  <script type="module">
-    import { redirect } from './js/utils.js';
-    redirect();
-  </script>
-  <?php die(); ?>
-<?php elseif ($type !== 'admin'): ?>
-  <?php if (!$type === 'seller'): ?>
-    <p>Not a seller. Please try again.</p>
-    <script type="module">
-      import { redirect } from './js/utils.js';
-      redirect('/', 3000);
-    </script>
-    <?php die(); ?>
-  <?php elseif (
-    User::getUserIdAttribute($user) 
+if (!$user)
+  Utils\redirect('../index.php');
+if (!$product_id)
+  Utils\redirect('../index.php');
+if ($type !== 'admin') {
+  if ($type !== 'seller')
+    Utils\redirect('../index.php');
+  if (
+    User::getUserIdAttribute($user)
     !== User::getUserIdAttribute($seller)
-  ): ?>
-    <p>Not the seller of this product. Please try again.</p>
-    <script type="module">
-      import { redirect } from './js/utils.js';
-      redirect('/', 3000);
-    </script>
-    <?php die(); ?>
-  <?php endif; ?>
-<?php endif; ?>
+  )
+    Utils\redirect('../index.php');
+}
+
+?>
 
 <h1>Edit Product</h1>
 

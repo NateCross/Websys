@@ -16,19 +16,14 @@ Component\Header('Add Product');
 
 ?>
 
-<?php if (!$user): ?>
-<p>No user. Please try again.</p>
-<script type="module">
-  import { redirect } from './js/utils.js';
-  redirect('/', 3000);
-</script>
-<?php elseif (!$type === 'seller'): ?>
-<p>Not a seller. Please try again.</p>
-<script type="module">
-  import { redirect } from './js/utils.js';
-  redirect('/', 3000);
-</script>
-<?php else: ?>
+<?php 
+
+if (!$user)
+  Utils\redirect("../index.php");
+else if (!$type === 'seller')
+  Utils\redirect("../index.php");
+
+?>
 
 <h1>Add Product</h1>
 
@@ -92,7 +87,5 @@ Component\Header('Add Product');
     </div>
   </form>
 </div>
-
-<?php endif; ?>
 
 <?php Component\Footer(); ?>

@@ -5,49 +5,27 @@ require_once "../lib/User.php";
 require_once "../lib/Member.php";
 require_once "../lib/Seller.php";
 
-?>
+if (!$id = filter_input(INPUT_POST, 'id', FILTER_SANITIZE_SPECIAL_CHARS))
+  Utils\redirect('../index.php');
 
-<?php if (!isset($_POST['submit'])): ?>
+$user_id = filter_input(INPUT_POST, 'user_id', FILTER_SANITIZE_SPECIAL_CHARS);
+$image = $_FILES['image'];
 
-<p>Invalid form. Please try again.</p>
-<script type="module">
-  import { redirect } from '../js/utils.js';
-  redirect('/', 3000);
-</script>
+$type = User::getCurrentUserType();
 
-<?php die(); endif; ?>
+if ($type === 'member')
+  $user = Member::getCurrentUser();
+else if ($type === 'seller')
+  $user = Seller::getCurrentUser();
+else if ($type === 'admin')
+  $user = Admin::getCurrentUser();
 
-<?php
-  $user_id = filter_input(INPUT_POST, 'user_id', FILTER_SANITIZE_SPECIAL_CHARS);
-  $image = $_FILES['image'];
+if (!$user)
+  Utils\redirect('../index.php');
+if (!$image)
+  Utils\redirect('../index.php');
 
-  $type = User::getCurrentUserType();
-
-  if ($type === 'member')
-    $user = Member::getCurrentUser();
-  else if ($type === 'seller')
-    $user = Seller::getCurrentUser();
-  else if ($type === 'admin')
-    $user = Admin::getCurrentUser();
-?>
-
-<!-- Check for errors -->
-<?php if (!$user): ?>
-  <p>No user. Please try again.</p>
-  <script type="module">
-    import { redirect } from '../js/utils.js';
-    redirect('/', 3000);
-  </script>
-  <?php die(); ?>
-<?php elseif (!$image): ?>
-  <script type="module">
-    import { redirect } from '../js/utils.js';
-    redirect();
-  </script>
-  <?php die(); ?>
-<?php endif; ?>
-
-<?php if (($type === 'member' && Member::updateUserImage(
+if (($type === 'member' && Member::updateUserImage(
   $user_id,
   $image,
 )) || ($type === 'seller' && Seller::updateUserImage(

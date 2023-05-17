@@ -1,15 +1,7 @@
-<?php if (!$id = filter_input(INPUT_POST, 'id', FILTER_SANITIZE_SPECIAL_CHARS)) : ?>
-  <p>No product ID to delete. Redirecting to home page...</p>
-  <script type="module">
-    import {
-      redirect
-    } from '../js/utils.js';
-    redirect('/', 3000);
-  </script>
-  <?php die(); ?>
-<?php endif; ?>
+<?php 
 
-<?php
+if (!$id = filter_input(INPUT_POST, 'id', FILTER_SANITIZE_SPECIAL_CHARS))
+  Utils\redirect('../index.php');
 
 require_once "../lib/require.php";
 require_once "../lib/Seller.php";
@@ -22,71 +14,18 @@ $user = Seller::getCurrentUser();
 $user_id = Seller::getUserIdAttribute($user);
 $seller_id = Product::getProductSellerIdAttribute($product);
 
-?>
+if (!$product)
+  Utils\redirect('../index.php');
+if (!$user)
+  Utils\redirect('../index.php');
+if (Admin::getCurrentUserType() !== 'admin') {
+  if (Seller::getCurrentUserType() !== 'seller')
+    Utils\redirect('../index.php');
+  if ($user_id !== $seller_id)
+    Utils\redirect('../index.php');
+}
 
-<?php if (!$product): ?>
-  <p>Product does not exist. Redirecting to home page...</p>
-  <script type="module">
-    import {
-      redirect
-    } from '../js/utils.js';
-    redirect('/', 3000);
-  </script>
-  <?php die(); ?>
-<?php endif; ?>
-
-<?php if (!$user): ?>
-  <p>User does not exist. Redirecting to home page...</p>
-  <script type="module">
-    import {
-      redirect
-    } from '../js/utils.js';
-    redirect('/', 3000);
-  </script>
-  <?php die(); ?>
-<?php endif; ?>
-
-<!-- Error checks before delete -->
-<?php if (Admin::getCurrentUserType() !== 'admin'): ?>
-  <?php 
-    if (Seller::getCurrentUserType() !== 'seller'): ?>
-    <p>User is not a seller. Redirecting to home page...</p>
-    <script type="module">
-      import {
-        redirect
-      } from '../js/utils.js';
-      redirect('/', 3000);
-    </script>
-    <?php die(); ?>
-  <?php endif; ?>
-
-  <?php if ($user_id !== $seller_id): ?>
-    <p>User is not the seller of this item. Redirecting to home page...</p>
-    <script type="module">
-      import {
-        redirect
-      } from '../js/utils.js';
-      redirect('/', 3000);
-    </script>
-    <?php die(); ?>
-  <?php endif; ?>
-<?php endif; ?>
-
-<?php if (!Product::deleteProduct($id)): ?>
-  <p>Failed to delete item. Redirecting to home page...</p>
-  <script type="module">
-    import {
-      redirect
-    } from '../js/utils.js';
-    redirect('/', 3000);
-  </script>
-  <?php die(); ?>
-<?php endif; ?>
-
-<p>Successfully deleted item. Redirecting to home page...</p>
-<script type="module">
-  import {
-    redirect
-  } from '../js/utils.js';
-  redirect('/', 3000);
-</script>
+if (!Product::deleteProduct($id))
+  Utils\redirectPage('ERROR: Failed to delete item');
+else
+  Utils\redirectPage('Successfully deleted item');

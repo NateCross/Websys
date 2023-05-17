@@ -15,18 +15,8 @@ else if ($type === 'seller')
 else if ($type === 'admin')
   $user = Admin::getCurrentUser();
 
-?>
-
-<!-- Check for errors -->
-<?php if (!$user):?>
-  <script type="module">
-    import { redirect } from './js/utils.js';
-    redirect('login.php');
-  </script>
-  <?php die(); ?>
-<?php endif; ?>
-
-<?php
+if (!$user)
+  Utils\redirect('../login.php');
 
 Component\Header(User::getUserNameAttribute($user));
 

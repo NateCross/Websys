@@ -79,7 +79,7 @@ function Header(string $title) { ?>
       </div>
       <div class="header-search-container">
         <form action="search.php" method="GET">
-          <input type="text" name="search" id="search">
+          <input type="text" name="search" id="search" required>
           <select name="type" id="type">
             <option value="product">Product</option>
             <option value="seller">Seller</option>
