@@ -2,6 +2,7 @@
 
 require_once 'lib/require.php';
 require_once 'lib/Seller.php';
+require_once 'lib/Review.php';
 
 if (!$id = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT))
   Utils\redirectPage("No ID");
@@ -38,7 +39,7 @@ Component\Header("Seller: " . Seller::getUserNameAttribute($seller));
             <?php $rating = Review::getAverageRating(Product::getProductIdAttribute($product)); ?>
             <?php if ($rating): ?>
             <p>
-              <?= $rating ?>★
+              <?= number_format($rating, 2); ?>★
             </p>
             <?php endif; ?>
           </div>

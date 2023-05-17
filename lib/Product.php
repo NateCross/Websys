@@ -140,6 +140,10 @@ class Product {
     return self::getCategories($product['id'])[0]['name'];
   }
 
+  public static function getProductCategoryId($product) {
+    return self::getCategories($product['id'])[0]['id'];
+  }
+
   public static function getProductQuantityAttribute($product) {
     return $product['quantity'];
   }

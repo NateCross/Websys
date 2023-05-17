@@ -108,6 +108,9 @@ function Footer() {
       &copy; <script type="text/javascript">document.write( new Date().getFullYear() );</script>
   Turn Zero Online
     </p>
+    <p class="admin-login-link">
+      <a href="admin.php">Admin Login</a>
+    </p>
   </div>
 </footer>
 </body>

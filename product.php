@@ -57,21 +57,34 @@ Component\Header(Product::getProductNameAttribute($product));
         Seller: <?= Seller::getUserNameAttribute($seller) ?>
       </a>
     </p>
+    <p>
+      <a href="category.php?id=<?= Product::getProductCategoryId($product) ?>">
+        Category:
+        <?= Product::getProductCategoryAttribute($product) ?>
+      </a>
+    </p>
     <?php if ($average_rating = Review::getAverageRating(Product::getProductIdAttribute($product))): ?>
       <p>Rating: <?= number_format($average_rating, 2) ?>★ / 5.00★</p>
     <?php endif; ?>
     <p>Quantity: <?= Product::getProductQuantityAttribute($product) ?></p>
     <p>Price: <?= Utils\formatCurrency(Product::getProductPriceAttribute($product)) ?></p>
     <?php if($user_is_seller || $user_is_admin): ?>
-      <a href="product_edit.php?id=<?= $id ?>">Edit Product</a>
-      <form action="scripts/_delete_product.php" method="POST">
-        <input 
-          type="hidden" 
-          name="id" 
-          value="<?= $id ?>"
-        >
-        <input type="submit" name="submit" value="Delete Product">
-      </form>
+      <div class="product-seller-actions-container">
+
+        <a href="product_edit.php?id=<?= $id ?>">
+          <button>
+            Edit Product
+          </button>
+        </a>
+        <form action="scripts/_delete_product.php" method="POST">
+          <input 
+            type="hidden" 
+            name="id" 
+            value="<?= $id ?>"
+          >
+          <input type="submit" name="submit" value="Delete Product">
+        </form>
+      </div>
     <?php endif; ?>
     <?php if($user_is_a_member && Product::getProductQuantityAttribute($product)): ?>
       <div class="add-to-cart-container">

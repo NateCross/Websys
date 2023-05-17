@@ -30,13 +30,13 @@ $type = filter_input(INPUT_POST, 'type', FILTER_SANITIZE_SPECIAL_CHARS);
 
 if ($type === "Member") {
   if (Member::register($email, $username, $password, $address, $contact_number))
-    Utils\redirectPage("Registered as $username", 'login.php');
+    Utils\redirectPage("Registered as $email", 'login.php');
 } else if ($type === "Seller") {
   if (Seller::register($email, $username, $password, $address, $contact_number))
-    Utils\redirectPage("Registered as $username", 'login.php');
+    Utils\redirectPage("Registered as $email", 'login.php');
 } else if ($type === "Admin") {
   if (Admin::register($email, $username, $password, $address, $contact_number))
-    Utils\redirectPage("Registered as $username", 'admin-panel.php');
+    Utils\redirectPage("Registered as $email", 'admin-panel.php');
 }
 
 Utils\redirectPage("ERROR: Unable to register", "register.php");

@@ -101,13 +101,26 @@ input[type="submit"] {
   cursor: pointer;
 }
 
+.form-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .form-input-container {
   display: flex;
   flex-direction: column;
-  max-width: 20vw;
+  width: 20vw;
   margin-top: 1rem;
   margin-bottom: 1rem;
   text-align: center;
+}
+
+.form-input-radio {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
 }
 
 .form-input-container label {
@@ -304,4 +317,21 @@ table img {
 .review-rating {
   font-size: 1.25rem;
   font-weight: bold;
+}
+
+.admin-login-link {
+  text-align: right;
+  margin-right: 5rem;
+  font-size: 0.75rem;
+}
+
+.product-edit-header {
+  text-align: center;
+}
+
+.product-seller-actions-container {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
 }

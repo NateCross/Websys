@@ -30,10 +30,6 @@ if (!$report_id) {
   Utils\redirectPage("ERROR: Report does not exist");
 }
 
-if (!$days_suspended) {
-  Utils\redirectPage("ERROR: No days suspended");
-}
-
 if (!$seller = Seller::getUserViaId($seller_id)) 
   Utils\redirectPage("ERROR: Seller does not exist");
 
