@@ -68,6 +68,22 @@ $user_is_admin = isset($user) && (
     <?php endif; ?>
     <p>Quantity: <?= Product::getProductQuantityAttribute($product) ?></p>
     <p>Price: <?= Utils\formatCurrency(Product::getProductPriceAttribute($product)) ?></p>
+    <?php if ($user_is_a_member): ?>
+      <div class="wishlist-button-container">
+        <form 
+          action="scripts/_wishlist.php" 
+          method="post" 
+          enctype="multipart/form-data"
+        >
+          <input
+            type="hidden"
+            name="prod_id"
+            value="<?= $id ?>"
+          >
+          <input type="submit" name="submit" value="Add to Wishlist">
+        </form>
+      </div>
+    <?php endif; ?>
     <?php if($user_is_seller || $user_is_admin): ?>
       <div class="product-seller-actions-container">
 

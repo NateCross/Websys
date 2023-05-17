@@ -6,10 +6,14 @@ class Wishlist {
   ) {
     try {
       $result = Database::query("
-          SELECT *
-          FROM `product_wishlist`
-          WHERE `member_id` = `$member_id`;
-        ");
+        SELECT product.*
+        FROM `product_wishlist`
+          INNER JOIN 
+            product
+          ON
+            product.id = product_wishlist.product_id
+        WHERE `member_id` = $member_id;
+      ");
       return $result->fetch_all(MYSQLI_ASSOC);
     } catch (Exception $e) {
       return false;
