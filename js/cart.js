@@ -17,8 +17,10 @@ cancel?.addEventListener('click', (e) => {
 bank?.addEventListener('change', (e) => {
   if (e?.target?.value === 'other') {
     bank_other.hidden = false;
+    bank_other.required = true;
   } else {
     bank_other.hidden = true;
+    bank_other.required = false;
   }
 
   // Clear the value so it doesn't persist and create

@@ -62,17 +62,21 @@ Component\Header("Search: $query");
     <p>No sellers found.</p>
   <?php endif; ?>
 
-  <ul>
+  <ul class="product-list-container">
     <?php foreach($sellers as $seller): ?>
       <li>
         <a 
           href="seller.php?id=<?= Seller::getUserIdAttribute($seller) ?>"
         >
           <!-- TODO: Adjust size through CSS  -->
-          <!-- <img 
-            src="<?= Product::getImagePath($product); ?>" 
-          > -->
-          <?= Seller::getUserNameAttribute($seller); ?>
+          <div class="product-image-container">
+            <img 
+              src="<?= Seller::getImagePath($seller); ?>" 
+            >
+          </div>
+          <div class="product-details-container product-details-name">
+            <?= Seller::getUserNameAttribute($seller); ?>
+          </div>
           </a>
       </li>
     <?php endforeach; ?>

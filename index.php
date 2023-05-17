@@ -30,7 +30,7 @@ Component\Header('Home');
             <?php $rating = Review::getAverageRating(Product::getProductIdAttribute($product)); ?>
             <?php if ($rating): ?>
             <p>
-              <?= $rating ?>★
+              <?= number_format($rating, 2) ?>★
             </p>
             <?php endif; ?>
           </div>

@@ -25,7 +25,7 @@ Component\Header('Purchases');
   <tr>
     <th>Bill ID</th>
     <th>Product ID</th>
-    <th>Name</th>
+    <th>Product Name</th>
     <th>Image</th>
     <th>Price</th>
     <th>Quantity Purchased</th>
@@ -83,7 +83,7 @@ Component\Header('Purchases');
       id="product_id"
     >
 
-    <div class="review-rating-container">
+    <div class="form-input-container">
       <label for="rating">Rating</label>
       <input 
         type="number" 
@@ -94,11 +94,11 @@ Component\Header('Purchases');
         max="5"
       >
     </div>
-    <div class="review-comment-container">
+    <div class="form-input-container">
       <label for="comment">Comment</label>
       <textarea name="comment" id="comment" cols="30" rows="10"></textarea>
     </div>
-    <div class="review-buttons-container">
+    <div>
       <button type="submit" name="submit" value="submit">Submit</button>
       <button value="cancel" id="cancel" formmethod="dialog">Cancel</button>
     </div>
