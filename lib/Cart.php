@@ -192,7 +192,6 @@ class Cart {
         , $user_id, $bank, $bank_other, $address, $contact_number);
       }
 
-
       $bill_id = Database::query("
         SELECT LAST_INSERT_ID();
       ")->fetch_all(MYSQLI_ASSOC)[0]['LAST_INSERT_ID()'];
