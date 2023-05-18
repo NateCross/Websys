@@ -31,7 +31,6 @@ class Member extends User {
     }
   }
 
-  // TODO
   public static function getBills(int $member_id) {
     $result = Database::query("
       SELECT * FROM bill

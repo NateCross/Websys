@@ -62,10 +62,6 @@ function redirectPage(
   \Session::set('redirect_duration', $duration);
 
   redirect('../redirect.php');
-
-  // Using require allows this to redirect to the info page
-  // no matter when this occurs 
-  // require_once "../redirect.php";
 }
 
 /**

@@ -65,15 +65,6 @@ class Product {
   }
 
   public static function getCategories(int $id) {
-    // $result = Database::query("
-    //   SELECT category.id, category.name
-    //   FROM category
-    //     LEFT JOIN product_category
-    //     ON product_category.category_id = category.id
-    //     LEFT JOIN product
-    //     ON product_category.product_id = product.id
-    //     AND product.id = $id;
-    // ");
     $result = Database::query("
       SELECT category.id, category.name
       FROM product
@@ -135,8 +126,6 @@ class Product {
   }
 
   public static function getProductCategoryAttribute($product) {
-    // $category = self::getCategories($product['id']);
-    // var_dump($category);
     return self::getCategories($product['id'])[0]['name'];
   }
 
@@ -162,16 +151,6 @@ class Product {
     }
   }
   
-  /**
-   * To buy a product, we need to have a bill
-   * Then we add products to that bill
-   * When a product_bill is added, we subtract that much
-   * to the quantity of the original product
-   */
-  // public static function buyProduct(int $id, int $quantity) {
-  //   return Database::preparedQuery();
-  // }
-
   public static function searchProduct(
     string $query, 
     bool $include_suspend = false,

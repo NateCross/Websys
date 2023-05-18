@@ -219,17 +219,5 @@ class Cart {
     if (!$cart) return true;
     return false;
   }
-
-  // public static function getProductsInCart() {
-  //   try {
-  //     $cart = self::getCart();
-  //     if (!$cart) return null;
-
-  //     $products = Database::preparedQuery();
-
-  //   } catch (Exception $e) {
-  //     return null;
-  //   }
-  // }
 }
 

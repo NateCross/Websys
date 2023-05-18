@@ -45,15 +45,6 @@ class Category {
    * Gets all products in a category
    */
   public static function getProducts(int $id) {
-    // $result = Database::query("
-    //   SELECT product.*
-    //   FROM product
-    //     LEFT JOIN product_category
-    //     ON product_category.product_id = product.id
-    //     LEFT JOIN category
-    //     ON product_category.category_id = category.id
-    //     AND category.id = $id;
-    // ");
     $result = Database::query("
       SELECT product.*
       FROM category

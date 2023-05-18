@@ -8,7 +8,6 @@ require_once '../lib/Review.php';
 
 if (!isset($_POST['submit']))
   Utils\redirectPage("ERROR: Invalid form");
-  // Utils\redirect('../index.php');
 
 $type = User::getCurrentUserType();
 if (!$type || $type !== 'member')
