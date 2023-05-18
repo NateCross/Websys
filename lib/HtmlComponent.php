@@ -45,6 +45,7 @@ function Header(string $title) { ?>
     <header>
       <div class="store-logo">
         <a href="index.php">Turn Zero Online</a>
+		<a href="account.php">Account</a>
       </div>
       <div class="header-categories-container">
         <a href="category.php?id=1">Board Games</a>
@@ -59,7 +60,7 @@ function Header(string $title) { ?>
           >
             <input type="submit" name="submit" value="Logout">
           </form>
-          <a href="account.php">Account</a>
+          <a href="notifications.php">Notifications</a>
         <?php else: ?>
           <a href="login.php">Login</a>
           <a> | </a>
@@ -73,6 +74,7 @@ function Header(string $title) { ?>
         <?php elseif (\User::getCurrentUserType() === 'member'): ?>
           <a href="cart.php">Cart</a>
           <a href="purchases.php">Purchases</a>
+		  <a href="wishlist.php">Wishlist</a>
         <?php elseif (\User::getCurrentUserType() === 'admin'): ?>
           <a href="admin-panel.php">Admin Panel</a>
         <?php endif; ?>

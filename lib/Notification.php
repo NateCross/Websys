@@ -14,9 +14,9 @@ class Notification {
       $result = Database::query("
         SELECT *
         FROM `notification_member`
-        WHERE `member_id` = `$member_id`;
+        WHERE `member_id` = '$member_id';
       ");
-      return $result->fetch_all(MYSQLI_ASSOC)[0];
+      return $result->fetch_all(MYSQLI_ASSOC);
     } catch (Exception $e) {
       return false;
     }
@@ -29,9 +29,9 @@ class Notification {
       $result = Database::query("
         SELECT *
         FROM `notification_seller`
-        WHERE `seller_id` = `$seller_id`;
+        WHERE `seller_id` = '$seller_id';
       ");
-      return $result->fetch_all(MYSQLI_ASSOC)[0];
+      return $result->fetch_all(MYSQLI_ASSOC);
     } catch (Exception $e) {
       return false;
     }
@@ -44,9 +44,9 @@ class Notification {
       $result = Database::query("
         SELECT *
         FROM `notification_admin`
-        WHERE `admin_id` = `$admin_id`;
+        WHERE `admin_id` = '$admin_id';
       ");
-      return $result->fetch_all(MYSQLI_ASSOC)[0];
+      return $result->fetch_all(MYSQLI_ASSOC);
     } catch (Exception $e) {
       return false;
     }
