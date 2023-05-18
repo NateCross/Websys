@@ -4,6 +4,8 @@ require_once 'Database.php';
 require_once 'Session.php';
 require_once 'Product.php';
 require_once 'Member.php';
+require_once 'Coupon.php';
+
 
 class Cart {
   public static function getCart() {
@@ -108,6 +110,22 @@ class Cart {
     }
   }
 
+  public static function searchCoupon(string $coupon_code) {
+    return Database::query("
+      SELECT * FROM coupon
+      WHERE coupon_code LIKE '%$coupon_code%';
+    ")->fetch_all(MYSQLI_ASSOC);
+  }
+
+  public static function setCoupon($coupon_code)
+  {
+    try{
+      return Session::set('coupon_code', $coupon_code);
+    } catch (Exception $e){
+      return false;
+    }
+  }
+
   public static function deleteProduct(int $index) {
     try {
       $cart = self::getCart();
@@ -137,6 +155,7 @@ class Cart {
     string | null $bank_other = null,
     string $address,
     string $contact_number,
+    int $coupon_id
   ) {
     try {
       if (self::cartIsEmpty()) return false;
@@ -156,8 +175,9 @@ class Cart {
           bank_other,
           address,
           contact_number
-        ) VALUES (?, ?, ?, ?, ?);"
-      , $user_id, $bank, $bank_other, $address, $contact_number);
+          coupon_id
+        ) VALUES (?, ?, ?, ?, ?, ?);"
+      , $user_id, $bank, $bank_other, $address, $contact_number, $coupon_id);
 
       $bill_id = Database::query("
         SELECT LAST_INSERT_ID();

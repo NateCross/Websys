@@ -11,6 +11,11 @@ if (!$member = Member::getCurrentUser())
 $cart = Cart::getCart();
 if ($cart) rsort($cart);
 
+$coupon_code = Session::get('coupon_code') ? Session::get('coupon_code')[0] : null;
+
+// DELETE ME
+var_dump($coupon_code);
+
 Component\Header('Cart');
 
 ?>
@@ -103,9 +108,23 @@ Component\Header('Cart');
 
 <!-- Display the subtotal in frontend -->
 <!-- But it will be recalculated in backend so don't pass this -->
-<p class="subtotal-container">
+  <td>
+    <form action="scripts/_search_coupon.php" method="POST">
+      <input type="text" name="coupon_code" required>
+        
+      </input>
+      <input type="submit" name="search_coupon" value="Use Voucher" onclick="voucherSuccess"> </input>
+    </form>
+  </td>
+<?php if($coupon_code): ?>
+<div class="subtotal-container">
+  Subtotal: <?= Utils\formatCurrency($subtotal - ($subtotal * $coupon_code['discount'] / 100)) ?>
+</div>
+<?php else: ?>
+<div class="subtotal-container">
   Subtotal: <?= Utils\formatCurrency($subtotal) ?>
-</p>
+</div>
+<?php endif; ?>
 
 <div class="checkout-container">
   <button id="showDialog">Checkout</button>
@@ -206,6 +225,11 @@ Component\Header('Cart');
 </dialog>
 
 <script src="js/cart.js"></script>
+<script> 
+  function voucherSuccess(){
+    alert("Your Voucher was successfully applied!");
+  }
+</script>
 
 <?php else: ?>
 
