@@ -23,22 +23,13 @@ Component\Header('Wishlist');
 <h1>Wishlist</h1>
 
 <?php if ($wishlist): ?>
-<div class="clear-cart-container">
-  <form 
-    action="scripts/_wishlist.php"
-    method="POST"
-  >
-    <input type="submit" name="submit" value="Clear Wishlist">
-  </form>
-</div>
+
 
 <table>
   <tr>
     <th>Product</th>
     <th>Image</th>
     <th>Price</th>
-    <th>Quantity</th>
-    <th>Total</th>
     <th>Actions</th>
   </tr>
   <?php $subtotal = 0; ?>
@@ -62,10 +53,6 @@ Component\Header('Wishlist');
       </td>
       
       <td>
-        <?php $subtotal += $price * $quantity_purchased ?>
-        <?= Utils\formatCurrency($price * $quantity_purchased) ?>
-      </td>
-      <td>
         <div class="cart-delete-container">
           <form 
             action="scripts/_delete_wishlist_item.php"
@@ -74,9 +61,9 @@ Component\Header('Wishlist');
             <input 
               type="hidden" 
               name="index" 
-              value="<?= $index ?>"
+              value="<?= $product['wishlist_id'] ?>"
             >
-            <input type="submit" value="Remove Item" name="submit">
+            <input type="submit" value="Remove From Wishlist" name="submit">
           </form>
         </div>
       </td>

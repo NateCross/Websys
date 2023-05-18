@@ -266,6 +266,20 @@ try {
         new.id = product_wishlist.product_id;
     END;
 
+    CREATE TRIGGER notify_seller_purchase
+    AFTER UPDATE
+    ON product FOR EACH ROW
+    BEGIN
+      IF old.quantity > new.quantity THEN
+        INSERT INTO notification_seller
+          (`seller_id`, `message`)
+        VALUES (
+          new.seller_id, 
+          CONCAT('A member has purchased your product: ', new.name)
+        );
+      END IF;
+    END;
+
     CREATE TRIGGER update_product_quantity_after_sale
     AFTER INSERT
     ON product_bill FOR EACH ROW

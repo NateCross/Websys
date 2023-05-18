@@ -19,6 +19,9 @@ header {
 .store-logo {
   font-weight: bold;
   font-size: large;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
 }
 
 .header-categories-container, .header-actions-container {
@@ -26,12 +29,6 @@ header {
   flex-direction: column;
   gap: 0.25rem;
 }
-
-.header-account-container {}
-
-.header-actions-container {}
-
-.header-search-container {}
 
 a {
   text-decoration: none;
@@ -191,10 +188,6 @@ table img {
 .product-details-container {
   text-overflow: ellipsis;
   overflow: hidden;
-}
-
-.product-details-container {
-
 }
 
 .product-details-container p {

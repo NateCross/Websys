@@ -45,7 +45,7 @@ function Header(string $title) { ?>
     <header>
       <div class="store-logo">
         <a href="index.php">Turn Zero Online</a>
-		<a href="account.php">Account</a>
+        <a href="account.php">Account</a>
       </div>
       <div class="header-categories-container">
         <a href="category.php?id=1">Board Games</a>

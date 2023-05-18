@@ -155,7 +155,7 @@ class Cart {
     string | null $bank_other = null,
     string $address,
     string $contact_number,
-    int $coupon_id
+    int | null $coupon_id = null,
   ) {
     try {
       if (self::cartIsEmpty()) return false;
@@ -168,16 +168,29 @@ class Cart {
 
       $user_id = Member::getUserIdAttribute($user);
 
-      Database::preparedQuery(
-        "INSERT INTO bill (
-          member_id,
-          bank,
-          bank_other,
-          address,
-          contact_number
-          coupon_id
-        ) VALUES (?, ?, ?, ?, ?, ?);"
-      , $user_id, $bank, $bank_other, $address, $contact_number, $coupon_id);
+      if ($coupon_id) {
+        Database::preparedQuery(
+          "INSERT INTO bill (
+            member_id,
+            bank,
+            bank_other,
+            address,
+            contact_number,
+            coupon_id
+          ) VALUES (?, ?, ?, ?, ?, ?);"
+        , $user_id, $bank, $bank_other, $address, $contact_number, $coupon_id);
+      } else {
+        Database::preparedQuery(
+          "INSERT INTO bill (
+            member_id,
+            bank,
+            bank_other,
+            address,
+            contact_number
+          ) VALUES (?, ?, ?, ?, ?);"
+        , $user_id, $bank, $bank_other, $address, $contact_number);
+      }
+
 
       $bill_id = Database::query("
         SELECT LAST_INSERT_ID();

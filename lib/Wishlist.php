@@ -6,7 +6,9 @@ class Wishlist {
   ) {
     try {
       $result = Database::query("
-        SELECT product.*
+        SELECT 
+          product.*,
+          product_wishlist.id wishlist_id
         FROM `product_wishlist`
           INNER JOIN 
             product
@@ -46,8 +48,8 @@ class Wishlist {
       return Database::preparedQuery("
         DELETE 
         FROM `product_wishlist`
-        WHERE `id` = '$wishlist_id';
-      ");
+        WHERE `id` = ?;
+      ", $wishlist_id);
     } catch (Exception $e) {
       return false;
     }

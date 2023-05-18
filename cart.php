@@ -13,9 +13,6 @@ if ($cart) rsort($cart);
 
 $coupon_code = Session::get('coupon_code') ? Session::get('coupon_code')[0] : null;
 
-// DELETE ME
-var_dump($coupon_code);
-
 Component\Header('Cart');
 
 ?>
@@ -142,6 +139,11 @@ Component\Header('Cart');
     action="scripts/_place_order.php"
     method="POST"
   >
+    <input 
+      type="hidden" 
+      name="coupon_id"
+      value="<?= $coupon_code['id'] ?>"
+    >
     <div class="bank-details-container">
       <div class="form-input-container">
         <label for="bank">Payment Method</label>
