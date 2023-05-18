@@ -321,21 +321,26 @@ try {
         b.`id` bill_id,
         m.`id` member_id,
         m.`name` member_name,
+        c.`discount` coupon_discount,
         SUM(pb.`quantity` * p.`price`) bill_total
       FROM
         bill b
-        LEFT JOIN
+        INNER JOIN
           product_bill pb
           ON
             b.`id` = pb.`bill_id`
-        LEFT JOIN
+        INNER JOIN
           product p
           ON
             pb.`product_id` = p.`id`
-        LEFT JOIN
+        INNER JOIN
           member m
           ON
             b.`member_id` = m.`id`
+        LEFT JOIN
+          coupon c
+          ON
+            c.`coupon_id` = b.`coupon_id` 
       GROUP BY b.`id`;
 
     CREATE FUNCTION get_review_rating_average(

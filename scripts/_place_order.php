@@ -24,7 +24,7 @@ if (!Member::getCurrentUser())
   'coupon_id' => FILTER_DEFAULT,
 ]);
 
-if (!$coupon_id) $coupon_id = null;
+if (!isset($coupon_id)) $coupon_id = null;
 
 if (!Cart::placeOrder(
   $bank,

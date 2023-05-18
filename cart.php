@@ -130,11 +130,19 @@ Component\Header('Cart');
 <!-- Modal that displays when submit order is clicked -->
 <dialog id="submitOrderDialog">
   <h2>Checkout</h2>
-  <p class="submit-order-text-container">
-    Your order for <?= count($cart) ?> 
-    <?= count($cart) > 1 ? "items" : "item" ?>
-    amounts to <?= Utils\formatCurrency($subtotal) ?>.
-  </p>
+  <?php if (!$coupon_code): ?>
+    <p class="submit-order-text-container">
+      Your order for <?= count($cart) ?> 
+      <?= count($cart) > 1 ? "items" : "item" ?>
+      amounts to <?= Utils\formatCurrency($subtotal) ?>.
+    </p>
+  <?php else: ?>
+    <p class="submit-order-text-container">
+      Your order for <?= count($cart) ?> 
+      <?= count($cart) > 1 ? "items" : "item" ?>
+      amounts to <?= Utils\formatCurrency($subtotal - ($subtotal * $coupon_code['discount'] / 100)) ?>.
+    </p>
+  <?php endif; ?>
   <form 
     action="scripts/_place_order.php"
     method="POST"
@@ -142,7 +150,7 @@ Component\Header('Cart');
     <input 
       type="hidden" 
       name="coupon_id"
-      value="<?= $coupon_code['id'] ?>"
+      value="<?= $coupon_code['coupon_id'] ?>"
     >
     <div class="bank-details-container">
       <div class="form-input-container">

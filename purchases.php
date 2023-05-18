@@ -34,6 +34,7 @@ $products = Member::getBillsWithProducts(Member::getUserIdAttribute($user));
     <th>Price</th>
     <th>Quantity Purchased</th>
     <th>Total</th>
+    <th>Coupon Discount</th>
     <th>Actions</th>
   </tr>
   <?php foreach($products as $product): ?>
@@ -57,6 +58,13 @@ $products = Member::getBillsWithProducts(Member::getUserIdAttribute($user));
       <td><?= Utils\formatCurrency($product['price']) ?></td>
       <td><?= $product['quantity_purchased'] ?></td>
       <td><?= Utils\formatCurrency($product['price'] * $product['quantity_purchased']) ?></td>
+      <td>
+        <?php if ($product['coupon_discount']): ?>
+          <?= $product['coupon_code'] ?>
+          <br>
+          <?= $product['coupon_discount'] ?>%
+        <?php endif; ?>
+      </td>
       <td>
         <button
           class="submit_review"

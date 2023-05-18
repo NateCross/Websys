@@ -58,7 +58,7 @@ class Cart {
       if (isset($index)) {
         $cart[$index]['quantity_purchased'] += $quantity;
         
-        if ($cart[$index]['quantity_purchased'] > $cart[$index['quantity']])
+        if ($cart[$index]['quantity_purchased'] > $cart[$index]['quantity'])
           $cart[$index]['quantity_purchased']
             = $cart[$index]['quantity'];
 
@@ -113,7 +113,8 @@ class Cart {
   public static function searchCoupon(string $coupon_code) {
     return Database::query("
       SELECT * FROM coupon
-      WHERE coupon_code LIKE '%$coupon_code%';
+      WHERE coupon_code LIKE '%$coupon_code%'
+      AND status != 'Invalid';
     ")->fetch_all(MYSQLI_ASSOC);
   }
 
@@ -206,6 +207,15 @@ class Cart {
           $bill_id,
           Cart::getProductQuantityPurchased($product),
         );
+      }
+
+      Session::delete('coupon_code');
+      if ($coupon_id) {
+        Database::preparedQuery("
+          UPDATE coupon
+          SET status = 'Invalid'
+          WHERE coupon_id = ?
+        ", $coupon_id);
       }
       
       return Cart::clearCart();
