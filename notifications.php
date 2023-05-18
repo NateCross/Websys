@@ -26,16 +26,12 @@ else if ($type === 'seller')
 else if ($type === 'admin')
   $notifications = Notification::getNotificationsAdmin($user_id);
 
-var_dump($notifications);
-
-
 Component\Header('Notifications');
 ?>
 
-
 <h1>Notifications</h1>
 
-<?php if($notifications):?>
+<?php if ($notifications): ?>
 
 <table>
   <tr>
