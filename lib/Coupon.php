@@ -10,17 +10,17 @@ class Coupon{
 		int $discount,
 		string $status,
 	  ): bool {
-		try {
-		  return Database::preparedQuery("
-			INSERT INTO `coupon` (
-			  `coupon_code`,
-			  `discount`,
-			  `status`
-			) VALUES (?, ?, ?);
-		  ", $coupon_code, $discount, $status);
-		} catch (Exception $e) {
-		  return false;
-		}
+			try {
+				return Database::preparedQuery("
+				INSERT INTO `coupon` (
+					`coupon_code`,
+					`discount`,
+					`status`
+				) VALUES (?, ?, ?);
+				", $coupon_code, $discount, $status);
+			} catch (Exception $e) {
+				return false;
+			}
 	  }
 
 	  public static function coupon($l){

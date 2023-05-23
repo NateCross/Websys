@@ -115,6 +115,20 @@ Component\Header(User::getUserNameAttribute($user));
   </div>
 </form>
 
+<h2>Delete User</h2>
+
+<form action="scripts/_delete_user.php" method="POST">
+  <input 
+    type="hidden" 
+    name="user_id"
+    value="<?= User::getUserIdAttribute($user) ?>"
+  >
+
+  <div class="form-input-container">
+    <input type="submit" name="submit" value="Delete">
+  </div>
+</form>
+
 <?php
 
 Component\Footer();

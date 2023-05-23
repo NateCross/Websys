@@ -53,7 +53,7 @@ $user_is_admin = isset($user) && (
   <div class="product-display-right-container">
     <h1><?= Product::getProductNameAttribute($product); ?></h1>
     <div>
-      <a href="seller.php?id=<?= Seller::getUserNameAttribute($seller) ?>">
+      <a href="seller.php?id=<?= Seller::getUserIdAttribute($seller) ?>">
         Seller: <?= Seller::getUserNameAttribute($seller) ?>
       </a>
     </div>

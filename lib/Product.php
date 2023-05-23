@@ -143,9 +143,23 @@ class Product {
 
   public static function deleteProduct(int $id) {
     try {
-      return Database::preparedQuery("
+      $product_result = Database::query("
+        SELECT 
+          image_path
+        FROM
+          product
+        WHERE
+          id = $id;
+      ");
+      $product = $product_result->fetch_all(MYSQLI_ASSOC)[0];
+
+      $result = Database::preparedQuery("
         DELETE FROM product WHERE id = ?;
       ", $id);
+      if (!$result) return $result;
+      return unlink(
+        '../' . self::getImagePath($product)
+      );
     } catch (Exception $e) {
       return false;
     }

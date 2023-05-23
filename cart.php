@@ -74,7 +74,7 @@ Component\Header('Cart');
             <input 
               type="hidden" 
               name="index" 
-              value="<?= count($cart) - 1 - $index ?>"
+              value="<?= $index ?>"
             >
             <input type="submit" value="Update Quantity" name="submit">
           </form>

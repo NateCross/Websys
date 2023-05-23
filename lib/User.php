@@ -214,27 +214,46 @@ abstract class User {
     string $contact_number,
   ) {
     try {
-      // Hash password first for better security
-      $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
+      if ($password) {
+        // Hash password first for better security
+        $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
 
-      $result = Database::preparedQuery("
-        UPDATE IGNORE " 
-        . static::getTableName()
-        . " SET 
-          email = ?,
-          name = ?,
-          password = ?,
-          address = ?,
-          contact_number = ?
-        WHERE id = ?
-        ", 
-        $email, 
-        $username, 
-        $hashedPassword, 
-        $address,
-        $contact_number,
-        $id,
-      );
+        $result = Database::preparedQuery("
+          UPDATE IGNORE " 
+          . static::getTableName()
+          . " SET 
+            email = ?,
+            name = ?,
+            password = ?,
+            address = ?,
+            contact_number = ?
+              WHERE id = ?
+          ", 
+          $email, 
+          $username, 
+          $hashedPassword, 
+          $address,
+          $contact_number,
+          $id,
+        );
+      } else {
+        $result = Database::preparedQuery("
+          UPDATE IGNORE " 
+          . static::getTableName()
+          . " SET 
+            email = ?,
+            name = ?,
+            address = ?,
+            contact_number = ?
+              WHERE id = ?
+          ", 
+          $email, 
+          $username, 
+          $address,
+          $contact_number,
+          $id,
+        );
+      }
 
       if (!$result) return false;
 
@@ -301,5 +320,33 @@ abstract class User {
 
   public static function getImagePath($user) {
     return "_assets/" . self::getUserImageAttribute($user);
+  }
+
+  public static function deleteUser($id) {
+    try {
+      $user_result = Database::query("
+        SELECT 
+          image_path
+        FROM " . static::getTableName() .
+        " WHERE
+          id = $id;
+      ");
+
+      $user = $user_result->fetch_all(MYSQLI_ASSOC)[0];
+
+      $result = Database::preparedQuery("
+        DELETE FROM " . static::getTableName() .
+        " WHERE 
+          id = ?;
+      ", $id);
+      if (!$result) return $result;
+      if (!unlink(
+        '../' . self::getImagePath($user)
+      )) return false;
+      return self::logout();
+    } catch (Exception $e) {
+      return false;
+    }
+
   }
 }

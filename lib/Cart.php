@@ -156,7 +156,7 @@ class Cart {
     string | null $bank_other = null,
     string $address,
     string $contact_number,
-    int | null $coupon_id = null,
+    $coupon_id = null,
   ) {
     try {
       if (self::cartIsEmpty()) return false;
