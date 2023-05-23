@@ -52,22 +52,22 @@ $user_is_admin = isset($user) && (
   </div>
   <div class="product-display-right-container">
     <h1><?= Product::getProductNameAttribute($product); ?></h1>
-    <p>
+    <div>
       <a href="seller.php?id=<?= Seller::getUserNameAttribute($seller) ?>">
         Seller: <?= Seller::getUserNameAttribute($seller) ?>
       </a>
-    </p>
-    <p>
+    </div>
+    <div>
       <a href="category.php?id=<?= Product::getProductCategoryId($product) ?>">
         Category:
         <?= Product::getProductCategoryAttribute($product) ?>
       </a>
-    </p>
+    </div>
     <?php if ($average_rating = Review::getAverageRating(Product::getProductIdAttribute($product))): ?>
-      <p>Rating: <?= number_format($average_rating, 2) ?>★ / 5.00★</p>
+      <div>Rating: <?= number_format($average_rating, 2) ?>★ / 5.00★</div>
     <?php endif; ?>
-    <p>Quantity: <?= Product::getProductQuantityAttribute($product) ?></p>
-    <p>Price: <?= Utils\formatCurrency(Product::getProductPriceAttribute($product)) ?></p>
+    <div>Quantity: <?= Product::getProductQuantityAttribute($product) ?></div>
+    <div>Price: <?= Utils\formatCurrency(Product::getProductPriceAttribute($product)) ?></div>
     <?php if ($user_is_a_member): ?>
       <div class="wishlist-button-container">
         <form 

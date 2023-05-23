@@ -45,7 +45,7 @@ function Header(string $title) { ?>
     <header>
       <div class="store-logo">
         <a href="index.php">Turn Zero Online</a>
-        <a href="account.php">Account</a>
+        <a href="account.php" class="account-link">Account</a>
       </div>
       <div class="header-categories-container">
         <a href="category.php?id=1">Board Games</a>
@@ -63,7 +63,6 @@ function Header(string $title) { ?>
           <a href="notifications.php">Notifications</a>
         <?php else: ?>
           <a href="login.php">Login</a>
-          <a> | </a>
           <a href="register.php">Register</a>
         <?php endif; ?>
       </div>

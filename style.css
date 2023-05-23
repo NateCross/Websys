@@ -13,18 +13,42 @@ header {
   display: flex;
   justify-content: space-between;
   border-bottom: 1px solid #EEEEEE;
-
+  background-color: #555;
+  color: #EEEEEE;
 }
 
 .store-logo {
   font-weight: bold;
-  font-size: large;
+  font-size: 1.75rem;
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
 }
 
-.header-categories-container, .header-actions-container {
+.account-link {
+  font-size: 1.25rem;
+}
+
+.header-account-container input {
+  background-color: none;
+  background: none;
+  border: none;
+  color: inherit;
+  text-align: left;
+  display: inline;
+  margin: 0;
+  padding: 0;
+  font-size: inherit;
+  transition: color 0.2s ease-in-out;
+}
+
+.header-account-container input:hover {
+  color: #000;
+}
+
+.header-categories-container, 
+.header-actions-container,
+.header-account-container {
   display: flex;
   flex-direction: column;
   gap: 0.25rem;
@@ -274,6 +298,7 @@ table img {
   justify-content: center;
   flex-direction: column;
   overflow: hidden;
+  gap: 1rem;
 }
 
 .add-to-cart-container input[type="number"] {
